@@ -1,0 +1,13 @@
+use_frameworks!
+platform :ios, '12.0'
+
+target 'OSSSpeechKit_Example' do
+  pod 'OSSSpeechKit', :path => '../'
+  pod 'PureLayout'
+  
+  target 'OSSSpeechKit_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
