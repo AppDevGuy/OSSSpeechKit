@@ -10,6 +10,7 @@ Pod::Spec.new do |s|
   s.name             = 'OSSSpeechKit'
   s.version          = '0.1.0'
   s.summary          = 'OSSSpeechKit provides developers easy text to voice integration.'
+  s.swift_version   = "5.0"
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -36,7 +37,7 @@ OSSSpeechKit offers an easy way to integrate text to voice using native AVFounda
   #   'OSSSpeechKit' => ['OSSSpeechKit/Assets/*.png']
   # }
 
-   s.public_header_files = 'Pod/Classes/*.swift'
+   # s.public_header_files = 'Pod/Classes/*.swift'
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
 end
