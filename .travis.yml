@@ -1,7 +1,7 @@
 language: objective-c
 osx_image: xcode10.2
 xcode_workspace: OSSSpeechKit.xcworkspace
-xcode_scheme: OSSSpeechKit_Example
+xcode_scheme: OSSSpeechKit-Example
 xcode_destination: platform=iOS Simulator,OS=12.2,name=iPhone X
 before_install:
 - cd Example
