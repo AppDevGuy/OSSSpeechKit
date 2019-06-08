@@ -50,14 +50,10 @@ public class OSSSpeech: NSObject {
             self.debugLog(object: self, message: "Text is empty or nil. Please confirm text has been passed in.")
             return
         }
-        if !self.voiceIsValid() {
-            self.voice = OSSVoice(quality: .default, language: .UnitedStatesEnglish)
-        }
         if !self.utteranceIsValid() {
             // Initialize default utterance
             self.utterance = OSSUtterance(string: text)
         }
-        self.utterance!.voice = self.voice
         if self.utterance!.speechString != text {
            self.utterance!.speechString = text
         }
@@ -71,15 +67,11 @@ public class OSSSpeech: NSObject {
         // Handle empty text gracefully.
         if attributedText.string.isEmpty {
             self.debugLog(object: self, message: "Attributed text is empty or nil. Please confirm text has been passed in.")
-            assertionFailure("Attributed text is empty or nil. Please confirm text has been passed in.")
             return
         }
         if !self.utteranceIsValid() {
             // Initialize default utterance
             self.utterance = OSSUtterance(attributedString: attributedText)
-        }
-        if self.voiceIsValid() {
-            self.utterance!.voice = self.voice!
         }
         if self.utterance!.attributedSpeechString.string != attributedText.string {
             self.utterance!.attributedSpeechString = attributedText
@@ -113,9 +105,17 @@ public class OSSSpeech: NSObject {
     }
     
     private func speak() {
+        if !self.voiceIsValid() {
+            self.voice = OSSVoice()
+        }
         // While unlikely to be invalid or null, safety first.
         guard let validUtterance = self.utterance else {
             self.debugLog(object: self, message: "No valid utterance.")
+            return
+        }
+        let validString = validUtterance.speechString
+        if validString.isEmpty {
+            self.debugLog(object: self, message: "No valid utterance string, please ensure you are passing a string to your speak call.")
             return
         }
         // Utterance must be an original object in order to be spoken. We redefine an new instance of Utterance each time using the values in the existing utterance.
