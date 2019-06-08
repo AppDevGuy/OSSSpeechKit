@@ -1,7 +1,7 @@
 language: swift
 osx_image: xcode10.2.1
 xcode_project: Example/OSSSpeechKit.xcworkspace
-# xcode_scheme: Example/Tests
+xcode_scheme: Example/OSSSpeechKitTests
 xcode_destination: platform=iOS Simulator,OS=12.2,name=iPhone X
 podfile: Example/Podfile
 after_success:
