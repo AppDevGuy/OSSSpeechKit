@@ -220,13 +220,11 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = 4632R9FHL5;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = 4632R9FHL5;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Manual;
 						TestTargetID = 607FACCF1AFB9204008FA782;
@@ -497,7 +495,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4632R9FHL5;
+				DEVELOPMENT_TEAM = "";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = OSSSpeechKit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -518,7 +516,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4632R9FHL5;
+				DEVELOPMENT_TEAM = "";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = OSSSpeechKit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -537,7 +535,7 @@
 			baseConfigurationReference = 8E50A387E6C9227B46CD07D5 /* Pods-OSSSpeechKit_Tests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 4632R9FHL5;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -563,7 +561,7 @@
 			baseConfigurationReference = EB2636A7260A79C428DB0FCF /* Pods-OSSSpeechKit_Tests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 4632R9FHL5;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
