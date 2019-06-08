@@ -76,7 +76,13 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // NOTE: Must set the voice before requesting speech. This can be set once.
         speechKit.voice = OSSVoice(quality: .enhanced, language: OSSVoiceEnum.allCases[indexPath.item])
-        self.speechKit.speakText(text: OSSVoiceEnum.allCases[indexPath.item].demoMessage)
+        // Test attributed string vs normal string
+        if indexPath.item % 2 == 0 {
+            self.speechKit.speakText(text: OSSVoiceEnum.allCases[indexPath.item].demoMessage)
+        } else {
+            let attributedString = NSAttributedString(string: OSSVoiceEnum.allCases[indexPath.item].demoMessage)
+            self.speechKit.speakAttributedText(attributedText: attributedString)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

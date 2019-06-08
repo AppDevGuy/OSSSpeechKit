@@ -25,15 +25,11 @@ public class OSSUtterance: AVSpeechUtterance {
     /// Default value in an empty string.
     override public var speechString: String {
         get {
-            if stringToSpeak.isEmpty {
-                if !attributedSpeechString.string.isEmpty {
-                    return attributedSpeechString.string
-                }
-            }
             return stringToSpeak
         }
         set {
             self.stringToSpeak = newValue
+            self.attributedStringToSpeak = NSAttributedString(string: newValue)
         }
     }
     
@@ -46,6 +42,7 @@ public class OSSUtterance: AVSpeechUtterance {
             return self.attributedStringToSpeak
         }
         set {
+            self.stringToSpeak = newValue.string
             self.attributedStringToSpeak = newValue
         }
     }
@@ -57,7 +54,7 @@ public class OSSUtterance: AVSpeechUtterance {
     }
     
     /// Init method which will set the speechString value.
-    override init(string: String) {
+    public override init(string: String) {
         super.init(string: string)
         self.speechString = string
         self.attributedSpeechString = NSAttributedString(string: string)
@@ -65,7 +62,7 @@ public class OSSUtterance: AVSpeechUtterance {
     }
     
     /// Init method which will set the attributedSpeechString value.
-    override init(attributedString: NSAttributedString) {
+    public override init(attributedString: NSAttributedString) {
         super.init(attributedString: attributedString)
         self.attributedSpeechString = attributedString
         self.speechString = attributedString.string

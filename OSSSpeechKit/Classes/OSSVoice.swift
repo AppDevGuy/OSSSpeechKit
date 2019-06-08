@@ -189,6 +189,7 @@ public class OSSVoice: AVSpeechSynthesisVoice {
     
     private var voiceQuality: AVSpeechSynthesisVoiceQuality = .default
     private var voiceLanguage: String = "en-US"
+    private var voiceTypeValue: OSSVoiceEnum = .UnitedStatesEnglish
     
     /// You have access to set the voice quality or use the default which is set to .default
     override public var quality: AVSpeechSynthesisVoiceQuality {
@@ -210,6 +211,12 @@ public class OSSVoice: AVSpeechSynthesisVoice {
         }
     }
     
+    public var voiceType: OSSVoiceEnum {
+        get {
+            return voiceTypeValue
+        }
+    }
+    
     /// If this init is used, defaults will be used.
     ///
     /// This method will set default values on the language and quality of voice.
@@ -225,6 +232,7 @@ public class OSSVoice: AVSpeechSynthesisVoice {
     /// This init method is required as it sets the voice quality and language in order to speak the text passed in.
     public init?(quality: AVSpeechSynthesisVoiceQuality, language: OSSVoiceEnum) {
         super.init()
+        self.voiceTypeValue = language
         self.language = language.rawValue
         self.quality = quality
     }
@@ -242,6 +250,7 @@ public class OSSVoice: AVSpeechSynthesisVoice {
     /// Quality defaults to .default.
     private func commonInit() {
         // Set the default values
+        self.voiceTypeValue = OSSVoiceEnum.UnitedStatesEnglish
         self.language = OSSVoiceEnum.UnitedStatesEnglish.rawValue
         self.quality = .default
     }

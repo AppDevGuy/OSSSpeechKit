@@ -119,7 +119,7 @@ public class OSSSpeech: NSObject {
             return
         }
         // Utterance must be an original object in order to be spoken. We redefine an new instance of Utterance each time using the values in the existing utterance.
-        let newUtterance = AVSpeechUtterance(string: validUtterance.speechString)
+        let newUtterance = AVSpeechUtterance(string: validString)
         newUtterance.rate = validUtterance.rate
         newUtterance.pitchMultiplier = validUtterance.pitchMultiplier
         newUtterance.volume = validUtterance.volume

@@ -92,5 +92,18 @@ class OSSSpeechTests: XCTestCase {
             XCTAssert(firstDetails.name == secondDetails.name, "Details has to be the same")
         }
     }
+    
+    func testChangesToUtterance() {
+        speechKit.voice = OSSVoice()
+        // Cannot initialise an utterance without a string
+        speechKit.utterance = OSSUtterance(string: "Testing")
+        speechKit.utterance!.volume = 0.5
+        speechKit.utterance!.rate = 0.5
+        speechKit.utterance!.pitchMultiplier = 1.2
+        speechKit.speakText(text: "Testing")
+        XCTAssert(speechKit.utterance!.rate == 0.5, "Rate should equal 0.5")
+        XCTAssert(speechKit.utterance!.volume == 0.5, "Volume should equal 0.5")
+        XCTAssert(speechKit.utterance!.pitchMultiplier == 1.2, "Pitch should equal 1.2")
+    }
 
 }
