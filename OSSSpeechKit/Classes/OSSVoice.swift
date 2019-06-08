@@ -110,10 +110,6 @@ public enum OSSVoiceEnum: String, CaseIterable {
             if #available(iOS 9.0, *) {
                 voiceInfo.name = voice.name
                 voiceInfo.identifier = voice.identifier
-            } else {
-                // Fallback on earlier versions
-                voiceInfo.identifier = "unavailable"
-                voiceInfo.identifier = "unavailable"
             }
             voiceInfo.languageCode = self.rawValue
             voiceInfo.language = "\(self)"

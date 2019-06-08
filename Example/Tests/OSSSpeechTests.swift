@@ -104,6 +104,8 @@ class OSSSpeechTests: XCTestCase {
         XCTAssert(speechKit.utterance!.rate == 0.5, "Rate should equal 0.5")
         XCTAssert(speechKit.utterance!.volume == 0.5, "Volume should equal 0.5")
         XCTAssert(speechKit.utterance!.pitchMultiplier == 1.2, "Pitch should equal 1.2")
+        XCTAssert(speechKit.voice!.quality == .default, "Quality should equal default")
+        XCTAssert(speechKit.voice!.voiceType == .UnitedStatesEnglish, "Default voice type should equal United States English")
     }
 
 }

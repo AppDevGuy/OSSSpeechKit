@@ -45,6 +45,15 @@ class ViewController: UIViewController {
     }
 
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        #if DEBUG
+        // For sake of testing
+        self.collectionView(self.collectionView, didSelectItemAt: IndexPath(row: 0, section: 0))
+        self.collectionView(self.collectionView, didSelectItemAt: IndexPath(row: 1, section: 0))
+        #endif
+    }
+    
     override func updateViewConstraints() {
         super.updateViewConstraints()
         if !hasSetConstraints {
@@ -105,7 +114,6 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 
 
 extension UIView {
-    
     static var reuseIdentifier: String {
         return String(describing: self)
     }
