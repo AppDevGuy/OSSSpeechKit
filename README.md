@@ -4,6 +4,7 @@
 [![Version](https://img.shields.io/cocoapods/v/OSSSpeechKit.svg?style=flat)](https://cocoapods.org/pods/OSSSpeechKit)
 [![License](https://img.shields.io/cocoapods/l/OSSSpeechKit.svg?style=flat)](https://cocoapods.org/pods/OSSSpeechKit)
 [![Platform](https://img.shields.io/cocoapods/p/OSSSpeechKit.svg?style=flat)](https://cocoapods.org/pods/OSSSpeechKit)
+[![codecov](https://codecov.io/gh/AppDevGuy/OSSSpeechKit/branch/master/graph/badge.svg)](https://codecov.io/gh/AppDevGuy/OSSSpeechKit)
 
 OSSSpeechKit was developed to provide easier accesibility options to apps. 
 
