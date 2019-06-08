@@ -41,7 +41,6 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       codeCoverageEnabled = "YES"
-      onlyGenerateCoverageForSpecifiedTargets = "YES"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <CodeCoverageTargets>
          <BuildableReference
@@ -50,13 +49,6 @@
             BuildableName = "OSSSpeechKit.framework"
             BlueprintName = "OSSSpeechKit"
             ReferencedContainer = "container:Pods/Pods.xcodeproj">
-         </BuildableReference>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "607FACE41AFB9204008FA782"
-            BuildableName = "OSSSpeechKit_Tests.xctest"
-            BlueprintName = "OSSSpeechKit_Tests"
-            ReferencedContainer = "container:OSSSpeechKit.xcodeproj">
          </BuildableReference>
       </CodeCoverageTargets>
       <Testables>

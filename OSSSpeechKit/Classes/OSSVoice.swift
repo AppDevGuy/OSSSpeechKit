@@ -12,13 +12,13 @@ import AVFoundation
 /// The voice infor struct ensures that the data structure has conformity and consistency.
 public struct OSSVoiceInfo {
     /// The name of the voice; All AVSpeechSynthesisVoice instances have a persons name.
-    var name: String?
+    public var name: String?
     /// The name of the language being used.
-    var language: String?
+    public var language: String?
     /// The language code is what is internationally used in Locale settings.
-    var languageCode: String?
+    public var languageCode: String?
     /// Identifier is a unique bundle url provided by Apple for each AVSpeechSynthesisVoice.
-    var identifier: Any?
+    public var identifier: Any?
 }
 
 /// The available system voices.

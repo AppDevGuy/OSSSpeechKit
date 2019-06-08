@@ -46,5 +46,15 @@ class OSSSpeechTests: XCTestCase {
         XCTAssert(speechKit.utterance!.speechString == "Should Pass", "The speechString should equal pass")
         XCTAssert(speechKit.voice?.language == OSSVoiceEnum.UnitedStatesEnglish.rawValue, "Voice language should be United States English")
     }
+    
+    func testOSSSpeechEnum() {
+        for language in OSSVoiceEnum.allCases {
+            XCTAssert(language.demoMessage == language.demoMessage, "Message has to be the same")
+            XCTAssert(language.title == language.title, "Title has to be the same")
+            let firstDetails = language.getDetails()
+            let secondDetails = language.getDetails()
+            XCTAssert(firstDetails.name == secondDetails.name, "Details has to be the same")
+        }
+    }
 
 }
