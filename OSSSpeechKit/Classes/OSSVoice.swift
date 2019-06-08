@@ -28,42 +28,79 @@ public struct OSSVoiceInfo {
 ///     OSSVoiceEnum.allCases
 ///
 public enum OSSVoiceEnum: String, CaseIterable {
+    /// SaudiArabian
     case SaudiArabian = "ar-SA"
+    /// Czech
     case Czech = "cs-CZ"
+    /// Danish
     case Danish = "da-DK"
+    /// German
     case German = "de-DE"
+    /// Greek
     case Greek = "el-GR"
+    /// Australian
     case Australian = "en-AU"
+    /// English
     case English = "en-GB"
+    /// Irish English
     case IrishEnglish = "en-IE"
+    /// USA English
     case UnitedStatesEnglish = "en-US"
+    /// South African English
     case SouthAfricanEnglish = "en-ZA"
+    /// Spanish
     case Spanish = "es-ES"
+    /// Mexican
     case Mexican = "es-MX"
+    /// Finnish
     case Finnish = "fi-FI"
+    /// Canidian French
     case CanadianFrench = "fr-CA"
+    /// French
     case French = "fr-FR"
+    /// Hebrew
     case Hebrew = "he-IL"
+    /// Hindi
     case Hindi = "hi-IN"
+    /// Hungarian
     case Hungarian = "hu-HU"
+    /// Indonedian
     case Indonesian = "id-ID"
+    /// Italian
     case Italian = "it-IT"
+    /// Japanese
     case Japanese = "ja-JP"
+    /// Korean
     case Korean = "ko-KR"
+    /// Dutch Beligium
     case DutchBelgium = "nl-BE"
+    /// Dutch Netherlands
     case DutchNetherlands = "nl-NL"
+    /// Norwegian
     case Norwegian = "no-NO"
+    /// Polish
     case Polish = "pl-PL"
+    /// Brazilian
     case Brazilian = "pt-BR"
+    /// Portuguese
     case Portuguese = "pt-PT"
+    /// Romanian
     case Romanian = "ro-RO"
+    /// Russian
     case Russian = "ru-RU"
+    /// Slovakian
     case Slovakian = "sk-SK"
+    /// Swedish
     case Swedish = "sv-SE"
+    /// Thai
     case Thai = "th-TH"
+    /// Turkish
     case Turkish = "tr-TR"
+    /// Chinese
     case Chinese = "zh-CH"
+    /// Chinese Hong Kong
     case ChineseHongKong = "zh-HK"
+    /// Taiwanese
     case Taiwanese  = "zh-TW"
     
     /// Will return specific information about the language as an OSSVoiceInfo object.
@@ -211,6 +248,7 @@ public class OSSVoice: AVSpeechSynthesisVoice {
         }
     }
     
+    /// Returns the current voice type enum to allow for obtining details.
     public var voiceType: OSSVoiceEnum {
         get {
             return voiceTypeValue
@@ -237,8 +275,10 @@ public class OSSVoice: AVSpeechSynthesisVoice {
         self.quality = quality
     }
     
+    /// Required: Do not recommend using.
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        return nil
     }
     
     /// Used as a fail-safe should the custom init method not be used.

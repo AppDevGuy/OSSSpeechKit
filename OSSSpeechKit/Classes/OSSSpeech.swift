@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 
+/// Speech is the primary interface. To use, set the voice and then call `.speak(string: "your string")`
 public class OSSSpeech: NSObject {
     
     // MARK: - Private Properties

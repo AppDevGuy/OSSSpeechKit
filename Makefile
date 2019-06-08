@@ -1,8 +1,12 @@
 documentation:
 	@jazzy \
+		--clean \
+		--author AppDevGuy \
+		--author_url https://github.com/AppDevGuy \
+		--github_url https://github.com/AppDevGuy/OSSSpeechKit \
+		--podspec OSSSpeechKit.podspec \
 		--min-acl internal \
 		--no-hide-documentation-coverage \
-		--theme fullwidth \
 		--output ./docs \
-		--documentation=./*.md
+
 	@rm -rf ./build

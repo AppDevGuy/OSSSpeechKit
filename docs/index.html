@@ -4,59 +4,64 @@
     <title>OSSSpeechKit  Reference</title>
     <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="css/highlight.css" />
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <script src="js/jquery.min.js" defer></script>
     <script src="js/jazzy.js" defer></script>
     
-    <script src="js/lunr.min.js" defer></script>
-    <script src="js/typeahead.jquery.js" defer></script>
-    <script src="js/jazzy.search.js" defer></script>
   </head>
   <body>
-
-
     <a title="OSSSpeechKit  Reference"></a>
-
-    <header class="header">
-      <p class="header-col header-col--primary">
-        <a class="header-link" href="index.html">
-          OSSSpeechKit Docs
-        </a>
-         (0% documented)
-      </p>
-    
-      <p class="header-col--secondary">
-        <form role="search" action="search.json">
-          <input type="text" placeholder="Search documentation" data-typeahead>
-        </form>
-      </p>
-    
-    
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">OSSSpeechKit Docs</a> (100% documented)</p>
+        <p class="header-right"><a href="https://github.com/AppDevGuy/OSSSpeechKit"><img src="img/gh.png"/>View on GitHub</a></p>
+      </div>
     </header>
-
-    <p class="breadcrumbs">
-      <a class="breadcrumb" href="index.html">OSSSpeechKit Reference</a>
-      <img class="carat" src="img/carat.png" />
-      OSSSpeechKit  Reference
-    </p>
-
     <div class="content-wrapper">
-      <nav class="navigation">
+      <p id="breadcrumbs">
+        <a href="index.html">OSSSpeechKit Reference</a>
+        <img id="carat" src="img/carat.png" />
+        OSSSpeechKit  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
         <ul class="nav-groups">
           <li class="nav-group-name">
-            <a class="nav-group-name-link" href="Guides.html">Guides</a>
+            <a href="Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="readme.html">README</a>
+                <a href="Classes/OSSSpeech.html">OSSSpeech</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/OSSUtterance.html">OSSUtterance</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/OSSVoice.html">OSSVoice</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Enums/OSSVoiceEnum.html">OSSVoiceEnum</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/OSSVoiceInfo.html">OSSVoiceInfo</a>
               </li>
             </ul>
           </li>
         </ul>
       </nav>
       <article class="main-content">
-
-        <section class="section">
-          <div class="section-content">
+        <section>
+          <section class="section">
             
             <h1 id='ossspeechkit' class='heading'>OSSSpeechKit</h1>
 
@@ -64,8 +69,7 @@
 <a href="https://cocoapods.org/pods/OSSSpeechKit"><img src="https://img.shields.io/cocoapods/v/OSSSpeechKit.svg?style=flat" alt="Version"></a>
 <a href="https://cocoapods.org/pods/OSSSpeechKit"><img src="https://img.shields.io/cocoapods/l/OSSSpeechKit.svg?style=flat" alt="License"></a>
 <a href="https://cocoapods.org/pods/OSSSpeechKit"><img src="https://img.shields.io/cocoapods/p/OSSSpeechKit.svg?style=flat" alt="Platform"></a>
-<a href="https://codecov.io/gh/AppDevGuy/OSSSpeechKit"><img src="https://codecov.io/gh/AppDevGuy/OSSSpeechKit/branch/master/graph/badge.svg" alt="codecov"></a>
-<a href="http://inch-ci.org/github/AppDevGuy/OSSSpeechKit"><img src="http://inch-ci.org/github/AppDevGuy/OSSSpeechKit.svg?branch=master" alt="Inline docs"></a></p>
+<a href="https://codecov.io/gh/AppDevGuy/OSSSpeechKit"><img src="https://codecov.io/gh/AppDevGuy/OSSSpeechKit/branch/master/graph/badge.svg" alt="codecov"></a></p>
 
 <p>OSSSpeechKit was developed to provide easier accesibility options to apps. </p>
 
@@ -113,7 +117,7 @@ it, simply add the following line to your Podfile:</p>
 </code></pre>
 <h4 id='other-info' class='heading'>Other Info</h4>
 
-<p>The <code>OSSVoiceEnum</code> contains other methods, such as a hello message, title variable and subtitle variable so you can use it in a list. </p>
+<p>The <code><a href="Enums/OSSVoiceEnum.html">OSSVoiceEnum</a></code> contains other methods, such as a hello message, title variable and subtitle variable so you can use it in a list. </p>
 
 <p>You can also set the speech:</p>
 
@@ -179,16 +183,14 @@ it, simply add the following line to your Podfile:</p>
 
 <p>OSSSpeechKit is available under the MIT license. See the LICENSE file for more info.</p>
 
-          </div>
+          </section>
         </section>
-
-
+        <section id="footer">
+          <p>&copy; 2019 <a class="link" href="https://github.com/AppDevGuy" target="_blank" rel="external">AppDevGuy</a>. All rights reserved. (Last updated: 2019-06-08)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
       </article>
     </div>
-    <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://github.com/appdevguy/OSSSpeechKit" target="_blank" rel="external">appdevguy</a>. All rights reserved. (Last updated: 2019-06-08)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
-    </section>
   </body>
 </div>
 </html>

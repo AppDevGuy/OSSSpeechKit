@@ -69,9 +69,13 @@ public class OSSUtterance: AVSpeechUtterance {
         self.commonInit()
     }
     
+    
+    /// Required. Do not recommend using.
     required init?(coder aDecoder: NSCoder) {
         super.init()
     }
+    
+    // MARK: - Private Methods
     
     /// Common init is used for testing purposes only.
     private func commonInit() {
