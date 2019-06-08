@@ -25,7 +25,7 @@ OSSSpeechKit offers an easy way to integrate text to voice using native AVFounda
 
   s.homepage         = 'https://github.com/appdevguy/OSSSpeechKit'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
-  s.license          = { :type => 'MIT', :file => 'LICENSE.txt' }
+  s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'appdevguy' => 'seaniosdeveloper@gmail.com' }
   s.source           = { :git => 'https://github.com/appdevguy/OSSSpeechKit.git', :tag => s.version.to_s }
   s.ios.deployment_target = '12.0'
