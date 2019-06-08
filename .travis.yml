@@ -1,6 +1,6 @@
 language: objective-c
 osx_image: xcode10.2
-xcode_project: OSSSpeechKit.xcworkspace
+xcode_workspace: OSSSpeechKit.xcworkspace
 xcode_scheme: OSSSpeechKit_Example
 xcode_destination: platform=iOS Simulator,OS=12.2,name=iPhone X
 # podfile: Example/Podfile
