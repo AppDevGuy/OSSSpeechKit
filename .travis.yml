@@ -1,7 +1,8 @@
 language: swift
-os: osx
-osx_image: xcode10
-script:
-  - xcodebuild -scheme OSSSpeechKit -workspace OSSSpeechKit.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone XR,OS=12.2' build test
+osx_image: xcode10.1
+xcode_project: Example/OSSSpeechKit.xcworkspace
+# xcode_scheme: Example/Tests
+xcode_destination: platform=iOS Simulator,OS=12.2,name=iPhone X
+podfile: Example/Podfile
 after_success:
   - bash <(curl -s https://codecov.io/bash)
