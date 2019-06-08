@@ -1,0 +1,6 @@
+language: swift
+osx_image: xcode10
+script:
+  - xcodebuild -scheme OSSSpeechKit -workspace OSSSpeechKit.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone XR,OS=12.2' build test
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
