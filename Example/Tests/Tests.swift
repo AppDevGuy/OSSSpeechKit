@@ -3,9 +3,12 @@ import OSSSpeechKit
 
 class Tests: XCTestCase {
     
+    var speechKit: OSSSpeech!
+    
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        speechKit = OSSSpeech.shared
+        speechKit.voice = OSSVoice(quality: .enhanced, language: .Australian)
     }
     
     override func tearDown() {
@@ -15,7 +18,9 @@ class Tests: XCTestCase {
     
     func testExample() {
         // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
+        XCTAssert(speechKit != nil, "speechKit instance cannot be nil")
+        XCTAssert(speechKit.voice != nil, "Voice instance cannot be nil")
+        XCTAssert(speechKit.voice?.language == OSSVoiceEnum.Australian.rawValue, "Voice language should be Australian")
     }
     
     func testPerformanceExample() {
