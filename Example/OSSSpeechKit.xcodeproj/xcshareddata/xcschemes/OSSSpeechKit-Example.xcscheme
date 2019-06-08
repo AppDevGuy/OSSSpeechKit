@@ -58,13 +58,6 @@
             BlueprintName = "OSSSpeechKit_Tests"
             ReferencedContainer = "container:OSSSpeechKit.xcodeproj">
          </BuildableReference>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "OSSSpeechKit_Example.app"
-            BlueprintName = "OSSSpeechKit_Example"
-            ReferencedContainer = "container:OSSSpeechKit.xcodeproj">
-         </BuildableReference>
       </CodeCoverageTargets>
       <Testables>
          <TestableReference
