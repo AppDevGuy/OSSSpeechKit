@@ -7,10 +7,11 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = 'OSSSpeechKit'
-  s.version          = '0.1.0'
-  s.summary          = 'OSSSpeechKit provides developers easy text to voice integration.'
-  s.swift_version   = "5.0"
+  s.name                = 'OSSSpeechKit'
+  s.version             = '0.1.0'
+  s.summary             = 'OSSSpeechKit provides developers easy text to voice integration.'
+  s.swift_version       = "5.0"
+  s.platform            = :ios, "12.0"
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -27,10 +28,7 @@ OSSSpeechKit offers an easy way to integrate text to voice using native AVFounda
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'appdevguy' => 'seaniosdeveloper@gmail.com' }
   s.source           = { :git => 'https://github.com/appdevguy/OSSSpeechKit.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
-
   s.ios.deployment_target = '12.0'
-
   s.source_files = 'OSSSpeechKit/Classes/*.swift'
   
   # s.resource_bundles = {
@@ -39,5 +37,4 @@ OSSSpeechKit offers an easy way to integrate text to voice using native AVFounda
 
    # s.public_header_files = 'Pod/Classes/*.swift'
   # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
 end
