@@ -1,8 +1,11 @@
-language: swift
+language: objective-c
 osx_image: xcode10.2.1
-xcode_project: Example/OSSSpeechKit.xcworkspace
-xcode_scheme: Example/OSSSpeechKitTests
+xcode_project: OSSSpeechKit.xcworkspace
+xcode_scheme: OSSSpeechKit_Example
 xcode_destination: platform=iOS Simulator,OS=12.2,name=iPhone X
-podfile: Example/Podfile
+# podfile: Example/Podfile
+before_install:
+- cd Example
+- pod install
 after_success:
   - bash <(curl -s https://codecov.io/bash)
