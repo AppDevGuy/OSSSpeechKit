@@ -11,9 +11,9 @@
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		64EA52AEB7F1C16E3DA6FF13 /* Pods_OSSSpeechKit_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72EC396A97B53B0AF569DE1A /* Pods_OSSSpeechKit_Example.framework */; };
 		B005BA2922A9430A0030E2F4 /* BasicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B005BA2822A9430A0030E2F4 /* BasicCollectionViewCell.swift */; };
+		B06260E122ABCA2600069801 /* OSSSpeechTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06260E022ABCA2600069801 /* OSSSpeechTests.swift */; };
 		E95D80055602E1F3DAB44DDC /* Pods_OSSSpeechKit_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59EABFEDF2B45A65EB1CA76E /* Pods_OSSSpeechKit_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,13 +38,13 @@
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* OSSSpeechKit_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OSSSpeechKit_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		68AF1DA5BE256D75F68CD361 /* OSSSpeechKit.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = OSSSpeechKit.podspec; path = ../OSSSpeechKit.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		72EC396A97B53B0AF569DE1A /* Pods_OSSSpeechKit_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OSSSpeechKit_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E50A387E6C9227B46CD07D5 /* Pods-OSSSpeechKit_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OSSSpeechKit_Tests.debug.xcconfig"; path = "Target Support Files/Pods-OSSSpeechKit_Tests/Pods-OSSSpeechKit_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		969F0DB7618212626605C72B /* Pods-OSSSpeechKit_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OSSSpeechKit_Example.release.xcconfig"; path = "Target Support Files/Pods-OSSSpeechKit_Example/Pods-OSSSpeechKit_Example.release.xcconfig"; sourceTree = "<group>"; };
 		AD7924CA4244888FD94ED9C6 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		B005BA2822A9430A0030E2F4 /* BasicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicCollectionViewCell.swift; sourceTree = "<group>"; };
+		B06260E022ABCA2600069801 /* OSSSpeechTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSSSpeechTests.swift; sourceTree = "<group>"; };
 		D9904FC64C70B4667E482942 /* Pods-OSSSpeechKit_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OSSSpeechKit_Example.debug.xcconfig"; path = "Target Support Files/Pods-OSSSpeechKit_Example/Pods-OSSSpeechKit_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		EB2636A7260A79C428DB0FCF /* Pods-OSSSpeechKit_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OSSSpeechKit_Tests.release.xcconfig"; path = "Target Support Files/Pods-OSSSpeechKit_Tests/Pods-OSSSpeechKit_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -135,8 +135,8 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
+				B06260E022ABCA2600069801 /* OSSSpeechTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -355,7 +355,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				B06260E122ABCA2600069801 /* OSSSpeechTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

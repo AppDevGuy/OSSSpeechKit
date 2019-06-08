@@ -49,7 +49,6 @@ public class OSSUtterance: AVSpeechUtterance {
     
     private override init() {
         super.init()
-        self.commonInit()
     }
     
     /// Init method which will set the speechString value.
