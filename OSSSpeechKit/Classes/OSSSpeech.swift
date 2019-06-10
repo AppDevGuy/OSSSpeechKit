@@ -8,6 +8,11 @@
 
 import UIKit
 import AVFoundation
+import Speech
+
+public protocol OSSSpeechDelegate: class {
+    func didFinishListening(withText text: String)
+}
 
 /// Speech is the primary interface. To use, set the voice and then call `.speak(string: "your string")`
 public class OSSSpeech: NSObject {
@@ -19,11 +24,25 @@ public class OSSSpeech: NSObject {
     
     // MARK: - Variables
     
+    /// Delegate allows for the recieving of spoken events.
+    public weak var delegate: OSSSpeechDelegate?
+    
     /// An object that allows overriding the default AVVoice options.
     public var voice: OSSVoice?
     
     /// The object used to enable translation of strings to synthsized voice.
     public var utterance: OSSUtterance?
+    
+    /// An AVAudioSession that ensure volume controls are correct in various scenarios
+    private let session = AVAudioSession.sharedInstance()
+    
+    // Voice to text
+    private var audioEngine: AVAudioEngine?
+    private var speechRecognizer: SFSpeechRecognizer? = SFSpeechRecognizer()
+    private let localVoice = OSSVoiceEnum.Australian.rawValue
+    private var request = SFSpeechAudioBufferRecognitionRequest()
+    private var recognitionTask: SFSpeechRecognitionTask?
+    private var spokenText: String = ""
     
     // MARK: - Lifecycle
     
@@ -125,12 +144,138 @@ public class OSSSpeech: NSObject {
         newUtterance.pitchMultiplier = validUtterance.pitchMultiplier
         newUtterance.volume = validUtterance.volume
         newUtterance.voice = self.voice!
+        // Ensure volume is correct each time
+        self.setSession(isRecording: false)
         self.speechSynthesizer.speak(newUtterance)
     }
     
+    private func setSession(isRecording: Bool) {
+        let category: AVAudioSession.Category = isRecording ? .playAndRecord : .playback
+        try! self.session.setCategory(category, options: .duckOthers)
+        try! self.session.setActive(true, options: .notifyOthersOnDeactivation)
+    }
+    
+    // MARK: - Voice Recording
+    
+    private func checkState() {
+        switch recognitionTask!.state {
+        case .starting:
+            print("Starting...")
+            break
+        case .running:
+            print("Running...")
+            break
+        case .finishing:
+            print("Finish...")
+            break
+        case .canceling:
+            print("Cancel...")
+            break
+        case .completed:
+            print("Complete...")
+            break
+        @unknown default:
+            print("Default...")
+            break
+        }
+    }
+    
+    private func cancelRecording() {
+        audioEngine!.stop()
+        request.endAudio()
+        recognitionTask?.cancel()
+        let node = audioEngine!.inputNode
+        node.removeTap(onBus: 0)
+        recognitionTask?.finish()
+        audioEngine = nil
+        self.checkState()
+        self.setSession(isRecording: false)
+        self.delegate?.didFinishListening(withText: self.spokenText)
+    }
+    
+    private func recordAndRecognizeSpeech() {
+        if let engine = audioEngine {
+            if engine.isRunning {
+                cancelRecording()
+                return
+            }
+        }
+        self.setSession(isRecording: true)
+        request = SFSpeechAudioBufferRecognitionRequest()
+        audioEngine = AVAudioEngine()
+        let identifier = voice?.voiceType.rawValue ?? OSSVoiceEnum.UnitedStatesEnglish.rawValue
+        speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: identifier))
+        let node = audioEngine!.inputNode
+        let recordingFormat = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 1)
+        node.installTap(onBus: 0, bufferSize: 8192, format: recordingFormat) { (buffer, audioTime) in
+            self.request.append(buffer)
+        }
+        audioEngine!.prepare()
+        do {
+            try audioEngine!.start()
+        } catch {
+            print("Error starting audio engine: \(error)")
+        }
+        guard let recogniser = SFSpeechRecognizer() else {
+            print("No speech recogniser")
+            return
+        }
+        if !recogniser.isAvailable {
+            print("No recogniser available right now.")
+            return
+        }
+        speechRecognizer?.defaultTaskHint = .unspecified
+        recognitionTask = speechRecognizer?.recognitionTask(with: request, delegate: self)
+    }
+    
+    /// Record and recognise speech
+    ///
+    /// This method will check to see if user is authorised to record. If they are, the recording will proceed.
+    /// If they are not.
+    public func recordVoice() {
+        SFSpeechRecognizer.requestAuthorization {
+            [unowned self] (authStatus) in
+            switch authStatus {
+            case .authorized:
+                self.recordAndRecognizeSpeech()
+                break
+            case .denied:
+                print("Speech recognition authorization denied")
+                break
+            case .restricted:
+                print("Not available on this device")
+                break
+            case .notDetermined:
+                print("Not determined")
+                break
+            @unknown default:
+                print("Unknown/Not determined")
+                break
+            }
+        }
+    }
 }
 
-extension OSSSpeech {
+extension OSSSpeech: SFSpeechRecognitionTaskDelegate, SFSpeechRecognizerDelegate {
+    public func speechRecognitionTask(_ task: SFSpeechRecognitionTask, didFinishSuccessfully successfully: Bool) {
+        print("Finished successfully? \(successfully)")
+    }
+    
+    public func speechRecognitionTask(_ task: SFSpeechRecognitionTask, didHypothesizeTranscription transcription: SFTranscription) {
+        print("Transcription: \(transcription.formattedString)")
+        self.spokenText = transcription.formattedString
+    }
+    
+    public func speechRecognitionTask(_ task: SFSpeechRecognitionTask, didFinishRecognition recognitionResult: SFSpeechRecognitionResult) {
+        print("The recognition: \(recognitionResult)")
+        print("The transcriptions: \(recognitionResult.transcriptions)")
+        print("The best transcriptions: \(recognitionResult.bestTranscription.formattedString)")
+    }
+    
+    public func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
+        print("Availability did change.")
+    }
+    
     /// Method outputs a debug statement containing necessary information to resolve issues.
     ///
     ///  Only works with debug/dev builds.
