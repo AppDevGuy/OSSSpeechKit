@@ -10,8 +10,42 @@ import UIKit
 import AVFoundation
 import Speech
 
+/// The authorization status of the Microphone and recording, imitating the native `SFSpeechRecognizerAuthorizationStatus`
+public enum OSSSpeechAuthorizationStatus: Int {
+    /// The app's authorization status has not yet been determined.
+    case notDetermined
+    /// The user denied your app's request to perform speech recognition.
+    case denied
+    /// The device prevents your app from performing speech recognition.
+    case restricted
+    /// The user granted your app's request to perform speech recognition.
+    case authorized
+    
+    /// A public message that can be displayed to the user.
+    public var message: String {
+        switch self {
+        case .notDetermined:
+            return "The app's authorization status has not yet been determined."
+        case .denied:
+            return "The user denied your app's request to perform speech recognition."
+        case .restricted:
+            return "The device prevents your app from performing speech recognition."
+        case .authorized:
+            return "The user granted your app's request to perform speech recognition."
+        @unknown default:
+            return "Unknown error."
+        }
+    }
+}
+
+/// Delegate to handle events such as failed authentication for microphone among many more.
 public protocol OSSSpeechDelegate: class {
+    /// When the microphone has finished accepting audio, this delegate will be called with the final best text output.
     func didFinishListening(withText text: String)
+    /// Handle the no authentication scenario
+    func didFailToAccessMicroPhone(withAuthentication type: OSSSpeechAuthorizationStatus)
+    /// If the speech recogniser and request fail to set up, this method will be called.
+    func didFailToCommenceSpeechRecording()
 }
 
 /// Speech is the primary interface. To use, set the voice and then call `.speak(string: "your string")`
@@ -38,9 +72,8 @@ public class OSSSpeech: NSObject {
     
     // Voice to text
     private var audioEngine: AVAudioEngine?
-    private var speechRecognizer: SFSpeechRecognizer? = SFSpeechRecognizer()
-    private let localVoice = OSSVoiceEnum.Australian.rawValue
-    private var request = SFSpeechAudioBufferRecognitionRequest()
+    private var speechRecognizer: SFSpeechRecognizer?
+    private var request: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
     private var spokenText: String = ""
     
@@ -155,40 +188,48 @@ public class OSSSpeech: NSObject {
         try! self.session.setActive(true, options: .notifyOthersOnDeactivation)
     }
     
-    // MARK: - Voice Recording
+    // MARK: - Public Voice Recording Methods
     
-    private func checkState() {
-        switch recognitionTask!.state {
-        case .starting:
-            print("Starting...")
-            break
-        case .running:
-            print("Running...")
-            break
-        case .finishing:
-            print("Finish...")
-            break
-        case .canceling:
-            print("Cancel...")
-            break
-        case .completed:
-            print("Complete...")
-            break
-        @unknown default:
-            print("Default...")
-            break
+    /// Record and recognise speech
+    ///
+    /// This method will check to see if user is authorised to record. If they are, the recording will proceed.
+    /// If they are not.
+    public func recordVoice() {
+        getMicroPhoneAuthorization()
+    }
+    
+    // MARK: - Private Voice Recording
+    
+    private func getMicroPhoneAuthorization() {
+        SFSpeechRecognizer.requestAuthorization {
+            [unowned self] (authStatus) in
+            let status = OSSSpeechAuthorizationStatus(rawValue: authStatus.rawValue)
+            switch authStatus {
+            case .authorized:
+                OperationQueue.main.addOperation {
+                    self.recordAndRecognizeSpeech()
+                    self.delegate?.didFailToAccessMicroPhone(withAuthentication: status!)
+                }
+                break
+            default:
+                OperationQueue.main.addOperation {
+                    self.delegate?.didFailToAccessMicroPhone(withAuthentication: status!)
+                }
+                break
+            }
         }
     }
     
     private func cancelRecording() {
         audioEngine!.stop()
-        request.endAudio()
+        request!.endAudio()
         recognitionTask?.cancel()
         let node = audioEngine!.inputNode
         node.removeTap(onBus: 0)
         recognitionTask?.finish()
+        // Remove from memory
         audioEngine = nil
-        self.checkState()
+        request = nil
         self.setSession(isRecording: false)
         self.delegate?.didFinishListening(withText: self.spokenText)
     }
@@ -208,50 +249,31 @@ public class OSSSpeech: NSObject {
         let node = audioEngine!.inputNode
         let recordingFormat = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 1)
         node.installTap(onBus: 0, bufferSize: 8192, format: recordingFormat) { (buffer, audioTime) in
-            self.request.append(buffer)
+            self.request?.append(buffer)
         }
         audioEngine!.prepare()
         do {
             try audioEngine!.start()
         } catch {
             print("Error starting audio engine: \(error)")
+            self.delegate?.didFailToCommenceSpeechRecording()
+            return
         }
         guard let recogniser = SFSpeechRecognizer() else {
             print("No speech recogniser")
+            self.delegate?.didFailToCommenceSpeechRecording()
             return
         }
         if !recogniser.isAvailable {
             print("No recogniser available right now.")
+            self.delegate?.didFailToCommenceSpeechRecording()
             return
         }
-        speechRecognizer?.defaultTaskHint = .unspecified
-        recognitionTask = speechRecognizer?.recognitionTask(with: request, delegate: self)
-    }
-    
-    /// Record and recognise speech
-    ///
-    /// This method will check to see if user is authorised to record. If they are, the recording will proceed.
-    /// If they are not.
-    public func recordVoice() {
-        SFSpeechRecognizer.requestAuthorization {
-            [unowned self] (authStatus) in
-            switch authStatus {
-            case .authorized:
-                self.recordAndRecognizeSpeech()
-                break
-            case .denied:
-                print("Speech recognition authorization denied")
-                break
-            case .restricted:
-                print("Not available on this device")
-                break
-            case .notDetermined:
-                print("Not determined")
-                break
-            @unknown default:
-                print("Unknown/Not determined")
-                break
-            }
+        if let audioRequest = request, let speechRecog = speechRecognizer {
+            speechRecog.defaultTaskHint = .unspecified
+            recognitionTask = speechRecog.recognitionTask(with: audioRequest, delegate: self)
+        } else {
+            self.delegate?.didFailToCommenceSpeechRecording()
         }
     }
 }

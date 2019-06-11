@@ -131,6 +131,14 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 }
 
 extension ViewController: OSSSpeechDelegate {
+    func didFailToAccessMicroPhone(withAuthentication type: OSSSpeechAuthorizationStatus) {
+        print("Authorization status has returned: \(type.message).")
+    }
+    
+    func didFailToCommenceSpeechRecording() {
+        print("Failed to record speech.")
+    }
+    
     func didFinishListening(withText text: String) {
         OperationQueue.main.addOperation {
             self.microphoneButton.tintColor = .black
