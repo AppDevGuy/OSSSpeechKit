@@ -112,5 +112,42 @@ class OSSSpeechTests: XCTestCase {
         XCTAssert(speechKit.voice!.voiceType == .Indonesian, "Default voice type should equal Indonesian")
         XCTAssert(speechKit.voice!.language == OSSVoiceEnum.Indonesian.rawValue, "Language should equal Indonesian")
     }
+    
+    func testAuthEnumValues() {
+        XCTAssert(OSSSpeechAuthorizationStatus.notDetermined.message == "The app's authorization status has not yet been determined.", "Test uncertain authorization message.")
+        XCTAssert(OSSSpeechAuthorizationStatus.denied.message == "The user denied your app's request to perform speech recognition.", "Test denied authorization message.")
+        XCTAssert(OSSSpeechAuthorizationStatus.restricted.message == "The device prevents your app from performing speech recognition.", "Test restricted authorization message.")
+        XCTAssert(OSSSpeechAuthorizationStatus.authorized.message == "The user granted your app's request to perform speech recognition.", "Test authorized message.")
+    }
+    
+    /// This should fail because voice recording is not permitted on simulators.
+    func testSpeechRecording() {
+        speechKit!.recordVoice()
+        speechKit!.delegate = self
+        speechKit!.recordVoice()
+    }
 
+}
+
+extension OSSSpeechTests: OSSSpeechDelegate {
+    func didFinishListening(withText text: String) {
+        guard let speech = speechKit else {
+            return
+        }
+        speech.debugLog(object: self, message: "Finished listening to text with text \(text)")
+    }
+    
+    func authorizationToMicrophone(withAuthentication type: OSSSpeechAuthorizationStatus) {
+        guard let speech = speechKit else {
+            return
+        }
+        speech.debugLog(object: self, message: "Authorization state: \(type.message)")
+    }
+    
+    func didFailToCommenceSpeechRecording() {
+        guard let speech = speechKit else {
+            return
+        }
+        speech.debugLog(object: self, message: "Did fail to commence speech.")
+    }
 }

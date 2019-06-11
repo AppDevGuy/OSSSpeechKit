@@ -41,7 +41,7 @@ public protocol OSSSpeechDelegate: class {
     /// When the microphone has finished accepting audio, this delegate will be called with the final best text output.
     func didFinishListening(withText text: String)
     /// Handle the no authentication scenario
-    func didFailToAccessMicroPhone(withAuthentication type: OSSSpeechAuthorizationStatus)
+    func authorizationToMicrophone(withAuthentication type: OSSSpeechAuthorizationStatus)
     /// If the speech recogniser and request fail to set up, this method will be called.
     func didFailToCommenceSpeechRecording()
 }
@@ -206,12 +206,12 @@ public class OSSSpeech: NSObject {
             case .authorized:
                 OperationQueue.main.addOperation {
                     self.recordAndRecognizeSpeech()
-                    self.delegate?.didFailToAccessMicroPhone(withAuthentication: status!)
+                    self.delegate?.authorizationToMicrophone(withAuthentication: status!)
                 }
                 break
             default:
                 OperationQueue.main.addOperation {
-                    self.delegate?.didFailToAccessMicroPhone(withAuthentication: status!)
+                    self.delegate?.authorizationToMicrophone(withAuthentication: status!)
                 }
                 break
             }

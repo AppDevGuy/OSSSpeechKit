@@ -1,10 +1,9 @@
 
 # OSSSpeechKit
-____
+
 [![OSSSpeechKit Logo](docs/OSSSpeechKit-Logo.png)](https://github.com/AppDevGuy/OSSSpeechKit)
 
 # Build Status
-____
 
 [![CI Status](https://img.shields.io/travis/appdevguy/OSSSpeechKit.svg?style=flat)](https://travis-ci.org/appdevguy/OSSSpeechKit)
 [![Version](https://img.shields.io/cocoapods/v/OSSSpeechKit.svg?style=flat)](https://cocoapods.org/pods/OSSSpeechKit)
@@ -14,7 +13,6 @@ ____
 [![docs](https://appdevguy.github.io/OSSSpeechKit/badge.svg)](https://appdevguy.github.io/OSSSpeechKit)
 
 # About
-____
 
 OSSSpeechKit was developed to provide easier accesibility options to apps. 
 
@@ -32,7 +30,6 @@ Apple does not make it easy to get the right voice, nor do they provide a simple
 | Czech | Italian | Portuguese | Spanish |   |
 
 # Features
-____
 
 OSSSpeechKit offers simple **text to speech** and in coming versions, **speech to text** in 37 different languages. 
 
@@ -45,7 +42,6 @@ The speech will play over the top of other sounds such as music.
 _Coming in future versions will be speech to text._
 
 # Requirements
-____
 
 - Swift 5.0 or higher
 - iOS 12.0 or higher
@@ -53,7 +49,6 @@ ____
 - A real device (for microphone)
 
 # Installation
-____
 
 OSSSpeechKit is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
@@ -63,7 +58,6 @@ pod 'OSSSpeechKit'
 ```
 
 # Implementation
-____
 
 ## Text to Speech
 These methods enable you to pass in a string and hear the text played back using.
@@ -119,7 +113,6 @@ speechKit.speakText(text: utterance.speechString)
 
 
 # Other Features
-____
 
 ### List all available voices:
 
@@ -169,7 +162,6 @@ If the language or voice you require is not available, this is either due to:
 - or the SDK has not been updated to include the newly added voice.
 
 # Important Information
-___
 
 Apple do not make the voice of Siri available for use. 
 
@@ -209,21 +201,19 @@ If you have a question, please create a ticket or email me directly.
 If you wish to contribute, please create a pull request. 
 
 # Example Project
-____
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 # Unit Tests
-____
 
 For further examples, please look at the Unit Test class.
 
-## Author
+# Author
 
 App Dev Guy
 
 <a href="https://stackoverflow.com/users/4008175/app-dev-guy"><img src="https://stackoverflow.com/users/flair/4008175.png" width="208" height="58" alt="profile for App Dev Guy at Stack Overflow, Q&amp;A for professional and enthusiast programmers" title="profile for App Dev Guy at Stack Overflow, Q&amp;A for professional and enthusiast programmers"></a>
 
-## License
+# License
 
 OSSSpeechKit is available under the MIT license. See the LICENSE file for more info.

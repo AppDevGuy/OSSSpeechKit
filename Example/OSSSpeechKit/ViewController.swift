@@ -131,7 +131,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 }
 
 extension ViewController: OSSSpeechDelegate {
-    func didFailToAccessMicroPhone(withAuthentication type: OSSSpeechAuthorizationStatus) {
+    func authorizationToMicrophone(withAuthentication type: OSSSpeechAuthorizationStatus) {
         print("Authorization status has returned: \(type.message).")
     }
     
