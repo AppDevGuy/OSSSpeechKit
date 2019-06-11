@@ -124,7 +124,14 @@ class OSSSpeechTests: XCTestCase {
     func testSpeechRecording() {
         speechKit!.recordVoice()
         speechKit!.delegate = self
-        speechKit!.recordVoice()
+        let expectation = XCTestExpectation()
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0, execute: {
+            self.speechKit!.recordVoice()
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3, execute: {
+                expectation.fulfill()
+            })
+        })
+        self.wait(for: [expectation], timeout: 3.0)
     }
 
 }
