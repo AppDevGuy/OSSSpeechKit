@@ -28,80 +28,80 @@ public struct OSSVoiceInfo {
 ///     OSSVoiceEnum.allCases
 ///
 public enum OSSVoiceEnum: String, CaseIterable {
-    /// SaudiArabian
-    case SaudiArabian = "ar-SA"
+    /// Australian
+    case Australian = "en-AU"
+    /// Brazilian
+    case Brazilian = "pt-BR"
+    /// CanadianFrench
+    case CanadianFrench = "fr-CA"
+    /// Chinese
+    case Chinese = "zh-CH"
+    /// ChineseHongKong
+    case ChineseHongKong = "zh-HK"
     /// Czech
     case Czech = "cs-CZ"
     /// Danish
     case Danish = "da-DK"
+    /// DutchBelgium
+    case DutchBelgium = "nl-BE"
+    /// DutchNetherlands
+    case DutchNetherlands = "nl-NL"
+    /// English
+    case English = "en-GB"
+    /// Finnish
+    case Finnish = "fi-FI"
+    /// French
+    case French = "fr-FR"
     /// German
     case German = "de-DE"
     /// Greek
     case Greek = "el-GR"
-    /// Australian
-    case Australian = "en-AU"
-    /// English
-    case English = "en-GB"
-    /// Irish English
-    case IrishEnglish = "en-IE"
-    /// USA English
-    case UnitedStatesEnglish = "en-US"
-    /// South African English
-    case SouthAfricanEnglish = "en-ZA"
-    /// Spanish
-    case Spanish = "es-ES"
-    /// Mexican
-    case Mexican = "es-MX"
-    /// Finnish
-    case Finnish = "fi-FI"
-    /// Canidian French
-    case CanadianFrench = "fr-CA"
-    /// French
-    case French = "fr-FR"
     /// Hebrew
     case Hebrew = "he-IL"
     /// Hindi
     case Hindi = "hi-IN"
     /// Hungarian
     case Hungarian = "hu-HU"
-    /// Indonedian
+    /// Indonesian
     case Indonesian = "id-ID"
+    /// IrishEnglish
+    case IrishEnglish = "en-IE"
     /// Italian
     case Italian = "it-IT"
     /// Japanese
     case Japanese = "ja-JP"
     /// Korean
     case Korean = "ko-KR"
-    /// Dutch Beligium
-    case DutchBelgium = "nl-BE"
-    /// Dutch Netherlands
-    case DutchNetherlands = "nl-NL"
+    /// Mexican
+    case Mexican = "es-MX"
     /// Norwegian
     case Norwegian = "no-NO"
     /// Polish
     case Polish = "pl-PL"
-    /// Brazilian
-    case Brazilian = "pt-BR"
     /// Portuguese
     case Portuguese = "pt-PT"
     /// Romanian
     case Romanian = "ro-RO"
     /// Russian
     case Russian = "ru-RU"
+    /// SaudiArabian
+    case SaudiArabian = "ar-SA"
     /// Slovakian
     case Slovakian = "sk-SK"
+    /// South African English
+    case SouthAfricanEnglish = "en-ZA"
+    /// Spanish
+    case Spanish = "es-ES"
     /// Swedish
     case Swedish = "sv-SE"
+    /// Taiwanese
+    case Taiwanese  = "zh-TW"
     /// Thai
     case Thai = "th-TH"
     /// Turkish
     case Turkish = "tr-TR"
-    /// Chinese
-    case Chinese = "zh-CH"
-    /// Chinese Hong Kong
-    case ChineseHongKong = "zh-HK"
-    /// Taiwanese
-    case Taiwanese  = "zh-TW"
+    /// USA English
+    case UnitedStatesEnglish = "en-US"
     
     /// Will return specific information about the language as an OSSVoiceInfo object.
     public func getDetails() -> OSSVoiceInfo {
@@ -221,7 +221,7 @@ public class OSSVoice: AVSpeechSynthesisVoice {
     // MARK: - Private Properties
     
     private var voiceQuality: AVSpeechSynthesisVoiceQuality = .default
-    private var voiceLanguage: String = "en-US"
+    private var voiceLanguage: String = OSSVoiceEnum.UnitedStatesEnglish.rawValue
     private var voiceTypeValue: OSSVoiceEnum = .UnitedStatesEnglish
     
     /// You have access to set the voice quality or use the default which is set to .default
@@ -241,6 +241,9 @@ public class OSSVoice: AVSpeechSynthesisVoice {
         }
         set {
             self.voiceLanguage = newValue
+            if let valueEnum = OSSVoiceEnum(rawValue: newValue) {
+                self.voiceTypeValue = valueEnum
+            }            
         }
     }
     
@@ -267,8 +270,8 @@ public class OSSVoice: AVSpeechSynthesisVoice {
     public init?(quality: AVSpeechSynthesisVoiceQuality, language: OSSVoiceEnum) {
         super.init()
         self.voiceTypeValue = language
-        self.language = language.rawValue
-        self.quality = quality
+        self.voiceLanguage = language.rawValue
+        self.voiceQuality = quality
     }
     
     /// Required: Do not recommend using.
@@ -287,7 +290,7 @@ public class OSSVoice: AVSpeechSynthesisVoice {
     private func commonInit() {
         // Set the default values
         self.voiceTypeValue = OSSVoiceEnum.UnitedStatesEnglish
-        self.language = OSSVoiceEnum.UnitedStatesEnglish.rawValue
-        self.quality = .default
+        self.voiceLanguage = OSSVoiceEnum.UnitedStatesEnglish.rawValue
+        self.voiceQuality = .default
     }
 }

@@ -94,18 +94,23 @@ class OSSSpeechTests: XCTestCase {
     }
     
     func testChangesToUtterance() {
-        speechKit.voice = OSSVoice()
+        let newVoice = OSSVoice()
+        newVoice.language = OSSVoiceEnum.Indonesian.rawValue
+        newVoice.quality = .enhanced
+        speechKit.voice = newVoice
         // Cannot initialise an utterance without a string
-        speechKit.utterance = OSSUtterance(string: "Testing")
-        speechKit.utterance!.volume = 0.5
-        speechKit.utterance!.rate = 0.5
-        speechKit.utterance!.pitchMultiplier = 1.2
-        speechKit.speakText(text: "Testing")
+        let utterance = OSSUtterance(string: "Testing")
+        utterance.volume = 0.5
+        utterance.rate = 0.5
+        utterance.pitchMultiplier = 1.2
+        speechKit.utterance = utterance
+        speechKit.speakText(text: utterance.speechString)
         XCTAssert(speechKit.utterance!.rate == 0.5, "Rate should equal 0.5")
         XCTAssert(speechKit.utterance!.volume == 0.5, "Volume should equal 0.5")
         XCTAssert(speechKit.utterance!.pitchMultiplier == 1.2, "Pitch should equal 1.2")
-        XCTAssert(speechKit.voice!.quality == .default, "Quality should equal default")
-        XCTAssert(speechKit.voice!.voiceType == .UnitedStatesEnglish, "Default voice type should equal United States English")
+        XCTAssert(speechKit.voice!.quality == .enhanced, "Quality should equal enhanced")
+        XCTAssert(speechKit.voice!.voiceType == .Indonesian, "Default voice type should equal Indonesian")
+        XCTAssert(speechKit.voice!.language == OSSVoiceEnum.Indonesian.rawValue, "Language should equal Indonesian")
     }
 
 }

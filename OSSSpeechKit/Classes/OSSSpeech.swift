@@ -32,8 +32,6 @@ public enum OSSSpeechAuthorizationStatus: Int {
             return "The device prevents your app from performing speech recognition."
         case .authorized:
             return "The user granted your app's request to perform speech recognition."
-        @unknown default:
-            return "Unknown error."
         }
     }
 }
