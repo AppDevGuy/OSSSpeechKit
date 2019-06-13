@@ -131,7 +131,7 @@ class OSSSpeechTests: XCTestCase {
                 expectation.fulfill()
             })
         })
-        self.wait(for: [expectation], timeout: 3.0)
+        self.wait(for: [expectation], timeout: 5.0)
     }
 
 }

@@ -233,7 +233,7 @@ public class OSSSpeech: NSObject {
     }
     
     private func recordAndRecognizeSpeech() {
-        if let engine = audioEngine {
+        if let engine = self.audioEngine {
             if engine.isRunning {
                 cancelRecording()
                 return
@@ -244,14 +244,18 @@ public class OSSSpeech: NSObject {
         audioEngine = AVAudioEngine()
         let identifier = voice?.voiceType.rawValue ?? OSSVoiceEnum.UnitedStatesEnglish.rawValue
         speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: identifier))
-        let node = audioEngine!.inputNode
+        guard let engine = audioEngine else {
+            self.debugLog(object: self, message: "The audio engine is nil.")
+            return
+        }
+        let node = engine.inputNode
         let recordingFormat = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 1)
         node.installTap(onBus: 0, bufferSize: 8192, format: recordingFormat) { (buffer, audioTime) in
             self.request?.append(buffer)
         }
-        audioEngine!.prepare()
+        engine.prepare()
         do {
-            try audioEngine!.start()
+            try engine.start()
         } catch {
             print("Error starting audio engine: \(error)")
             self.delegate?.didFailToCommenceSpeechRecording()
