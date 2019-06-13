@@ -208,10 +208,14 @@ public enum OSSVoiceEnum: String, CaseIterable {
     
     /// The flag
     public var flag: UIImage? {
-        print("The value \(self.rawValue)")
-        let bundle = Bundle(for: OSSSpeech.self)
-        let image = UIImage(named: self.rawValue, in: bundle, compatibleWith: nil)
-        return image
+        if let mainBundleImage = UIImage(named: self.rawValue, in: Bundle.main, compatibleWith: nil) {
+            return mainBundleImage
+        }
+        if let bundle = Bundle.getResourcesBundle() {
+            let image = UIImage(named: self.rawValue, in: bundle, compatibleWith: nil)
+            return image
+        }
+        return nil
     }
 }
 
@@ -300,5 +304,15 @@ public class OSSVoice: AVSpeechSynthesisVoice {
         self.voiceTypeValue = OSSVoiceEnum.UnitedStatesEnglish
         self.voiceLanguage = OSSVoiceEnum.UnitedStatesEnglish.rawValue
         self.voiceQuality = .default
+    }
+}
+
+extension Bundle {
+    static func getResourcesBundle() -> Bundle? {
+        let bundle = Bundle(for: OSSSpeech.self)
+        guard let resourcesBundleUrl = bundle.resourceURL?.appendingPathComponent("OSSSpeechKit.bundle") else {
+            return nil
+        }
+        return Bundle(url: resourcesBundleUrl)
     }
 }
