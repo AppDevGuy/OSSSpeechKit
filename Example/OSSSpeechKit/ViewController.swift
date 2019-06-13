@@ -91,6 +91,8 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         cell.backgroundColor = .white
         cell.titleLabel.text = OSSVoiceEnum.allCases[indexPath.item].title
         cell.subtitleLabel.text = OSSVoiceEnum.allCases[indexPath.item].rawValue
+        cell.imageView.image = OSSVoiceEnum.allCases[indexPath.item].flag
+        cell.imageView.contentMode = .scaleAspectFit
         return cell
     }
     

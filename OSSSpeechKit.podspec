@@ -31,9 +31,9 @@ OSSSpeechKit offers an easy way to integrate text to voice using native AVFounda
   s.ios.deployment_target = '12.0'
   s.source_files = 'OSSSpeechKit/Classes/*.swift'
   
-  # s.resource_bundles = {
-  #   'OSSSpeechKit' => ['OSSSpeechKit/Assets/*.png']
-  # }
+   s.resource_bundles = {
+     'OSSSpeechKit' => ['OSSSpeechKit/Assets/*']
+   }
 
    # s.public_header_files = 'Pod/Classes/*.swift'
   # s.frameworks = 'UIKit', 'MapKit'

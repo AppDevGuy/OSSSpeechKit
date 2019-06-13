@@ -205,6 +205,14 @@ public enum OSSVoiceEnum: String, CaseIterable {
             return "你好我的名字是 \(voiceName)"
         }
     }
+    
+    /// The flag
+    public var flag: UIImage? {
+        print("The value \(self.rawValue)")
+        let bundle = Bundle(for: OSSSpeech.self)
+        let image = UIImage(named: self.rawValue, in: bundle, compatibleWith: nil)
+        return image
+    }
 }
 
 /** OSSVoice overides some of the properties provided to enable setting as well as getting.
