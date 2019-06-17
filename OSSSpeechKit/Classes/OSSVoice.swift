@@ -206,7 +206,11 @@ public enum OSSVoiceEnum: String, CaseIterable {
         }
     }
     
-    /// The flag
+    /// The flag for the selected language.
+    ///
+    /// You can supply your own flag image, provided is has the same name (.rawValue) as the image in the pod assets.
+    ///
+    /// If no image is found in the application bundle, the image from the SDK bundle will be provided.
     public var flag: UIImage? {
         if let mainBundleImage = UIImage(named: self.rawValue, in: Bundle.main, compatibleWith: nil) {
             return mainBundleImage
