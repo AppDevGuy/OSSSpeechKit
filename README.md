@@ -22,12 +22,12 @@ Apple does not make it easy to get the right voice, nor do they provide a simple
 
 |   |   |   |   |   |
 |:-:|:-:|:-:|:-:|:-:|
-| Australian | Hebrew | Japanese | Romanian | Swedish | 
-| Brazilian | Hindi | Korean | Russian | Taiwanese | 
-| French Canadian | Hungarian | Mexican | Saudi Arabian | Thai |
-| Chinese | Indonesian | Norwegian | Slovakian | Turkish |
-| Chinese Hong Kong | Irish English | Polish | South African English | US English
-| Czech | Italian | Portuguese | Spanish |   |
+| Australian<br>🇦🇺 | Hebrew<br>🇮🇱 | Japanese<br>🇯🇵 | Romanian<br>🇷🇴 | Swedish<br>🇸🇪 | 
+| Brazilian<br>🇧🇷 | Hindi<br>🇮🇳 | Korean<br>🇰🇷 | Russian<br>🇷🇺 | Taiwanese<br>🇹🇼 | 
+| French Canadian<br>🇨🇦 | Hungarian<br>🇭🇺 | Mexican<br>🇲🇽 | Saudi Arabian<br>🇸🇦 | Thai<br>🇹🇭 |
+| Chinese<br>🇨🇳 | Indonesian<br>🇮🇩 | Norwegian<br>🇳🇴 | Slovakian<br>🇸🇰 | Turkish<br>🇹🇷 |
+| Chinese Hong Kong<br>🇭🇰 | Irish English<br>🇮🇪 | Polish<br>🇵🇱 | South African English<br>🇿🇦 | US English<br>🇺🇸
+| Czech<br>🇨🇿 | Italian<br>🇮🇹 | Portuguese<br>🇵🇹 | Spanish<br>🇪🇸 |   |
 
 # Features
 
@@ -109,8 +109,44 @@ speechKit.speakText(text: utterance.speechString)
 ```
 
 
-## Speech to Text - Coming Soon
+## Speech to Text
 
+Currently speech to text is offered in a very simple format. Starting and stopping of recording is handled by the app. 
+
+_The next release is expected to contain auto ending of recording along with features such as returning sound wave float variables for use in User Interfaces._
+
+### NOTE: iOS 13 Local-to-Device Speech to Text support will be introduced.
+
+SpeechKit implements delegates to handle the recording authorization, output of text and failure to record.
+
+```swift
+speechKit.delegate = self
+// Call to start and end recording. 
+speechKit.recordVoice()
+// Call to end recording
+speechKit.endVoiceRecording()
+```
+
+It is important that you have included in your `info.plist` the following:
+
+> Privacy - Speech Recognition Usage Description
+
+> Privacy - Microphone Usage Description
+
+Without these, you will not be able to access the microphone nor speech recognition.
+
+### Delegates
+
+Handle returning authentication status to user - primary use is for non-authorized state.
+> `func authorizationToMicrophone(withAuthentication type: OSSSpeechAuthorizationStatus)`
+
+When the microphone has finished accepting audio, this delegate will be called with the final best text output.
+> `func didFailToCommenceSpeechRecording()`
+
+If the speech recogniser and request fail to set up, this method will be called.
+> `func didFinishListening(withText text: String)`
+
+For further information you can [check out the Apple documentation directly.](https://developer.apple.com/documentation/speech/sfspeechrecognizer)
 
 # Other Features
 
@@ -123,11 +159,15 @@ let allLanguages = OSSVoiceEnum.allCases
 ### Get specific voice information:
 
 ```swift
+// All support languages
 let allVoices = OSSVoiceEnum.allCases
+// Language details
 let languageInformation = allVoices[0].getDetails()
+// Flag of country
+let flag = allVoices[0].flag
 ```
 
-The `getDetails()` method will returns a struct containing:
+The `getDetails()` method returns a struct containing:
 
 ```swift
 OSSVoiceInfo {
@@ -171,7 +211,7 @@ To say things correctly in each language, you need to set the voice to the corre
 
 ### Code Example:
 
-You wish for you app to use a Chinese voice, you will need to ensure the text being passed in is German. 
+You wish for you app to use a Chinese voice, you will need to ensure the text being passed in is Chinese. 
 
 _Disclaimer: I do not know how to speak Chinese, I have used Google translate for the chinese characters._
 
@@ -194,7 +234,9 @@ speechKit.voice = OSSVoice(quality: .enhanced, language: .Chinese)
 speechKit.speakText(text: "Hello, my name is ...")
 ```
 
-This same principle applies to all other languages such as Chinese, Saudi Arabian, French, etc. Failing to set the language for the text you wish to be spoken will not sound correct. 
+This same principle applies to all other languages such as German, Saudi Arabian, French, etc. Failing to set the language for the text you wish to be spoken will not sound correct. 
+
+# Contributions and Queries
 
 If you have a question, please create a ticket or email me directly. 
 

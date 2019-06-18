@@ -40,7 +40,7 @@ public enum OSSSpeechAuthorizationStatus: Int {
 public protocol OSSSpeechDelegate: class {
     /// When the microphone has finished accepting audio, this delegate will be called with the final best text output.
     func didFinishListening(withText text: String)
-    /// Handle the no authentication scenario
+    /// Handle returning authentication status to user - primary use is for non-authorized state.
     func authorizationToMicrophone(withAuthentication type: OSSSpeechAuthorizationStatus)
     /// If the speech recogniser and request fail to set up, this method will be called.
     func didFailToCommenceSpeechRecording()
@@ -191,9 +191,19 @@ public class OSSSpeech: NSObject {
     /// Record and recognise speech
     ///
     /// This method will check to see if user is authorised to record. If they are, the recording will proceed.
-    /// If they are not.
+    ///
+    /// Upon checking the authorisation and being registered successful, a check to determine if a recording session is active will be made and any active session will be cancelled.
     public func recordVoice() {
         getMicroPhoneAuthorization()
+    }
+    
+    /// End recording of speech session if one exists.
+    public func endVoiceRecording() {
+        if let engine = self.audioEngine {
+            if engine.isRunning {
+                cancelRecording()
+            }
+        }
     }
     
     // MARK: - Private Voice Recording
@@ -219,10 +229,14 @@ public class OSSSpeech: NSObject {
     }
     
     private func cancelRecording() {
-        audioEngine!.stop()
-        request!.endAudio()
+        guard let engine = audioEngine, let voiceRequest = request else {
+            self.debugLog(object: self, message: "No audio recording session is active.")
+            return
+        }
+        engine.stop()
+        voiceRequest.endAudio()
         recognitionTask?.cancel()
-        let node = audioEngine!.inputNode
+        let node = engine.inputNode
         node.removeTap(onBus: 0)
         recognitionTask?.finish()
         // Remove from memory
@@ -236,7 +250,6 @@ public class OSSSpeech: NSObject {
         if let engine = self.audioEngine {
             if engine.isRunning {
                 cancelRecording()
-                return
             }
         }
         self.setSession(isRecording: true)

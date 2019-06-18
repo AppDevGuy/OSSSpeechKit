@@ -70,6 +70,10 @@ class ViewController: UIViewController {
     // MARK: - Voice Recording
     
     @objc func recordVoice() {
+        if self.microphoneButton.tintColor == .red {
+            speechKit.endVoiceRecording()
+            return
+        }
         self.microphoneButton.tintColor = .red
         speechKit.recordVoice()
     }
