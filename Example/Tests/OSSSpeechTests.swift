@@ -94,18 +94,67 @@ class OSSSpeechTests: XCTestCase {
     }
     
     func testChangesToUtterance() {
-        speechKit.voice = OSSVoice()
+        let newVoice = OSSVoice()
+        newVoice.language = OSSVoiceEnum.Indonesian.rawValue
+        newVoice.quality = .enhanced
+        speechKit.voice = newVoice
         // Cannot initialise an utterance without a string
-        speechKit.utterance = OSSUtterance(string: "Testing")
-        speechKit.utterance!.volume = 0.5
-        speechKit.utterance!.rate = 0.5
-        speechKit.utterance!.pitchMultiplier = 1.2
-        speechKit.speakText(text: "Testing")
+        let utterance = OSSUtterance(string: "Testing")
+        utterance.volume = 0.5
+        utterance.rate = 0.5
+        utterance.pitchMultiplier = 1.2
+        speechKit.utterance = utterance
+        speechKit.speakText(text: utterance.speechString)
         XCTAssert(speechKit.utterance!.rate == 0.5, "Rate should equal 0.5")
         XCTAssert(speechKit.utterance!.volume == 0.5, "Volume should equal 0.5")
         XCTAssert(speechKit.utterance!.pitchMultiplier == 1.2, "Pitch should equal 1.2")
-        XCTAssert(speechKit.voice!.quality == .default, "Quality should equal default")
-        XCTAssert(speechKit.voice!.voiceType == .UnitedStatesEnglish, "Default voice type should equal United States English")
+        XCTAssert(speechKit.voice!.quality == .enhanced, "Quality should equal enhanced")
+        XCTAssert(speechKit.voice!.voiceType == .Indonesian, "Default voice type should equal Indonesian")
+        XCTAssert(speechKit.voice!.language == OSSVoiceEnum.Indonesian.rawValue, "Language should equal Indonesian")
+    }
+    
+    func testAuthEnumValues() {
+        XCTAssert(OSSSpeechAuthorizationStatus.notDetermined.message == "The app's authorization status has not yet been determined.", "Test uncertain authorization message.")
+        XCTAssert(OSSSpeechAuthorizationStatus.denied.message == "The user denied your app's request to perform speech recognition.", "Test denied authorization message.")
+        XCTAssert(OSSSpeechAuthorizationStatus.restricted.message == "The device prevents your app from performing speech recognition.", "Test restricted authorization message.")
+        XCTAssert(OSSSpeechAuthorizationStatus.authorized.message == "The user granted your app's request to perform speech recognition.", "Test authorized message.")
+    }
+    
+    /// This should fail because voice recording is not permitted on simulators.
+    func testSpeechRecording() {
+        speechKit!.recordVoice()
+        speechKit!.delegate = self
+        let expectation = XCTestExpectation()
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0, execute: {
+            self.speechKit!.recordVoice()
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3, execute: {
+                expectation.fulfill()
+            })
+        })
+        self.wait(for: [expectation], timeout: 5.0)
     }
 
+}
+
+extension OSSSpeechTests: OSSSpeechDelegate {
+    func didFinishListening(withText text: String) {
+        guard let speech = speechKit else {
+            return
+        }
+        speech.debugLog(object: self, message: "Finished listening to text with text \(text)")
+    }
+    
+    func authorizationToMicrophone(withAuthentication type: OSSSpeechAuthorizationStatus) {
+        guard let speech = speechKit else {
+            return
+        }
+        speech.debugLog(object: self, message: "Authorization state: \(type.message)")
+    }
+    
+    func didFailToCommenceSpeechRecording() {
+        guard let speech = speechKit else {
+            return
+        }
+        speech.debugLog(object: self, message: "Did fail to commence speech.")
+    }
 }

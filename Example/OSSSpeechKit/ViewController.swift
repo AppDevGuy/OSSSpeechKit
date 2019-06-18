@@ -17,6 +17,13 @@ class ViewController: UIViewController {
     private var hasSetConstraints: Bool = false
     private let speechKit = OSSSpeech.shared
     
+    private lazy var microphoneButton: UIBarButtonItem = {
+        let image = UIImage(named: "oss-microphone-icon")?.withRenderingMode(.alwaysTemplate)
+        let button = UIBarButtonItem(image: image, style:.plain, target: self, action: #selector(recordVoice))
+        button.tintColor = .black
+        return button
+    }()
+    
     // MARK: - View Elements
     
     lazy var collectionView : UICollectionView = {
@@ -37,6 +44,9 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         self.view.addSubview(collectionView)
         self.view.backgroundColor = .lightGray
+        self.title = "Languages"
+        speechKit.delegate = self
+        self.navigationItem.rightBarButtonItem = microphoneButton
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,11 +57,6 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        #if DEBUG
-        // For sake of testing
-        self.collectionView(self.collectionView, didSelectItemAt: IndexPath(row: 0, section: 0))
-        self.collectionView(self.collectionView, didSelectItemAt: IndexPath(row: 1, section: 0))
-        #endif
     }
     
     override func updateViewConstraints() {
@@ -60,6 +65,17 @@ class ViewController: UIViewController {
             hasSetConstraints = true
             collectionView.autoPinEdgesToSuperviewSafeArea()
         }
+    }
+    
+    // MARK: - Voice Recording
+    
+    @objc func recordVoice() {
+        if self.microphoneButton.tintColor == .red {
+            speechKit.endVoiceRecording()
+            return
+        }
+        self.microphoneButton.tintColor = .red
+        speechKit.recordVoice()
     }
 }
 
@@ -79,6 +95,8 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         cell.backgroundColor = .white
         cell.titleLabel.text = OSSVoiceEnum.allCases[indexPath.item].title
         cell.subtitleLabel.text = OSSVoiceEnum.allCases[indexPath.item].rawValue
+        cell.imageView.image = OSSVoiceEnum.allCases[indexPath.item].flag
+        cell.imageView.contentMode = .scaleAspectFit
         return cell
     }
     
@@ -112,6 +130,22 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
 }
 
+extension ViewController: OSSSpeechDelegate {
+    func authorizationToMicrophone(withAuthentication type: OSSSpeechAuthorizationStatus) {
+        print("Authorization status has returned: \(type.message).")
+    }
+    
+    func didFailToCommenceSpeechRecording() {
+        print("Failed to record speech.")
+    }
+    
+    func didFinishListening(withText text: String) {
+        OperationQueue.main.addOperation {
+            self.microphoneButton.tintColor = .black
+            self.speechKit.speakText(text: text)
+        }
+    }
+}
 
 extension UIView {
     static var reuseIdentifier: String {

@@ -12,6 +12,7 @@ class BasicCollectionViewCell: UICollectionViewCell {
     
     public let titleLabel = UILabel()
     public let subtitleLabel = UILabel()
+    public let imageView = UIImageView()
     
     // MARK: - Variables
     var hasSetConstraints: Bool = false
@@ -33,13 +34,14 @@ class BasicCollectionViewCell: UICollectionViewCell {
     
     private func commonInit() {
         titleLabel.font = UIFont.systemFont(ofSize: 25.0, weight: .bold)
-        titleLabel.textAlignment = .center
+        titleLabel.textAlignment = .left
         subtitleLabel.font = UIFont.systemFont(ofSize: 18.0, weight: .bold)
-        subtitleLabel.textAlignment = .center
+        subtitleLabel.textAlignment = .left
         titleLabel.textColor = .black
         subtitleLabel.textColor = .black
         self.addSubview(titleLabel)
         self.addSubview(subtitleLabel)
+        self.addSubview(imageView)
     }
     
     // MARK: - Layouts
@@ -50,10 +52,14 @@ class BasicCollectionViewCell: UICollectionViewCell {
             let inset: CGFloat = 8.0
             self.titleLabel.autoPinEdge(toSuperviewEdge: .top, withInset: inset)
             self.titleLabel.autoPinEdge(toSuperviewEdge: .left, withInset: inset * 2)
-            self.titleLabel.autoPinEdge(toSuperviewEdge: .right, withInset: inset * 2)
+            self.titleLabel.autoPinEdge(.right, to: .left, of: self.imageView, withOffset: inset)
             self.subtitleLabel.autoPinEdge(toSuperviewEdge: .left, withInset: inset * 2)
-            self.subtitleLabel.autoPinEdge(toSuperviewEdge: .right, withInset: inset * 2)
-            self.subtitleLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: inset * 2)
+            self.subtitleLabel.autoPinEdge(.right, to: .left, of: self.imageView, withOffset: inset)
+            self.subtitleLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: inset)
+            self.imageView.autoPinEdge(toSuperviewEdge: .right, withInset: inset)
+            self.imageView.autoPinEdge(toSuperviewEdge: .bottom, withInset: inset)
+            self.imageView.autoPinEdge(toSuperviewEdge: .top, withInset: inset)
+            self.imageView.autoSetDimension(.width, toSize: 150.0)
         }
     }
     

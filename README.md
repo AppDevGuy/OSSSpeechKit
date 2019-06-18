@@ -1,18 +1,54 @@
+
 # OSSSpeechKit
+
+[![OSSSpeechKit Logo](docs/OSSSpeechKit-Logo.png)](https://github.com/AppDevGuy/OSSSpeechKit)
+
+# Build Status
 
 [![CI Status](https://img.shields.io/travis/appdevguy/OSSSpeechKit.svg?style=flat)](https://travis-ci.org/appdevguy/OSSSpeechKit)
 [![Version](https://img.shields.io/cocoapods/v/OSSSpeechKit.svg?style=flat)](https://cocoapods.org/pods/OSSSpeechKit)
 [![License](https://img.shields.io/cocoapods/l/OSSSpeechKit.svg?style=flat)](https://cocoapods.org/pods/OSSSpeechKit)
 [![Platform](https://img.shields.io/cocoapods/p/OSSSpeechKit.svg?style=flat)](https://cocoapods.org/pods/OSSSpeechKit)
 [![codecov](https://codecov.io/gh/AppDevGuy/OSSSpeechKit/branch/master/graph/badge.svg)](https://codecov.io/gh/AppDevGuy/OSSSpeechKit)
-[![Inline docs](docs/badge.svg)](https://appdevguy.github.io/OSSSpeechKit)
+[![docs](https://appdevguy.github.io/OSSSpeechKit/badge.svg)](https://appdevguy.github.io/OSSSpeechKit)
 
+# About
 
 OSSSpeechKit was developed to provide easier accesibility options to apps. 
 
 Apple does not make it easy to get the right voice, nor do they provide a simple way of selecting a language. OSSSpeechKit makes the hassle of trying to find the right language go away. 
 
-## Installation
+## Supported Languages
+
+|   |   |   |   |   |
+|:-:|:-:|:-:|:-:|:-:|
+| Australian<br>🇦🇺 | Hebrew<br>🇮🇱 | Japanese<br>🇯🇵 | Romanian<br>🇷🇴 | Swedish<br>🇸🇪 | 
+| Brazilian<br>🇧🇷 | Hindi<br>🇮🇳 | Korean<br>🇰🇷 | Russian<br>🇷🇺 | Taiwanese<br>🇹🇼 | 
+| French Canadian<br>🇨🇦 | Hungarian<br>🇭🇺 | Mexican<br>🇲🇽 | Saudi Arabian<br>🇸🇦 | Thai<br>🇹🇭 |
+| Chinese<br>🇨🇳 | Indonesian<br>🇮🇩 | Norwegian<br>🇳🇴 | Slovakian<br>🇸🇰 | Turkish<br>🇹🇷 |
+| Chinese Hong Kong<br>🇭🇰 | Irish English<br>🇮🇪 | Polish<br>🇵🇱 | South African English<br>🇿🇦 | US English<br>🇺🇸
+| Czech<br>🇨🇿 | Italian<br>🇮🇹 | Portuguese<br>🇵🇹 | Spanish<br>🇪🇸 |   |
+
+# Features
+
+OSSSpeechKit offers simple **text to speech** and in coming versions, **speech to text** in 37 different languages. 
+
+OSSSpeechKit is built on top of the [AVFoundation](https://developer.apple.com/documentation/avfoundation) framework. 
+
+You can achieve text to speech in as little as two lines of code. 
+
+The speech will play over the top of other sounds such as music. 
+
+_Coming in future versions will be speech to text._
+
+# Requirements
+
+- Swift 5.0 or higher
+- iOS 12.0 or higher
+- Cocoapods or higher
+- A real device (for microphone)
+
+# Installation
 
 OSSSpeechKit is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
@@ -21,7 +57,12 @@ it, simply add the following line to your Podfile:
 pod 'OSSSpeechKit'
 ```
 
-## How to use (TL;DR)
+# Implementation
+
+## Text to Speech
+These methods enable you to pass in a string and hear the text played back using.
+
+### Simple
 
 ```swift
 import OSSSpeechKit
@@ -36,24 +77,97 @@ speechKit.voice = OSSVoice(quality: .enhanced, language: .Australian)
 speechKit.speakText(text: "Hello, my name is OSSSpeechKit.")
 ```
 
-That's it. You are all set. 
+### Advanced
 
-### Other features
+```swift
+import OSSSpeechKit
 
-#### List all available voices:
+.....
+
+// Declare an instance of OSSSpeechKit
+let speechKit = OSSSpeech.shared
+// Create a voice instance
+let newVoice = OSSVoice()
+// Set the language
+newVoice.language = OSSVoiceEnum.Australian.rawValue
+// Set the voice quality
+newVoice.quality = .enhanced
+// Set the voice of the speech kit
+speechKit.voice = newVoice
+// Initialise an utterance
+let utterance = OSSUtterance(string: "Testing")
+// Set volume
+utterance.volume = 0.5
+// Set rate of speech
+utterance.rate = 0.5
+// Set the pitch 
+utterance.pitchMultiplier = 1.2
+// Set speech utterance
+speechKit.utterance = utterance
+// Ask to speak
+speechKit.speakText(text: utterance.speechString)
+```
+
+
+## Speech to Text
+
+Currently speech to text is offered in a very simple format. Starting and stopping of recording is handled by the app. 
+
+_The next release is expected to contain auto ending of recording along with features such as returning sound wave float variables for use in User Interfaces._
+
+### NOTE: iOS 13 Local-to-Device Speech to Text support will be introduced.
+
+SpeechKit implements delegates to handle the recording authorization, output of text and failure to record.
+
+```swift
+speechKit.delegate = self
+// Call to start and end recording. 
+speechKit.recordVoice()
+// Call to end recording
+speechKit.endVoiceRecording()
+```
+
+It is important that you have included in your `info.plist` the following:
+
+> Privacy - Speech Recognition Usage Description
+
+> Privacy - Microphone Usage Description
+
+Without these, you will not be able to access the microphone nor speech recognition.
+
+### Delegates
+
+Handle returning authentication status to user - primary use is for non-authorized state.
+> `func authorizationToMicrophone(withAuthentication type: OSSSpeechAuthorizationStatus)`
+
+When the microphone has finished accepting audio, this delegate will be called with the final best text output.
+> `func didFailToCommenceSpeechRecording()`
+
+If the speech recogniser and request fail to set up, this method will be called.
+> `func didFinishListening(withText text: String)`
+
+For further information you can [check out the Apple documentation directly.](https://developer.apple.com/documentation/speech/sfspeechrecognizer)
+
+# Other Features
+
+### List all available voices:
 
 ```swift
 let allLanguages = OSSVoiceEnum.allCases
 ```
 
-#### Get specific voice information:
+### Get specific voice information:
 
 ```swift
+// All support languages
 let allVoices = OSSVoiceEnum.allCases
+// Language details
 let languageInformation = allVoices[0].getDetails()
+// Flag of country
+let flag = allVoices[0].flag
 ```
 
-The `getDetails()` method will returns a struct containing:
+The `getDetails()` method returns a struct containing:
 
 ```swift
 OSSVoiceInfo {
@@ -68,7 +182,7 @@ OSSVoiceInfo {
 }
 ```
 
-#### Other Info
+### Other Info
 
 The `OSSVoiceEnum` contains other methods, such as a hello message, title variable and subtitle variable so you can use it in a list. 
 
@@ -87,7 +201,7 @@ If the language or voice you require is not available, this is either due to:
 - Apple have not made it avaiable through their AVFoundation; 
 - or the SDK has not been updated to include the newly added voice.
 
-## Important Information
+# Important Information
 
 Apple do not make the voice of Siri available for use. 
 
@@ -95,9 +209,9 @@ This kit provides Apple's AVFoundation voices available and easy to use, so you 
 
 To say things correctly in each language, you need to set the voice to the correct langauge and supply that languages text; this SDK is not a translator. 
 
-### Example:
+### Code Example:
 
-You wish for you app to use a Chinese voice, you will need to ensure the text being passed in is German. 
+You wish for you app to use a Chinese voice, you will need to ensure the text being passed in is Chinese. 
 
 _Disclaimer: I do not know how to speak Chinese, I have used Google translate for the chinese characters._
 
@@ -120,26 +234,28 @@ speechKit.voice = OSSVoice(quality: .enhanced, language: .Chinese)
 speechKit.speakText(text: "Hello, my name is ...")
 ```
 
-This same principle applies to all other languages such as Chinese, Saudi Arabian, French, etc. Failing to set the language for the text you wish to be spoken will not sound correct. 
+This same principle applies to all other languages such as German, Saudi Arabian, French, etc. Failing to set the language for the text you wish to be spoken will not sound correct. 
+
+# Contributions and Queries
 
 If you have a question, please create a ticket or email me directly. 
 
 If you wish to contribute, please create a pull request. 
 
-## Example
+# Example Project
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-## Requirements
+# Unit Tests
 
-OSSSpeechKit is written in Swift 5.0. You will need to be using iOS 12 and up to use this. 
+For further examples, please look at the Unit Test class.
 
-There are no plans to make it accesible to earlier iOS versions. 
+# Author
 
-## Author
+App Dev Guy
 
-App Dev Guy, seaniosdeveloper@gmail.com
+<a href="https://stackoverflow.com/users/4008175/app-dev-guy"><img src="https://stackoverflow.com/users/flair/4008175.png" width="208" height="58" alt="profile for App Dev Guy at Stack Overflow, Q&amp;A for professional and enthusiast programmers" title="profile for App Dev Guy at Stack Overflow, Q&amp;A for professional and enthusiast programmers"></a>
 
-## License
+# License
 
 OSSSpeechKit is available under the MIT license. See the LICENSE file for more info.
