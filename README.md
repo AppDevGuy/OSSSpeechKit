@@ -1,9 +1,7 @@
 
 # OSSSpeechKit
 
-[![OSSSpeechKit Logo](docs/OSSSpeechKit-Logo.png)](https://github.com/AppDevGuy/OSSSpeechKit)
-
-# Build Status
+[![OSSSpeechKit Logo](https://appdevguy.github.io/OSSSpeechKit/OSSSpeechKit-Logo.png)](https://github.com/AppDevGuy/OSSSpeechKit)
 
 [![CI Status](https://img.shields.io/travis/appdevguy/OSSSpeechKit.svg?style=flat)](https://travis-ci.org/appdevguy/OSSSpeechKit)
 [![Version](https://img.shields.io/cocoapods/v/OSSSpeechKit.svg?style=flat)](https://cocoapods.org/pods/OSSSpeechKit)
@@ -12,34 +10,9 @@
 [![codecov](https://codecov.io/gh/AppDevGuy/OSSSpeechKit/branch/master/graph/badge.svg)](https://codecov.io/gh/AppDevGuy/OSSSpeechKit)
 [![docs](https://appdevguy.github.io/OSSSpeechKit/badge.svg)](https://appdevguy.github.io/OSSSpeechKit)
 
-# About
-
 OSSSpeechKit was developed to provide easier accesibility options to apps. 
 
-Apple does not make it easy to get the right voice, nor do they provide a simple way of selecting a language. OSSSpeechKit makes the hassle of trying to find the right language go away. 
-
-## Supported Languages
-
-|   |   |   |   |   |
-|:-:|:-:|:-:|:-:|:-:|
-| Australian<br>🇦🇺 | Hebrew<br>🇮🇱 | Japanese<br>🇯🇵 | Romanian<br>🇷🇴 | Swedish<br>🇸🇪 | 
-| Brazilian<br>🇧🇷 | Hindi<br>🇮🇳 | Korean<br>🇰🇷 | Russian<br>🇷🇺 | Taiwanese<br>🇹🇼 | 
-| French Canadian<br>🇨🇦 | Hungarian<br>🇭🇺 | Mexican<br>🇲🇽 | Saudi Arabian<br>🇸🇦 | Thai<br>🇹🇭 |
-| Chinese<br>🇨🇳 | Indonesian<br>🇮🇩 | Norwegian<br>🇳🇴 | Slovakian<br>🇸🇰 | Turkish<br>🇹🇷 |
-| Chinese Hong Kong<br>🇭🇰 | Irish English<br>🇮🇪 | Polish<br>🇵🇱 | South African English<br>🇿🇦 | US English<br>🇺🇸
-| Czech<br>🇨🇿 | Italian<br>🇮🇹 | Portuguese<br>🇵🇹 | Spanish<br>🇪🇸 |   |
-
-# Features
-
-OSSSpeechKit offers simple **text to speech** and in coming versions, **speech to text** in 37 different languages. 
-
-OSSSpeechKit is built on top of the [AVFoundation](https://developer.apple.com/documentation/avfoundation) framework. 
-
-You can achieve text to speech in as little as two lines of code. 
-
-The speech will play over the top of other sounds such as music. 
-
-_Coming in future versions will be speech to text._
+Apple does not make it easy to get the right voice, nor do they provide a simple way of selecting a language or using speech to text. OSSSpeechKit makes the hassle of trying to find the right language go away. 
 
 # Requirements
 
@@ -47,6 +20,20 @@ _Coming in future versions will be speech to text._
 - iOS 12.0 or higher
 - Cocoapods or higher
 - A real device (for microphone)
+
+# Supported Languages
+
+<style type="text/css">table{width: 100%;}.tg{border-collapse: collapse; border-spacing: 0;}.tg td{font-family: Arial, sans-serif; font-size: 14px; padding: 10px 5px; border-style: solid; border-width: 1px; overflow: hidden; word-break: normal; border-color: black;}.tg th{font-family: Arial, sans-serif; font-size: 14px; font-weight: normal; padding: 10px 5px; border-style: solid; border-width: 1px; overflow: hidden; word-break: normal; border-color: black;}.tg .tg-xldj{border-color: inherit; text-align: center;}th,td{width: 20%; vertical-align: middle;}</style><table class="tg"> <tr> <td class="tg-xldj"> English - Australian<br>🇦🇺 </td><td class="tg-xldj"> Hebrew<br>🇮🇱 </td><td class="tg-xldj"> Japanese<br>🇯🇵 </td><td class="tg-xldj"> Romanian<br>🇷🇴 </td><td class="tg-xldj"> Swedish<br>🇸🇪 </td></tr><tr> <td class="tg-xldj"> Portuguese - Brazilian<br>🇧🇷 </td><td class="tg-xldj"> Hindi - Indian<br>🇮🇳 </td><td class="tg-xldj"> Korean<br>🇰🇷 </td><td class="tg-xldj"> Russian<br>🇷🇺 </td><td class="tg-xldj"> Chinese - Taiwanese<br>🇹🇼 </td></tr><tr> <td class="tg-xldj"> French - Canadian<br>🇨🇦 </td><td class="tg-xldj"> Hungarian<br>🇭🇺 </td><td class="tg-xldj"> Spanish - Mexican<br>🇲🇽 </td><td class="tg-xldj"> Arabic - Saudi Arabian<br>🇸🇦 </td><td class="tg-xldj"> Thai<br>🇹🇭 </td></tr><tr> <td class="tg-xldj"> Chinese<br>🇨🇳 </td><td class="tg-xldj"> Indonesian<br>🇮🇩 </td><td class="tg-xldj"> Norwegian<br>🇳🇴 </td><td class="tg-xldj"> Slovakian<br>🇸🇰 </td><td class="tg-xldj"> Turkish<br>🇹🇷 </td></tr><tr> <td class="tg-xldj"> Chinese - Hong Kong<br>🇭🇰 </td><td class="tg-xldj"> English - Irish<br>🇮🇪 </td><td class="tg-xldj"> Polish<br>🇵🇱 </td><td class="tg-xldj"> English - South African<br>🇿🇦 </td><td class="tg-xldj"> English - United States<br>🇺🇸 </td></tr><tr> <td class="tg-xldj"> Czech<br>🇨🇿 </td><td class="tg-xldj"> Italian<br>🇮🇹 </td><td class="tg-xldj"> Portuguese<br>🇵🇹 </td><td class="tg-xldj"> Spanish<br>🇪🇸 </td><td class="tg-xldj"></td></tr></table>
+
+# Features
+
+OSSSpeechKit offers simple **text to speech** and **speech to text** in 37 different languages. 
+
+OSSSpeechKit is built on top of both the [AVFoundation](https://developer.apple.com/documentation/avfoundation) and [Speech](https://developer.apple.com/documentation/speech) frameworks. 
+
+You can achieve text to speech or speech to text in as little as two lines of code. 
+
+The speech will play over the top of other sounds such as music. 
 
 # Installation
 
@@ -234,7 +221,7 @@ speechKit.voice = OSSVoice(quality: .enhanced, language: .Chinese)
 speechKit.speakText(text: "Hello, my name is ...")
 ```
 
-This same principle applies to all other languages such as German, Saudi Arabian, French, etc. Failing to set the language for the text you wish to be spoken will not sound correct. 
+This same principle applies to all other languages such as German, Saudi Arabian, French, etc.. Failing to set the language for the text you wish to be spoken will not sound correct. 
 
 # Contributions and Queries
 
