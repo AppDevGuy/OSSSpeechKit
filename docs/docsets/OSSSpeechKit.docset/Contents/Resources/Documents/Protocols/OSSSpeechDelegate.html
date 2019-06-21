@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>OSSVoiceInfo Structure Reference</title>
+    <title>OSSSpeechDelegate Protocol Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Struct/OSSVoiceInfo" class="dashAnchor"></a>
-    <a title="OSSVoiceInfo Structure Reference"></a>
+    <a name="//apple_ref/swift/Protocol/OSSSpeechDelegate" class="dashAnchor"></a>
+    <a title="OSSSpeechDelegate Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">OSSSpeechKit Docs</a> (100% documented)</p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">OSSSpeechKit Reference</a>
         <img id="carat" src="../img/carat.png" />
-        OSSVoiceInfo Structure Reference
+        OSSSpeechDelegate Protocol Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -82,14 +82,14 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>OSSVoiceInfo</h1>
+            <h1>OSSSpeechDelegate</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">OSSVoiceInfo</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">OSSSpeechDelegate</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
 
                 </div>
               </div>
-            <p>The voice infor struct ensures that the data structure has conformity and consistency.</p>
+            <p>Delegate to handle events such as failed authentication for microphone among many more.</p>
 
           </section>
           <section class="section task-group-section">
@@ -98,9 +98,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:12OSSSpeechKit12OSSVoiceInfoV4nameSSSgvp"></a>
-                    <a name="//apple_ref/swift/Property/name" class="dashAnchor"></a>
-                    <a class="token" href="#/s:12OSSSpeechKit12OSSVoiceInfoV4nameSSSgvp">name</a>
+                    <a name="/s:12OSSSpeechKit0A8DelegateP18didFinishListening8withTextySS_tF"></a>
+                    <a name="//apple_ref/swift/Method/didFinishListening(withText:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit0A8DelegateP18didFinishListening8withTextySS_tF">didFinishListening(withText:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -108,14 +108,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The name of the voice; All AVSpeechSynthesisVoice instances have a persons name.</p>
+                        <p>When the microphone has finished accepting audio, this delegate will be called with the final best text output.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">didFinishListening</span><span class="p">(</span><span class="n">withText</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -125,9 +125,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:12OSSSpeechKit12OSSVoiceInfoV8languageSSSgvp"></a>
-                    <a name="//apple_ref/swift/Property/language" class="dashAnchor"></a>
-                    <a class="token" href="#/s:12OSSSpeechKit12OSSVoiceInfoV8languageSSSgvp">language</a>
+                    <a name="/s:12OSSSpeechKit0A8DelegateP25authorizationToMicrophone18withAuthenticationyAA0A19AuthorizationStatusO_tF"></a>
+                    <a name="//apple_ref/swift/Method/authorizationToMicrophone(withAuthentication:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit0A8DelegateP25authorizationToMicrophone18withAuthenticationyAA0A19AuthorizationStatusO_tF">authorizationToMicrophone(withAuthentication:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -135,14 +135,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The name of the language being used.</p>
+                        <p>Handle returning authentication status to user - primary use is for non-authorized state.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">language</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">authorizationToMicrophone</span><span class="p">(</span><span class="n">withAuthentication</span> <span class="nv">type</span><span class="p">:</span> <span class="kt"><a href="../Enums/OSSSpeechAuthorizationStatus.html">OSSSpeechAuthorizationStatus</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -152,9 +152,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:12OSSSpeechKit12OSSVoiceInfoV12languageCodeSSSgvp"></a>
-                    <a name="//apple_ref/swift/Property/languageCode" class="dashAnchor"></a>
-                    <a class="token" href="#/s:12OSSSpeechKit12OSSVoiceInfoV12languageCodeSSSgvp">languageCode</a>
+                    <a name="/s:12OSSSpeechKit0A8DelegateP32didFailToCommenceSpeechRecordingyyF"></a>
+                    <a name="//apple_ref/swift/Method/didFailToCommenceSpeechRecording()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit0A8DelegateP32didFailToCommenceSpeechRecordingyyF">didFailToCommenceSpeechRecording()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -162,41 +162,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The language code is what is internationally used in Locale settings.</p>
+                        <p>If the speech recogniser and request fail to set up, this method will be called.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">languageCode</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:12OSSSpeechKit12OSSVoiceInfoV10identifierypSgvp"></a>
-                    <a name="//apple_ref/swift/Property/identifier" class="dashAnchor"></a>
-                    <a class="token" href="#/s:12OSSSpeechKit12OSSVoiceInfoV10identifierypSgvp">identifier</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Identifier is a unique bundle url provided by Apple for each AVSpeechSynthesisVoice.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">identifier</span><span class="p">:</span> <span class="kt">Any</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">didFailToCommenceSpeechRecording</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>

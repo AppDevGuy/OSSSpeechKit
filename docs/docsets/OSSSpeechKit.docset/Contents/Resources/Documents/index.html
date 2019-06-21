@@ -45,7 +45,26 @@
             <a href="Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="Enums/OSSSpeechAuthorizationStatus.html">OSSSpeechAuthorizationStatus</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Enums/OSSVoiceEnum.html">OSSVoiceEnum</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Extensions/Bundle.html">Bundle</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/OSSSpeechDelegate.html">OSSSpeechDelegate</a>
               </li>
             </ul>
           </li>
@@ -65,22 +84,49 @@
             
             <h1 id='ossspeechkit' class='heading'>OSSSpeechKit</h1>
 
+<p><a href="https://github.com/AppDevGuy/OSSSpeechKit"><img src="https://appdevguy.github.io/OSSSpeechKit/OSSSpeechKit-Logo.png" alt="OSSSpeechKit Logo"></a></p>
+
 <p><a href="https://travis-ci.org/appdevguy/OSSSpeechKit"><img src="https://img.shields.io/travis/appdevguy/OSSSpeechKit.svg?style=flat" alt="CI Status"></a>
 <a href="https://cocoapods.org/pods/OSSSpeechKit"><img src="https://img.shields.io/cocoapods/v/OSSSpeechKit.svg?style=flat" alt="Version"></a>
 <a href="https://cocoapods.org/pods/OSSSpeechKit"><img src="https://img.shields.io/cocoapods/l/OSSSpeechKit.svg?style=flat" alt="License"></a>
 <a href="https://cocoapods.org/pods/OSSSpeechKit"><img src="https://img.shields.io/cocoapods/p/OSSSpeechKit.svg?style=flat" alt="Platform"></a>
-<a href="https://codecov.io/gh/AppDevGuy/OSSSpeechKit"><img src="https://codecov.io/gh/AppDevGuy/OSSSpeechKit/branch/master/graph/badge.svg" alt="codecov"></a></p>
+<a href="https://codecov.io/gh/AppDevGuy/OSSSpeechKit"><img src="https://codecov.io/gh/AppDevGuy/OSSSpeechKit/branch/master/graph/badge.svg" alt="codecov"></a>
+<a href="https://appdevguy.github.io/OSSSpeechKit"><img src="https://appdevguy.github.io/OSSSpeechKit/badge.svg" alt="docs"></a></p>
 
 <p>OSSSpeechKit was developed to provide easier accesibility options to apps. </p>
 
-<p>Apple does not make it easy to get the right voice, nor do they provide a simple way of selecting a language. OSSSpeechKit makes the hassle of trying to find the right language go away. </p>
-<h2 id='installation' class='heading'>Installation</h2>
+<p>Apple does not make it easy to get the right voice, nor do they provide a simple way of selecting a language or using speech to text. OSSSpeechKit makes the hassle of trying to find the right language go away. </p>
+<h1 id='requirements' class='heading'>Requirements</h1>
+
+<ul>
+<li>Swift 5.0 or higher</li>
+<li>iOS 12.0 or higher</li>
+<li>Cocoapods or higher</li>
+<li>A real device (for microphone)</li>
+</ul>
+<h1 id='supported-languages' class='heading'>Supported Languages</h1>
+
+<table class="tg" style="width: 100%;"> <tr> <td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> English - Australian<br>🇦🇺 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Hebrew<br>🇮🇱 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Japanese<br>🇯🇵 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Romanian<br>🇷🇴 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Swedish<br>🇸🇪 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Norsk<br>🇳🇴 </td></tr><tr> <td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Portuguese - Brazilian<br>🇧🇷 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Hindi - Indian<br>🇮🇳 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Korean<br>🇰🇷 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Russian<br>🇷🇺 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Chinese - Taiwanese<br>🇹🇼 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Dutch - Belgium<br>🇧🇪 </td></tr><tr> <td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> French - Canadian<br>🇨🇦 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Hungarian<br>🇭🇺 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Spanish - Mexican<br>🇲🇽 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Arabic - Saudi Arabian<br>🇸🇦 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Thai<br>🇹🇭 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> French<br>🇫🇷 </td></tr><tr> <td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Chinese<br>🇨🇳 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Indonesian<br>🇮🇩 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Norwegian<br>🇳🇴 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Slovakian<br>🇸🇰 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Turkish<br>🇹🇷 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Finnish<br>🇫🇮 </td></tr><tr> <td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Chinese - Hong Kong<br>🇭🇰 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> English - Irish<br>🇮🇪 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Polish<br>🇵🇱 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> English - South African<br>🇿🇦 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> English - United States<br>🇺🇸 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Danish<br>🇩🇰 </td></tr><tr> <td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Czech<br>🇨🇿 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Italian<br>🇮🇹 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Portuguese<br>🇵🇹 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Spanish<br>🇪🇸 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> English<br>🇬🇧</td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Dutch<br>🇳🇱 </td></tr><tr> <td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Greek<br>🇬🇷 </td></tr></table>
+<h1 id='features' class='heading'>Features</h1>
+
+<p>OSSSpeechKit offers simple <strong>text to speech</strong> and <strong>speech to text</strong> in 37 different languages. </p>
+
+<p>OSSSpeechKit is built on top of both the <a href="https://developer.apple.com/documentation/avfoundation">AVFoundation</a> and <a href="https://developer.apple.com/documentation/speech">Speech</a> frameworks. </p>
+
+<p>You can achieve text to speech or speech to text in as little as two lines of code. </p>
+
+<p>The speech will play over the top of other sounds such as music. </p>
+<h1 id='installation' class='heading'>Installation</h1>
 
 <p>OSSSpeechKit is available through <a href="https://cocoapods.org">CocoaPods</a>. To install
 it, simply add the following line to your Podfile:</p>
 <pre class="highlight ruby"><code><span class="n">pod</span> <span class="s1">'OSSSpeechKit'</span>
 </code></pre>
-<h2 id='how-to-use-tl-dr' class='heading'>How to use (TL;DR)</h2>
+<h1 id='implementation' class='heading'>Implementation</h1>
+<h2 id='text-to-speech' class='heading'>Text to Speech</h2>
+
+<p>These methods enable you to pass in a string and hear the text played back using.</p>
+<h3 id='simple' class='heading'>Simple</h3>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">OSSSpeechKit</span>
 
 <span class="o">.....</span>
@@ -92,18 +138,93 @@ it, simply add the following line to your Podfile:</p>
 <span class="c1">// Set the text in the language you have set</span>
 <span class="n">speechKit</span><span class="o">.</span><span class="nf">speakText</span><span class="p">(</span><span class="nv">text</span><span class="p">:</span> <span class="s">"Hello, my name is OSSSpeechKit."</span><span class="p">)</span>
 </code></pre>
+<h3 id='advanced' class='heading'>Advanced</h3>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">OSSSpeechKit</span>
 
-<p>That&rsquo;s it. You are all set. </p>
-<h3 id='other-features' class='heading'>Other features</h3>
-<h4 id='list-all-available-voices' class='heading'>List all available voices:</h4>
+<span class="o">.....</span>
+
+<span class="c1">// Declare an instance of OSSSpeechKit</span>
+<span class="k">let</span> <span class="nv">speechKit</span> <span class="o">=</span> <span class="kt">OSSSpeech</span><span class="o">.</span><span class="n">shared</span>
+<span class="c1">// Create a voice instance</span>
+<span class="k">let</span> <span class="nv">newVoice</span> <span class="o">=</span> <span class="kt">OSSVoice</span><span class="p">()</span>
+<span class="c1">// Set the language</span>
+<span class="n">newVoice</span><span class="o">.</span><span class="n">language</span> <span class="o">=</span> <span class="kt">OSSVoiceEnum</span><span class="o">.</span><span class="kt">Australian</span><span class="o">.</span><span class="n">rawValue</span>
+<span class="c1">// Set the voice quality</span>
+<span class="n">newVoice</span><span class="o">.</span><span class="n">quality</span> <span class="o">=</span> <span class="o">.</span><span class="n">enhanced</span>
+<span class="c1">// Set the voice of the speech kit</span>
+<span class="n">speechKit</span><span class="o">.</span><span class="n">voice</span> <span class="o">=</span> <span class="n">newVoice</span>
+<span class="c1">// Initialise an utterance</span>
+<span class="k">let</span> <span class="nv">utterance</span> <span class="o">=</span> <span class="kt">OSSUtterance</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="s">"Testing"</span><span class="p">)</span>
+<span class="c1">// Set volume</span>
+<span class="n">utterance</span><span class="o">.</span><span class="n">volume</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="c1">// Set rate of speech</span>
+<span class="n">utterance</span><span class="o">.</span><span class="n">rate</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="c1">// Set the pitch </span>
+<span class="n">utterance</span><span class="o">.</span><span class="n">pitchMultiplier</span> <span class="o">=</span> <span class="mf">1.2</span>
+<span class="c1">// Set speech utterance</span>
+<span class="n">speechKit</span><span class="o">.</span><span class="n">utterance</span> <span class="o">=</span> <span class="n">utterance</span>
+<span class="c1">// Ask to speak</span>
+<span class="n">speechKit</span><span class="o">.</span><span class="nf">speakText</span><span class="p">(</span><span class="nv">text</span><span class="p">:</span> <span class="n">utterance</span><span class="o">.</span><span class="n">speechString</span><span class="p">)</span>
+</code></pre>
+<h2 id='speech-to-text' class='heading'>Speech to Text</h2>
+
+<p>Currently speech to text is offered in a very simple format. Starting and stopping of recording is handled by the app. </p>
+
+<p><em>The next release is expected to contain auto ending of recording along with features such as returning sound wave float variables for use in User Interfaces.</em></p>
+<h3 id='note-ios-13-local-to-device-speech-to-text-support-will-be-introduced' class='heading'>NOTE: iOS 13 Local-to-Device Speech to Text support will be introduced.</h3>
+
+<p>SpeechKit implements delegates to handle the recording authorization, output of text and failure to record.</p>
+<pre class="highlight swift"><code><span class="n">speechKit</span><span class="o">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="k">self</span>
+<span class="c1">// Call to start and end recording. </span>
+<span class="n">speechKit</span><span class="o">.</span><span class="nf">recordVoice</span><span class="p">()</span>
+<span class="c1">// Call to end recording</span>
+<span class="n">speechKit</span><span class="o">.</span><span class="nf">endVoiceRecording</span><span class="p">()</span>
+</code></pre>
+
+<p>It is important that you have included in your <code>info.plist</code> the following:</p>
+
+<blockquote>
+<p>Privacy - Speech Recognition Usage Description</p>
+
+<p>Privacy - Microphone Usage Description</p>
+</blockquote>
+
+<p>Without these, you will not be able to access the microphone nor speech recognition.</p>
+<h3 id='delegates' class='heading'>Delegates</h3>
+
+<p>Handle returning authentication status to user - primary use is for non-authorized state.</p>
+
+<blockquote>
+<p><code>func authorizationToMicrophone(withAuthentication type: OSSSpeechAuthorizationStatus)</code></p>
+</blockquote>
+
+<p>When the microphone has finished accepting audio, this delegate will be called with the final best text output.</p>
+
+<blockquote>
+<p><code>func didFailToCommenceSpeechRecording()</code></p>
+</blockquote>
+
+<p>If the speech recogniser and request fail to set up, this method will be called.</p>
+
+<blockquote>
+<p><code>func didFinishListening(withText text: String)</code></p>
+</blockquote>
+
+<p>For further information you can <a href="https://developer.apple.com/documentation/speech/sfspeechrecognizer">check out the Apple documentation directly.</a></p>
+<h1 id='other-features' class='heading'>Other Features</h1>
+<h3 id='list-all-available-voices' class='heading'>List all available voices:</h3>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">allLanguages</span> <span class="o">=</span> <span class="kt">OSSVoiceEnum</span><span class="o">.</span><span class="n">allCases</span>
 </code></pre>
-<h4 id='get-specific-voice-information' class='heading'>Get specific voice information:</h4>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">allVoices</span> <span class="o">=</span> <span class="kt">OSSVoiceEnum</span><span class="o">.</span><span class="n">allCases</span>
+<h3 id='get-specific-voice-information' class='heading'>Get specific voice information:</h3>
+<pre class="highlight swift"><code><span class="c1">// All support languages</span>
+<span class="k">let</span> <span class="nv">allVoices</span> <span class="o">=</span> <span class="kt">OSSVoiceEnum</span><span class="o">.</span><span class="n">allCases</span>
+<span class="c1">// Language details</span>
 <span class="k">let</span> <span class="nv">languageInformation</span> <span class="o">=</span> <span class="n">allVoices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="nf">getDetails</span><span class="p">()</span>
+<span class="c1">// Flag of country</span>
+<span class="k">let</span> <span class="nv">flag</span> <span class="o">=</span> <span class="n">allVoices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">flag</span>
 </code></pre>
 
-<p>The <code>getDetails()</code> method will returns a struct containing:</p>
+<p>The <code>getDetails()</code> method returns a struct containing:</p>
 <pre class="highlight swift"><code><span class="kt">OSSVoiceInfo</span> <span class="p">{</span>
     <span class="c1">/// The name of the voice; All AVSpeechSynthesisVoice instances have a persons name.</span>
     <span class="k">var</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
@@ -115,7 +236,7 @@ it, simply add the following line to your Podfile:</p>
     <span class="k">var</span> <span class="nv">identifier</span><span class="p">:</span> <span class="kt">Any</span><span class="p">?</span>
 <span class="p">}</span>
 </code></pre>
-<h4 id='other-info' class='heading'>Other Info</h4>
+<h3 id='other-info' class='heading'>Other Info</h3>
 
 <p>The <code><a href="Enums/OSSVoiceEnum.html">OSSVoiceEnum</a></code> contains other methods, such as a hello message, title variable and subtitle variable so you can use it in a list. </p>
 
@@ -137,16 +258,16 @@ it, simply add the following line to your Podfile:</p>
 <li>Apple have not made it avaiable through their AVFoundation;</li>
 <li>or the SDK has not been updated to include the newly added voice.</li>
 </ul>
-<h2 id='important-information' class='heading'>Important Information</h2>
+<h1 id='important-information' class='heading'>Important Information</h1>
 
 <p>Apple do not make the voice of Siri available for use. </p>
 
 <p>This kit provides Apple&rsquo;s AVFoundation voices available and easy to use, so you do not need to know all the voice codes, among many other things.</p>
 
 <p>To say things correctly in each language, you need to set the voice to the correct langauge and supply that languages text; this SDK is not a translator. </p>
-<h3 id='example' class='heading'>Example:</h3>
+<h3 id='code-example' class='heading'>Code Example:</h3>
 
-<p>You wish for you app to use a Chinese voice, you will need to ensure the text being passed in is German. </p>
+<p>You wish for you app to use a Chinese voice, you will need to ensure the text being passed in is Chinese. </p>
 
 <p><em>Disclaimer: I do not know how to speak Chinese, I have used Google translate for the chinese characters.</em></p>
 <h4 id='correct' class='heading'>Correct:</h4>
@@ -163,30 +284,31 @@ it, simply add the following line to your Podfile:</p>
 <span class="n">speechKit</span><span class="o">.</span><span class="nf">speakText</span><span class="p">(</span><span class="nv">text</span><span class="p">:</span> <span class="s">"Hello, my name is ..."</span><span class="p">)</span>
 </code></pre>
 
-<p>This same principle applies to all other languages such as Chinese, Saudi Arabian, French, etc. Failing to set the language for the text you wish to be spoken will not sound correct. </p>
+<p>This same principle applies to all other languages such as German, Saudi Arabian, French, etc.. Failing to set the language for the text you wish to be spoken will not sound correct. </p>
+<h1 id='contributions-and-queries' class='heading'>Contributions and Queries</h1>
 
 <p>If you have a question, please create a ticket or email me directly. </p>
 
 <p>If you wish to contribute, please create a pull request. </p>
-<h2 id='example' class='heading'>Example</h2>
+<h1 id='example-project' class='heading'>Example Project</h1>
 
 <p>To run the example project, clone the repo, and run <code>pod install</code> from the Example directory first.</p>
-<h2 id='requirements' class='heading'>Requirements</h2>
+<h1 id='unit-tests' class='heading'>Unit Tests</h1>
 
-<p>OSSSpeechKit is written in Swift 5.0. You will need to be using iOS 12 and up to use this. </p>
+<p>For further examples, please look at the Unit Test class.</p>
+<h1 id='author' class='heading'>Author</h1>
 
-<p>There are no plans to make it accesible to earlier iOS versions. </p>
-<h2 id='author' class='heading'>Author</h2>
+<p>App Dev Guy</p>
 
-<p>App Dev Guy, <a href="mailto:seaniosdeveloper@gmail.com">seaniosdeveloper@gmail.com</a></p>
-<h2 id='license' class='heading'>License</h2>
+<p><a href="https://stackoverflow.com/users/4008175/app-dev-guy"><img src="https://stackoverflow.com/users/flair/4008175.png" width="208" height="58" alt="profile for App Dev Guy at Stack Overflow, Q&amp;A for professional and enthusiast programmers" title="profile for App Dev Guy at Stack Overflow, Q&amp;A for professional and enthusiast programmers"></a></p>
+<h1 id='license' class='heading'>License</h1>
 
 <p>OSSSpeechKit is available under the MIT license. See the LICENSE file for more info.</p>
 
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2019 <a class="link" href="https://github.com/AppDevGuy" target="_blank" rel="external">AppDevGuy</a>. All rights reserved. (Last updated: 2019-06-08)</p>
+          <p>&copy; 2019 <a class="link" href="https://github.com/AppDevGuy" target="_blank" rel="external">AppDevGuy</a>. All rights reserved. (Last updated: 2019-06-22)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

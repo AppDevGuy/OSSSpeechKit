@@ -293,22 +293,27 @@ public class OSSSpeech: NSObject {
     }
 }
 
+/// Extension to handle the SFSpeechRecognitionTaskDelegate and SFSpeechRecognizerDelegate methods.
 extension OSSSpeech: SFSpeechRecognitionTaskDelegate, SFSpeechRecognizerDelegate {
+    /// Docs available by Google searching for SFSpeechRecognitionTaskDelegate
     public func speechRecognitionTask(_ task: SFSpeechRecognitionTask, didFinishSuccessfully successfully: Bool) {
         print("Finished successfully? \(successfully)")
     }
     
+    /// Docs available by Google searching for SFSpeechRecognitionTaskDelegate
     public func speechRecognitionTask(_ task: SFSpeechRecognitionTask, didHypothesizeTranscription transcription: SFTranscription) {
         print("Transcription: \(transcription.formattedString)")
         self.spokenText = transcription.formattedString
     }
     
+    /// Docs available by Google searching for SFSpeechRecognitionTaskDelegate
     public func speechRecognitionTask(_ task: SFSpeechRecognitionTask, didFinishRecognition recognitionResult: SFSpeechRecognitionResult) {
         print("The recognition: \(recognitionResult)")
         print("The transcriptions: \(recognitionResult.transcriptions)")
         print("The best transcriptions: \(recognitionResult.bestTranscription.formattedString)")
     }
     
+    /// Docs available by Google searching for SFSpeechRecognizerDelegate
     public func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
         print("Availability did change.")
     }
