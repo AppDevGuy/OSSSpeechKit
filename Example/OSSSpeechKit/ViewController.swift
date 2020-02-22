@@ -103,9 +103,10 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // NOTE: Must set the voice before requesting speech. This can be set once.
         speechKit.voice = OSSVoice(quality: .enhanced, language: OSSVoiceEnum.allCases[indexPath.item])
+        speechKit.utterance?.rate = 0.45
         // Test attributed string vs normal string
         if indexPath.item % 2 == 0 {
-            self.speechKit.speakText(text: OSSVoiceEnum.allCases[indexPath.item].demoMessage)
+            self.speechKit.speakText(OSSVoiceEnum.allCases[indexPath.item].demoMessage)
         } else {
             let attributedString = NSAttributedString(string: OSSVoiceEnum.allCases[indexPath.item].demoMessage)
             self.speechKit.speakAttributedText(attributedText: attributedString)
@@ -131,6 +132,19 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 }
 
 extension ViewController: OSSSpeechDelegate {
+    
+    func didCompleteTranslation(withText text: String) {
+        print("Translation completed: \(text)")
+    }
+    
+    func didFailToProcessRequest(withError error: Error?) {
+        guard let err = error else {
+            print("Error with the request but the error returned is nil")
+            return
+        }
+        print("Error with the request: \(err)")
+    }
+    
     func authorizationToMicrophone(withAuthentication type: OSSSpeechAuthorizationStatus) {
         print("Authorization status has returned: \(type.message).")
     }
@@ -142,7 +156,7 @@ extension ViewController: OSSSpeechDelegate {
     func didFinishListening(withText text: String) {
         OperationQueue.main.addOperation {
             self.microphoneButton.tintColor = .black
-            self.speechKit.speakText(text: text)
+            self.speechKit.speakText(text)
         }
     }
 }

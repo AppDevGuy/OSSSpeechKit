@@ -33,7 +33,7 @@ class OSSSpeechTests: XCTestCase {
     
     func testSpeechStringSetup() {
         speechKit.voice = OSSVoice(quality: .enhanced, language: .Australian)
-        speechKit.speakText(text: "Should Pass")
+        speechKit.speakText("Should Pass")
         speechKit.utterance?.volume = 1.0
         XCTAssert(speechKit.utterance != nil, "The utterance should not be nil.")
         XCTAssert(speechKit.voice != nil, "The voice should not be nil.")
@@ -51,22 +51,22 @@ class OSSSpeechTests: XCTestCase {
     
     func testRegularSetup() {
         speechKit.voice = OSSVoice()
-        speechKit.speakText(text: "Should Pass")
+        speechKit.speakText("Should Pass")
         XCTAssert(speechKit.voice != nil, "The voice should not be nil.")
         XCTAssert(speechKit.utterance!.speechString == "Should Pass", "The speechString should equal pass")
         XCTAssert(speechKit.voice?.language == OSSVoiceEnum.UnitedStatesEnglish.rawValue, "Voice language should be United States English")
     }
     
     func testSpeechNoText() {
-        speechKit.speakText(text: "")
+        speechKit.speakText("")
         speechKit.utterance = nil
         XCTAssert(speechKit.utterance == nil, "Utterance should be nil")
-        speechKit.speakText(text: "Test One")
+        speechKit.speakText("Test One")
         speechKit.voice = nil
         XCTAssert(speechKit.voice == nil, "Voice should be nil")
-        speechKit.speakText(text: "Test One")
+        speechKit.speakText("Test One")
         speechKit.voice = OSSVoice()
-        speechKit.speakText(text: "Test Two")
+        speechKit.speakText("Test Two")
     }
     
     func testSpeechNoAttributedText() {
@@ -104,7 +104,7 @@ class OSSSpeechTests: XCTestCase {
         utterance.rate = 0.5
         utterance.pitchMultiplier = 1.2
         speechKit.utterance = utterance
-        speechKit.speakText(text: utterance.speechString)
+        speechKit.speakText(utterance.speechString)
         XCTAssert(speechKit.utterance!.rate == 0.5, "Rate should equal 0.5")
         XCTAssert(speechKit.utterance!.volume == 0.5, "Volume should equal 0.5")
         XCTAssert(speechKit.utterance!.pitchMultiplier == 1.2, "Pitch should equal 1.2")
@@ -137,6 +137,18 @@ class OSSSpeechTests: XCTestCase {
 }
 
 extension OSSSpeechTests: OSSSpeechDelegate {
+    func didCompleteTranslation(withText text: String) {
+        print("Translation completed with text: \(text)")
+    }
+    
+    func didFailToProcessRequest(withError error: Error?) {
+        guard let err = error else {
+            print("Failed to process the request")
+            return
+        }
+        print("Failed to process the request \(err)")
+    }
+    
     func didFinishListening(withText text: String) {
         guard let speech = speechKit else {
             return
