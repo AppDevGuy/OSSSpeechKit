@@ -152,13 +152,13 @@ public class OSSSpeech: NSObject {
     
     /// Speech recognition variable to determine if recognition should use on device capabilities if available
     ///
-    /// Not all devices support on device speech recognition and only devices operation with iOS 13 or higher support it.
-    ///
-    /// This var should be set to true unless you wish to have network recognition.
+    /// Not all devices support on device speech recognition and only devices operating with iOS 13 or higher support it.
     ///
     /// On device recognition offers many benefits such as working without network connectivity,
     /// no data costs and longer recording-to-transcription.
-    public var shouldUseOnDeviceRecognition = true
+    ///
+    /// On device recognition comes at a cost of accurate transcription though; speech recognition is less accurate with on device recognition.
+    public var shouldUseOnDeviceRecognition = false
     
     /// The task type by default is undefined.
     /// Changing the task type will change how speech recognition performs.
@@ -412,7 +412,9 @@ public class OSSSpeech: NSObject {
         speechRecognizer = recogniser
         if let audioRequest = request, let speechRecog = speechRecognizer {
             if #available(iOS 13, *) {
-                speechRecog.supportsOnDeviceRecognition = shouldUseOnDeviceRecognition
+                if speechRecog.supportsOnDeviceRecognition {
+                    audioRequest.requiresOnDeviceRecognition = shouldUseOnDeviceRecognition
+                }
             }
             speechRecog.delegate = self
             speechRecog.defaultTaskHint = recognitionTaskType.taskType
