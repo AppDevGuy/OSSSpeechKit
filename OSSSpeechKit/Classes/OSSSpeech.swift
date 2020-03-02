@@ -321,53 +321,98 @@ public class OSSSpeech: NSObject {
     // MARK: - Private Voice Recording
     
     private func getMicroPhoneAuthorization() {
-        SFSpeechRecognizer.requestAuthorization {
-            [unowned self] (authStatus) in
-            let status = OSSSpeechAuthorizationStatus(rawValue: authStatus.rawValue)
-            switch authStatus {
-            case .authorized:
-                OperationQueue.main.addOperation {
-                    self.recordAndRecognizeSpeech()
-                    self.delegate?.authorizationToMicrophone(withAuthentication: status!)
+        AVAudioSession.sharedInstance().requestRecordPermission { (allowed) in
+            if !allowed {
+                self.debugLog(object: self, message: "Microphone permission was denied.")
+                self.delegate?.authorizationToMicrophone(withAuthentication: .denied)
+                return
+            }
+            SFSpeechRecognizer.requestAuthorization {
+                [unowned self] (authStatus) in
+                let status = OSSSpeechAuthorizationStatus(rawValue: authStatus.rawValue)
+                switch authStatus {
+                case .authorized:
+                    OperationQueue.main.addOperation {
+                        self.delegate?.authorizationToMicrophone(withAuthentication: status!)
+                        self.recordAndRecognizeSpeech()
+                    }
+                    break
+                default:
+                    OperationQueue.main.addOperation {
+                        self.delegate?.authorizationToMicrophone(withAuthentication: status!)
+                    }
+                    break
                 }
-                break
-            default:
-                OperationQueue.main.addOperation {
-                    self.delegate?.authorizationToMicrophone(withAuthentication: status!)
-                }
-                break
             }
         }
     }
     
     private func cancelRecording() {
-        guard let task = recognitionTask else {
-                        self.debugLog(object: self, message: "No valid voice recognition task.")
-            self.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidSpeechRequest.error)
-            return
+        if let voiceRequest = request {
+            voiceRequest.endAudio()
+            request = nil
         }
-        guard let engine = audioEngine else {
-            self.debugLog(object: self, message: "No audio recording session is active.")
+        if let engine = audioEngine {
+            if engine.isRunning {
+                engine.stop()
+            }
+            let node = engine.inputNode
+            node.removeTap(onBus: 0)
+            audioEngine = nil
+        }
+        if let task = recognitionTask {
+            task.finish()
+        }
+    }
+    
+    func engineSetup(_ engine: AVAudioEngine) -> Bool {
+        let input = engine.inputNode
+        let bus = 0
+        let inputFormat = input.outputFormat(forBus: 0)
+        guard let outputFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: 8000, channels: 1, interleaved: true) else {
+            self.delegate?.didFailToCommenceSpeechRecording()
             self.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidAudioEngine.error)
-            return
+            return false
         }
-        if !engine.isRunning {
-            self.debugLog(object: self, message: "No audio recording session is active.")
-            return
+        guard let converter = AVAudioConverter(from: inputFormat, to: outputFormat) else {
+            self.delegate?.didFailToCommenceSpeechRecording()
+            self.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidAudioEngine.error)
+            return false
         }
-        guard let voiceRequest = request else {
-            self.debugLog(object: self, message: "No valid voice request.")
-            self.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidSpeechRequest.error)
-            return
+        input.installTap(onBus: bus, bufferSize: 8192, format: inputFormat) { (buffer, time) -> Void in
+            var newBufferAvailable = true
+            let inputCallback: AVAudioConverterInputBlock = { inNumPackets, outStatus in
+                if newBufferAvailable {
+                    outStatus.pointee = .haveData
+                    newBufferAvailable = false
+                    return buffer
+                } else {
+                    outStatus.pointee = .noDataNow
+                    return nil
+                }
+            }
+            let convertedBuffer = AVAudioPCMBuffer(pcmFormat: outputFormat, frameCapacity: AVAudioFrameCount(outputFormat.sampleRate) * buffer.frameLength / AVAudioFrameCount(buffer.format.sampleRate))!
+            var error: NSError?
+            let status = converter.convert(to: convertedBuffer, error: &error, withInputFrom: inputCallback)
+            if status == .error {
+                self.delegate?.didFailToCommenceSpeechRecording()
+                self.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidAudioEngine.error)
+                if let err = error {
+                    self.debugLog(object: self, message: "Audio Engine conversion error: \(err)")
+                }
+                return
+            }
+            self.request?.append(convertedBuffer)
         }
-        engine.stop()
-        voiceRequest.endAudio()
-        let node = engine.inputNode
-        node.removeTap(onBus: 0)
-        // Remove from memory
-        audioEngine = nil
-        request = nil
-        task.finish()
+        engine.prepare()
+        do {
+            try engine.start()
+            return true
+        } catch {
+            self.delegate?.didFailToCommenceSpeechRecording()
+            self.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidAudioEngine.error)
+            return false
+        }
     }
     
     private func recordAndRecognizeSpeech() {
@@ -386,17 +431,8 @@ public class OSSSpeech: NSObject {
             self.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidAudioEngine.error)
             return
         }
-        let node = engine.inputNode
-        let recordingFormat = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 1)
-        node.installTap(onBus: 0, bufferSize: 8192, format: recordingFormat) { (buffer, audioTime) in
-            self.request?.append(buffer)
-        }
-        engine.prepare()
-        do {
-            try engine.start()
-        } catch {
-            self.delegate?.didFailToCommenceSpeechRecording()
-            self.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidAudioEngine.error)
+        if !engineSetup(engine) {
+            self.debugLog(object: self, message: "The audio engine is nil.")
             return
         }
         guard let recogniser = SFSpeechRecognizer() else {
