@@ -125,7 +125,7 @@ Without these, you will not be able to access the microphone nor speech recognit
 ### Delegates
 
 Handle returning authentication status to user - primary use is for non-authorized state.
-> `func authorizationToMicrophone(withAuthentication type: OSSSpeechAuthorizationStatus)`
+> `func authorizationToMicrophone(withAuthentication type: OSSSpeechKitAuthorizationStatus)`
 
 When the microphone has finished accepting audio, this delegate will be called with the final best text output.
 > `func didFailToCommenceSpeechRecording()`

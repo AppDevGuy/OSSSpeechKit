@@ -22,18 +22,41 @@
 //
 
 import UIKit
+import OSSSpeechKit
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class CountryLanguageTableViewCell: UITableViewCell {
+    
+    // MARK: - Variables
+    
+    public var language: OSSVoiceEnum? {
+        didSet {
+            imageView?.image = language?.flag
+            textLabel?.text = language?.title
+            detailTextLabel?.text = language?.rawValue
+        }
+    }
 
-    var window: UIWindow?
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        let navigationController = UINavigationController(rootViewController: CountryLanguageListTableViewController())
-        self.window?.rootViewController = navigationController
-        self.window?.makeKeyAndVisible()
-        return true
+    // MARK: - Lifecycle
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+        imageView?.contentMode = .scaleAspectFit
+        imageView?.layer.masksToBounds = true
+        imageView?.clipsToBounds = true
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        textLabel?.text = ""
+        detailTextLabel?.text = ""
+        imageView?.image = nil
     }
 }
-

@@ -1,9 +1,24 @@
+//  Copyright © 2018-2020 App Dev Guy. All rights reserved.
 //
-//  OSSSpeechTests.swift
-//  OSSSpeechKit_Tests
+//  This code is distributed under the terms and conditions of the MIT license.
 //
-//  Created by Sean Smith on 8/6/19.
-//  Copyright © 2019 CocoaPods. All rights reserved.
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to
+//  deal in the Software without restriction, including without limitation the
+//  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+//  sell copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+//  IN THE SOFTWARE.
 //
 
 import XCTest
@@ -14,7 +29,6 @@ class OSSSpeechTests: XCTestCase {
     var speechKit: OSSSpeech!
     
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
         speechKit = OSSSpeech.shared
         speechKit.utterance = nil
         speechKit.voice = nil
@@ -22,7 +36,6 @@ class OSSSpeechTests: XCTestCase {
     }
 
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         speechKit = nil
     }
 
@@ -40,7 +53,7 @@ class OSSSpeechTests: XCTestCase {
         XCTAssert(speechKit.utterance!.speechString == "Should Pass", "The speechString should equal pass")
     }
     
-    func testSpeechAttributStringSetuo() {
+    func testSpeechAttributedStringSetup() {
         speechKit.voice = OSSVoice(quality: .enhanced, language: .Australian)
         speechKit.speakAttributedText(attributedText: NSAttributedString(string: "Should Pass"))
         speechKit.utterance?.volume = 1.0
@@ -98,7 +111,7 @@ class OSSSpeechTests: XCTestCase {
         newVoice.language = OSSVoiceEnum.Indonesian.rawValue
         newVoice.quality = .enhanced
         speechKit.voice = newVoice
-        // Cannot initialise an utterance without a string
+        // Cannot initialize an utterance without a string
         let utterance = OSSUtterance(string: "Testing")
         utterance.volume = 0.5
         utterance.rate = 0.5
@@ -114,10 +127,10 @@ class OSSSpeechTests: XCTestCase {
     }
     
     func testAuthEnumValues() {
-        XCTAssert(OSSSpeechAuthorizationStatus.notDetermined.message == "The app's authorization status has not yet been determined.", "Test uncertain authorization message.")
-        XCTAssert(OSSSpeechAuthorizationStatus.denied.message == "The user denied your app's request to perform speech recognition.", "Test denied authorization message.")
-        XCTAssert(OSSSpeechAuthorizationStatus.restricted.message == "The device prevents your app from performing speech recognition.", "Test restricted authorization message.")
-        XCTAssert(OSSSpeechAuthorizationStatus.authorized.message == "The user granted your app's request to perform speech recognition.", "Test authorized message.")
+        XCTAssert(OSSSpeechKitAuthorizationStatus.notDetermined.message == "The app's authorization status has not yet been determined.", "Test uncertain authorization message.")
+        XCTAssert(OSSSpeechKitAuthorizationStatus.denied.message == "The user denied your app's request to perform speech recognition.", "Test denied authorization message.")
+        XCTAssert(OSSSpeechKitAuthorizationStatus.restricted.message == "The device prevents your app from performing speech recognition.", "Test restricted authorization message.")
+        XCTAssert(OSSSpeechKitAuthorizationStatus.authorized.message == "The user granted your app's request to perform speech recognition.", "Test authorized message.")
     }
     
     /// This should fail because voice recording is not permitted on simulators.
@@ -156,7 +169,7 @@ extension OSSSpeechTests: OSSSpeechDelegate {
         speech.debugLog(object: self, message: "Finished listening to text with text \(text)")
     }
     
-    func authorizationToMicrophone(withAuthentication type: OSSSpeechAuthorizationStatus) {
+    func authorizationToMicrophone(withAuthentication type: OSSSpeechKitAuthorizationStatus) {
         guard let speech = speechKit else {
             return
         }

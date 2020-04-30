@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name                = 'OSSSpeechKit'
-  s.version             = '0.2.0'
+  s.version             = '0.3.0'
   s.summary             = 'OSSSpeechKit provides developers easy text to voice integration.'
   s.swift_version       = "5.0"
   s.platform            = :ios, "12.0"
@@ -32,7 +32,7 @@ OSSSpeechKit offers an easy way to integrate text to voice using native AVFounda
   s.source_files = 'OSSSpeechKit/Classes/*.swift'
 
    s.resource_bundles = {
-     'OSSSpeechKit' => ['OSSSpeechKit/Assets/*']
+     'OSSSpeechKit' => ['OSSSpeechKit/Assets/*', ]
    }
 
    # s.public_header_files = 'Pod/Classes/*.swift'
