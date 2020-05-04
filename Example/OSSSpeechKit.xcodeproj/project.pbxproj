@@ -14,7 +14,6 @@
 		B042F2D1245FC24100958719 /* LocalizableTests.strings in Resources */ = {isa = PBXBuildFile; fileRef = B042F2D0245FC24100958719 /* LocalizableTests.strings */; };
 		B042F2D4245FEDC600958719 /* SFSpeechRecognizerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B042F2D3245FEDC600958719 /* SFSpeechRecognizerMock.swift */; };
 		B042F2D5245FEDC600958719 /* SFSpeechRecognizerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B042F2D3245FEDC600958719 /* SFSpeechRecognizerMock.swift */; };
-		B042F2E6245FF7BB00958719 /* OSSSpeechKitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B042F2D6245FF3AB00958719 /* OSSSpeechKitUITests.swift */; };
 		B04ABC992458500100ACE8F2 /* CountryLanguageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04ABC982458500100ACE8F2 /* CountryLanguageTableViewCell.swift */; };
 		B04ABC9B2458502C00ACE8F2 /* CountryLanguageListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04ABC9A2458502C00ACE8F2 /* CountryLanguageListTableViewController.swift */; };
 		B06260E122ABCA2600069801 /* OSSSpeechTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06260E022ABCA2600069801 /* OSSSpeechTests.swift */; };
@@ -28,13 +27,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 607FACCF1AFB9204008FA782;
 			remoteInfo = OSSSpeechKit;
-		};
-		B042F2E1245FF79100958719 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 607FACCF1AFB9204008FA782;
-			remoteInfo = OSSSpeechKit_Example;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -55,9 +47,6 @@
 		AD7924CA4244888FD94ED9C6 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		B042F2D0245FC24100958719 /* LocalizableTests.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = LocalizableTests.strings; sourceTree = "<group>"; };
 		B042F2D3245FEDC600958719 /* SFSpeechRecognizerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFSpeechRecognizerMock.swift; sourceTree = "<group>"; };
-		B042F2D6245FF3AB00958719 /* OSSSpeechKitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSSSpeechKitUITests.swift; sourceTree = "<group>"; };
-		B042F2DC245FF79100958719 /* OSSSpeechKit_ExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OSSSpeechKit_ExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B042F2E0245FF79100958719 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B04ABC982458500100ACE8F2 /* CountryLanguageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryLanguageTableViewCell.swift; sourceTree = "<group>"; };
 		B04ABC9A2458502C00ACE8F2 /* CountryLanguageListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryLanguageListTableViewController.swift; sourceTree = "<group>"; };
 		B06260E022ABCA2600069801 /* OSSSpeechTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSSSpeechTests.swift; sourceTree = "<group>"; };
@@ -79,13 +68,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E95D80055602E1F3DAB44DDC /* Pods_OSSSpeechKit_Tests.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B042F2D9245FF79100958719 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,7 +100,6 @@
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for OSSSpeechKit */,
 				607FACE81AFB9204008FA782 /* Tests */,
-				B042F2DD245FF79100958719 /* OSSSpeechKit_ExampleUITests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				46FCF8F1DCF41A9F227DB736 /* Pods */,
 				5F6BD5C16B6F66B83078BEFD /* Frameworks */,
@@ -130,7 +111,6 @@
 			children = (
 				607FACD01AFB9204008FA782 /* OSSSpeechKit_Example.app */,
 				607FACE51AFB9204008FA782 /* OSSSpeechKit_Tests.xctest */,
-				B042F2DC245FF79100958719 /* OSSSpeechKit_ExampleUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -194,15 +174,6 @@
 			name = Subviews;
 			sourceTree = "<group>";
 		};
-		B042F2DD245FF79100958719 /* OSSSpeechKit_ExampleUITests */ = {
-			isa = PBXGroup;
-			children = (
-				B042F2D6245FF3AB00958719 /* OSSSpeechKitUITests.swift */,
-				B042F2E0245FF79100958719 /* Info.plist */,
-			);
-			path = OSSSpeechKit_ExampleUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -245,24 +216,6 @@
 			productReference = 607FACE51AFB9204008FA782 /* OSSSpeechKit_Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		B042F2DB245FF79100958719 /* OSSSpeechKit_ExampleUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B042F2E3245FF79100958719 /* Build configuration list for PBXNativeTarget "OSSSpeechKit_ExampleUITests" */;
-			buildPhases = (
-				B042F2D8245FF79100958719 /* Sources */,
-				B042F2D9245FF79100958719 /* Frameworks */,
-				B042F2DA245FF79100958719 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B042F2E2245FF79100958719 /* PBXTargetDependency */,
-			);
-			name = OSSSpeechKit_ExampleUITests;
-			productName = OSSSpeechKit_ExampleUITests;
-			productReference = B042F2DC245FF79100958719 /* OSSSpeechKit_ExampleUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -284,12 +237,6 @@
 						ProvisioningStyle = Automatic;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
-					B042F2DB245FF79100958719 = {
-						CreatedOnToolsVersion = 11.4.1;
-						DevelopmentTeam = 4632R9FHL5;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 607FACCF1AFB9204008FA782;
-					};
 				};
 			};
 			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "OSSSpeechKit" */;
@@ -307,7 +254,6 @@
 			targets = (
 				607FACCF1AFB9204008FA782 /* OSSSpeechKit_Example */,
 				607FACE41AFB9204008FA782 /* OSSSpeechKit_Tests */,
-				B042F2DB245FF79100958719 /* OSSSpeechKit_ExampleUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -324,13 +270,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		607FACE31AFB9204008FA782 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B042F2DA245FF79100958719 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -444,14 +383,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B042F2D8245FF79100958719 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B042F2E6245FF7BB00958719 /* OSSSpeechKitUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -459,11 +390,6 @@
 			isa = PBXTargetDependency;
 			target = 607FACCF1AFB9204008FA782 /* OSSSpeechKit_Example */;
 			targetProxy = 607FACE61AFB9204008FA782 /* PBXContainerItemProxy */;
-		};
-		B042F2E2245FF79100958719 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 607FACCF1AFB9204008FA782 /* OSSSpeechKit_Example */;
-			targetProxy = B042F2E1245FF79100958719 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -678,58 +604,6 @@
 			};
 			name = Release;
 		};
-		B042F2E4245FF79100958719 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 4632R9FHL5;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = OSSSpeechKit_ExampleUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.appdevguy.OSSSpeechKit-ExampleUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = OSSSpeechKit_Example;
-			};
-			name = Debug;
-		};
-		B042F2E5245FF79100958719 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4632R9FHL5;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = OSSSpeechKit_ExampleUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.appdevguy.OSSSpeechKit-ExampleUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = OSSSpeechKit_Example;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -756,15 +630,6 @@
 			buildConfigurations = (
 				607FACF31AFB9204008FA782 /* Debug */,
 				607FACF41AFB9204008FA782 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B042F2E3245FF79100958719 /* Build configuration list for PBXNativeTarget "OSSSpeechKit_ExampleUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B042F2E4245FF79100958719 /* Debug */,
-				B042F2E5245FF79100958719 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
