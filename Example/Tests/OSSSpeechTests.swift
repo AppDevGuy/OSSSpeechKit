@@ -32,12 +32,23 @@ class OSSSpeechTests: XCTestCase {
         speechKit = OSSSpeech.shared
         speechKit.utterance = nil
         speechKit.voice = nil
-        speechKit.audioSession = AVAudioSessionMock.sharedInstance()
+        speechKit.srp = SFSpeechRecognizerMock.self
         print("Reset Speech Kit details")
     }
 
     override func tearDown() {
         speechKit = nil
+    }
+    
+    func testAudioSessionValid() {
+        let exp = expectation(description: "Speech Recogniser Permission")
+        var speechAuth = false
+        SFSpeechRecognizerMock.requestAuthorization { authStatus in
+            speechAuth = authStatus == .authorized
+            exp.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+        XCTAssert(speechAuth == true)
     }
 
     func testVoiceDecoderNil() {
@@ -62,9 +73,16 @@ class OSSSpeechTests: XCTestCase {
     func testSpeechStringSetupInvalid() {
         speechKit.voice = OSSVoice(quality: .enhanced, language: .Australian)
         speechKit.speakText(nil)
+        speechKit.recognitionTaskType = .confirmation
         XCTAssertNil(speechKit.utterance, "The utterance should be nil.")
         XCTAssertNotNil(speechKit.voice, "The voice should not be nil.")
-//        XCTAssert(speechKit.utterance?.speechString.isEmpty, "The speechString should be empty")
+        XCTAssert(speechKit.recognitionTaskType == .confirmation)
+        speechKit.recognitionTaskType = .dictation
+        XCTAssert(speechKit.recognitionTaskType == .dictation)
+        speechKit.recognitionTaskType = .search
+        XCTAssert(speechKit.recognitionTaskType == .search)
+        speechKit.recognitionTaskType = .undefined
+        XCTAssert(speechKit.recognitionTaskType == .undefined)
     }
     
     func testSpeechStringSetup() {
@@ -221,11 +239,11 @@ class OSSSpeechTests: XCTestCase {
     
     /// This should fail because voice recording is not permitted on simulators.
     func testSpeechRecording() {
-        speechKit!.recordVoice()
+        speechKit!.recordVoice(requestMicPermission: false)
         speechKit!.delegate = self
         let expectation = XCTestExpectation()
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0, execute: {
-            self.speechKit!.recordVoice()
+            self.speechKit!.recordVoice(requestMicPermission: false)
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3, execute: {
                 expectation.fulfill()
             })

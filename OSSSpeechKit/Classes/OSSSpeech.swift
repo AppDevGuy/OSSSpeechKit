@@ -193,17 +193,24 @@ public class OSSSpeech: NSObject {
     public var utterance: OSSUtterance?
     
     /// An AVAudioSession that ensure volume controls are correct in various scenarios
-    private var session = AVAudioSession.sharedInstance()
+    private var session: AVAudioSession?
     
     /// Audio Session can be overriden should you choose to.
     public var audioSession: AVAudioSession {
         get {
-            return session
+            guard let audioSess = session else {
+                return AVAudioSession.sharedInstance()
+            }
+            return audioSess
         }
         set {
             session = newValue
         }
     }
+    
+    /// This property handles permission authorization.
+    /// This property is intentionally named vaguely to prevent accidental overriding.
+    public var srp = SFSpeechRecognizer.self
     
     // Voice to text
     private var audioEngine: AVAudioEngine?
@@ -250,11 +257,6 @@ public class OSSSpeech: NSObject {
         if let speechText = text, !speechText.isEmpty {
             utterance?.speechString = speechText
         }
-        guard let _ = utterance?.speechString else {
-            debugLog(object: self, message: "Text is empty or nil. Please confirm text has been passed in.")
-            delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidUtterance.error)
-             return
-        }
         speak()
     }
     
@@ -279,21 +281,6 @@ public class OSSSpeech: NSObject {
     }
     
     // MARK: - Private Methods
-    
-    private func voiceIsValid() -> Bool {
-        guard let _ = voice else {
-            if utteranceIsValid() {
-                guard let _ = utterance!.voice else {
-                    debugLog(object: self, message: "No valid utterance voice.")
-                    return false
-                }
-                return true
-            }
-            debugLog(object: self, message: "No valid voice.")
-            return false
-        }
-        return true
-    }
 
     private func utteranceIsValid() -> Bool {
         guard let _ = utterance else {
@@ -344,7 +331,13 @@ public class OSSSpeech: NSObject {
     /// This method will check to see if user is authorised to record. If they are, the recording will proceed.
     ///
     /// Upon checking the authorisation and being registered successful, a check to determine if a recording session is active will be made and any active session will be cancelled.
-    public func recordVoice() {
+    public func recordVoice(requestMicPermission requested: Bool = true) {
+        if requested {
+            if audioSession.recordPermission != .granted {
+                self.requestMicPermission()
+                return
+            }
+        }
         getMicroPhoneAuthorization()
     }
     
@@ -355,7 +348,7 @@ public class OSSSpeech: NSObject {
     
     // MARK: - Private Voice Recording
     
-    private func getMicroPhoneAuthorization() {
+    private func requestMicPermission() {
         weak var weakSelf = self
         audioSession.requestRecordPermission { allowed in
             if !allowed {
@@ -363,21 +356,26 @@ public class OSSSpeech: NSObject {
                 weakSelf?.delegate?.authorizationToMicrophone(withAuthentication: .denied)
                 return
             }
-            SFSpeechRecognizer.requestAuthorization { authStatus in
-                let status = OSSSpeechKitAuthorizationStatus(rawValue: authStatus.rawValue)
-                switch authStatus {
-                case .authorized:
-                    OperationQueue.main.addOperation {
-                        weakSelf?.delegate?.authorizationToMicrophone(withAuthentication: status!)
-                        weakSelf?.recordAndRecognizeSpeech()
-                    }
-                    break
-                default:
-                    OperationQueue.main.addOperation {
-                        weakSelf?.delegate?.authorizationToMicrophone(withAuthentication: status!)
-                    }
-                    break
+            weakSelf?.getMicroPhoneAuthorization()
+        }
+    }
+    
+    private func getMicroPhoneAuthorization() {
+        weak var weakSelf = self
+        weakSelf?.srp.requestAuthorization { authStatus in
+            let status = OSSSpeechKitAuthorizationStatus(rawValue: authStatus.rawValue)
+            switch authStatus {
+            case .authorized:
+                OperationQueue.main.addOperation {
+                    weakSelf?.delegate?.authorizationToMicrophone(withAuthentication: status!)
+                    weakSelf?.recordAndRecognizeSpeech()
                 }
+                break
+            default:
+                OperationQueue.main.addOperation {
+                    weakSelf?.delegate?.authorizationToMicrophone(withAuthentication: status!)
+                }
+                break
             }
         }
     }

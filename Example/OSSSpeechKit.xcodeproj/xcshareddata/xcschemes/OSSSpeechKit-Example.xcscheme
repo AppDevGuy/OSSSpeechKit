@@ -106,6 +106,16 @@
                ReferencedContainer = "container:OSSSpeechKit.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B042F2DB245FF79100958719"
+               BuildableName = "OSSSpeechKit_ExampleUITests.xctest"
+               BlueprintName = "OSSSpeechKit_ExampleUITests"
+               ReferencedContainer = "container:OSSSpeechKit.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

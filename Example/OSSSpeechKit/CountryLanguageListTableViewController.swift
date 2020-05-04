@@ -39,6 +39,7 @@ class CountryLanguageListTableViewController: UITableViewController {
         }
         let button = UIBarButtonItem(image: micImage, style: .plain, target: self, action: #selector(recordVoice))
         button.tintColor = .black
+        button.accessibilityIdentifier = "OSSSpeechKitMicButton"
         return button
     }()
     
@@ -47,6 +48,7 @@ class CountryLanguageListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Languages"
+        tableView.accessibilityIdentifier = "OSSSpeechKitLanguageTableView"
         speechKit.delegate = self
         navigationItem.rightBarButtonItem = microphoneButton
         tableView.register(CountryLanguageTableViewCell.self,
@@ -83,6 +85,8 @@ extension CountryLanguageListTableViewController {
             return UITableViewCell(style: .subtitle, reuseIdentifier: UITableViewCell.reuseIdentifier)
         }
         cell.language = OSSVoiceEnum.allCases[indexPath.row]
+        cell.isAccessibilityElement = true
+        cell.accessibilityIdentifier = "OSSLanguageCell_\(indexPath.section)_\(indexPath.row)"
         return cell
     }
     

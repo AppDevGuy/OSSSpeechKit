@@ -23,12 +23,11 @@
 
 import UIKit
 import AVKit
+import Speech
 
-class AVAudioSessionMock: AVAudioSession {
-
-    /// Mock that the permission state is true for recording audio.
-    override func requestRecordPermission(_ response: @escaping PermissionBlock) {
-        response(true)
+class SFSpeechRecognizerMock: SFSpeechRecognizer {
+    /// Mock the permission with allowed
+    override class func requestAuthorization(_ handler: @escaping (SFSpeechRecognizerAuthorizationStatus) -> Void) {
+        handler(.authorized)
     }
-    
 }
