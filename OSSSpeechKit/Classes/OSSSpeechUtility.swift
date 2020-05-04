@@ -63,7 +63,7 @@ public class OSSSpeechUtility: NSObject {
             return defaultValue
         }
         // The Main Bundle does not contain the value for the key. Use the SDK strings table.
-        localString = NSLocalizedString(name, tableName: "Localizable", bundle: sdkBundle, value: defaultValue, comment: defaultValue)
+        localString = NSLocalizedString(name, tableName: "Localizable", bundle: Bundle.getResourcesBundle(), value: defaultValue, comment: defaultValue)
         if !localString.isEmpty && localString != name {
             return localString
         }
