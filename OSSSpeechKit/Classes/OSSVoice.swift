@@ -230,11 +230,7 @@ public enum OSSVoiceEnum: String, CaseIterable {
         if let mainBundleImage = UIImage(named: self.rawValue, in: Bundle.main, compatibleWith: nil) {
             return mainBundleImage
         }
-        if let bundle = Bundle.getResourcesBundle() {
-            let image = UIImage(named: self.rawValue, in: bundle, compatibleWith: nil)
-            return image
-        }
-        return nil
+        return UIImage(named: self.rawValue, in: Bundle.getResourcesBundle(), compatibleWith: nil)
     }
 }
 
@@ -306,7 +302,7 @@ public class OSSVoice: AVSpeechSynthesisVoice {
     }
     
     /// Required: Do not recommend using.
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         return nil
     }

@@ -64,8 +64,12 @@ public class OSSUtterance: AVSpeechUtterance {
     
     // MARK: - Lifecycle
     
-    private override init() {
-        super.init()
+    public override init() {
+        super.init(string: "ERROR")
+        debugLog(object: self, message: "ERROR: You must use the `init(string:)` or `init(attributedString:` methods.")
+        self.speechString = "ERROR"
+        self.attributedSpeechString = NSAttributedString(string: "ERROR")
+        self.commonInit()
     }
     
     /// Init method which will set the speechString value.
@@ -84,10 +88,10 @@ public class OSSUtterance: AVSpeechUtterance {
         self.commonInit()
     }
     
-    
     /// Required. Do not recommend using.
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init()
+        return nil
     }
     
     // MARK: - Private Methods

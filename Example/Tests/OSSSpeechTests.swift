@@ -39,17 +39,39 @@ class OSSSpeechTests: XCTestCase {
         speechKit = nil
     }
 
+    func testVoiceDecoderNil() {
+        let archiver = NSKeyedUnarchiver(forReadingWith: Data())
+        let voice = OSSVoice(coder: archiver)
+        let utterance = OSSUtterance(coder: archiver)
+        XCTAssertNil(voice)
+        XCTAssertNil(utterance)
+    }
+    
+    func testUtteranceInit() {
+        let utterance = OSSUtterance()
+        XCTAssert(utterance.speechString == "ERROR")
+        XCTAssert(utterance.attributedSpeechString.string == "ERROR")
+    }
+    
     func testFirstLoadSpeechValues() {
         XCTAssert(speechKit.utterance == nil, "The utterance should be nil.")
         XCTAssert(speechKit.voice == nil, "The voice should be nil.")
+    }
+    
+    func testSpeechStringSetupInvalid() {
+        speechKit.voice = OSSVoice(quality: .enhanced, language: .Australian)
+        speechKit.speakText(nil)
+        XCTAssertNil(speechKit.utterance, "The utterance should be nil.")
+        XCTAssertNotNil(speechKit.voice, "The voice should not be nil.")
+//        XCTAssert(speechKit.utterance?.speechString.isEmpty, "The speechString should be empty")
     }
     
     func testSpeechStringSetup() {
         speechKit.voice = OSSVoice(quality: .enhanced, language: .Australian)
         speechKit.speakText("Should Pass")
         speechKit.utterance?.volume = 1.0
-        XCTAssert(speechKit.utterance != nil, "The utterance should not be nil.")
-        XCTAssert(speechKit.voice != nil, "The voice should not be nil.")
+        XCTAssertNotNil(speechKit.utterance, "The utterance should not be nil.")
+        XCTAssertNotNil(speechKit.voice, "The voice should not be nil.")
         XCTAssert(speechKit.utterance!.speechString == "Should Pass", "The speechString should equal pass")
     }
     
@@ -57,8 +79,8 @@ class OSSSpeechTests: XCTestCase {
         speechKit.voice = OSSVoice(quality: .enhanced, language: .Australian)
         speechKit.speakAttributedText(attributedText: NSAttributedString(string: "Should Pass"))
         speechKit.utterance?.volume = 1.0
-        XCTAssert(speechKit.utterance != nil, "The utterance should not be nil.")
-        XCTAssert(speechKit.voice != nil, "The voice should not be nil.")
+        XCTAssertNotNil(speechKit.utterance, "The utterance should not be nil.")
+        XCTAssertNotNil(speechKit.voice, "The voice should not be nil.")
         XCTAssert(speechKit.utterance!.attributedSpeechString.string == "Should Pass", "The attributedSpeechString should equal pass")
     }
     
@@ -73,10 +95,10 @@ class OSSSpeechTests: XCTestCase {
     func testSpeechNoText() {
         speechKit.speakText("")
         speechKit.utterance = nil
-        XCTAssert(speechKit.utterance == nil, "Utterance should be nil")
+        XCTAssertNil(speechKit.utterance, "Utterance should be nil")
         speechKit.speakText("Test One")
         speechKit.voice = nil
-        XCTAssert(speechKit.voice == nil, "Voice should be nil")
+        XCTAssertNil(speechKit.voice, "Voice should be nil")
         speechKit.speakText("Test One")
         speechKit.voice = OSSVoice()
         speechKit.speakText("Test Two")
@@ -85,11 +107,11 @@ class OSSSpeechTests: XCTestCase {
     func testSpeechNoAttributedText() {
         speechKit.speakAttributedText(attributedText: NSAttributedString(string: ""))
         speechKit.utterance = nil
-        XCTAssert(speechKit.utterance == nil, "Utterance should be nil")
+        XCTAssertNil(speechKit.utterance, "Utterance should be nil")
         var attributedText = NSAttributedString(string: "Test One")
         speechKit.speakAttributedText(attributedText: attributedText)
         speechKit.voice = nil
-        XCTAssert(speechKit.voice == nil, "Voice should be nil")
+        XCTAssertNil(speechKit.voice, "Voice should be nil")
         speechKit.speakAttributedText(attributedText: attributedText)
         attributedText = NSAttributedString(string: "Test Two")
         speechKit.voice = OSSVoice()
@@ -177,8 +199,8 @@ class OSSSpeechTests: XCTestCase {
         let message = error.userInfo["message"] as? String
         let requestType = error.userInfo["request"] as? String
         XCTAssert(error.code == -1)
-        XCTAssert(message != nil)
-        XCTAssert(requestType != nil)
+        XCTAssertNotNil(message)
+        XCTAssertNotNil(requestType)
         if let aMessage = message, let rqType = requestType {
             XCTAssert(aMessage == "Access to the microphone is unavailable.")
             XCTAssert(rqType == "Recording")

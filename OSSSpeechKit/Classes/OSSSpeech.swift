@@ -323,8 +323,8 @@ public class OSSSpeech: NSObject {
     
     private func setSession(isRecording: Bool) {
         let category: AVAudioSession.Category = isRecording ? .playAndRecord : .playback
-        try! self.session.setCategory(category, options: .duckOthers)
-        try! self.session.setActive(true, options: .notifyOthersOnDeactivation)
+        try? self.session.setCategory(category, options: .duckOthers)
+        try? self.session.setActive(true, options: .notifyOthersOnDeactivation)
     }
     
     // MARK: - Public Voice Recording Methods
@@ -404,6 +404,7 @@ public class OSSSpeech: NSObject {
             self.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidAudioEngine.error)
             return false
         }
+        weak var weakSelf = self
         input.installTap(onBus: bus, bufferSize: 8192, format: inputFormat) { (buffer, time) -> Void in
             var newBufferAvailable = true
             let inputCallback: AVAudioConverterInputBlock = { inNumPackets, outStatus in
@@ -420,14 +421,14 @@ public class OSSSpeech: NSObject {
             var error: NSError?
             let status = converter.convert(to: convertedBuffer, error: &error, withInputFrom: inputCallback)
             if status == .error {
-                self.delegate?.didFailToCommenceSpeechRecording()
-                self.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidAudioEngine.error)
+                weakSelf?.delegate?.didFailToCommenceSpeechRecording()
+                weakSelf?.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidAudioEngine.error)
                 if let err = error {
-                    self.debugLog(object: self, message: "Audio Engine conversion error: \(err)")
+                    weakSelf?.debugLog(object: self, message: "Audio Engine conversion error: \(err)")
                 }
                 return
             }
-            self.request?.append(convertedBuffer)
+            weakSelf?.request?.append(convertedBuffer)
         }
         engine.prepare()
         do {
