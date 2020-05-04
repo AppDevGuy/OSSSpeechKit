@@ -10,7 +10,7 @@
 [![codecov](https://codecov.io/gh/AppDevGuy/OSSSpeechKit/branch/master/graph/badge.svg)](https://codecov.io/gh/AppDevGuy/OSSSpeechKit)
 [![docs](https://appdevguy.github.io/OSSSpeechKit/badge.svg)](https://appdevguy.github.io/OSSSpeechKit)
 
-OSSSpeechKit was developed to provide easier accesibility options to apps. 
+OSSSpeechKit was developed to provide easier accessibility options to apps. 
 
 Apple does not make it easy to get the right voice, nor do they provide a simple way of selecting a language or using speech to text. OSSSpeechKit makes the hassle of trying to find the right language go away. 
 
@@ -19,7 +19,7 @@ Apple does not make it easy to get the right voice, nor do they provide a simple
 - Swift 5.0 or higher
 - iOS 12.0 or higher
 - Cocoapods or higher
-- A real device (for microphone)
+- A real device
 
 # Supported Languages
 
@@ -83,6 +83,8 @@ newVoice.quality = .enhanced
 speechKit.voice = newVoice
 // Initialise an utterance
 let utterance = OSSUtterance(string: "Testing")
+// Set the recognition task type 
+speechKit.recognitionTaskType = .dictation
 // Set volume
 utterance.volume = 0.5
 // Set rate of speech
@@ -185,7 +187,7 @@ There are plans to implement flags for each country as well as some more feature
 
 If the language or voice you require is not available, this is either due to:
 
-- Apple have not made it avaiable through their AVFoundation; 
+- Apple have not made it available through their AVFoundation; 
 - or the SDK has not been updated to include the newly added voice.
 
 # Important Information
@@ -194,13 +196,13 @@ Apple do not make the voice of Siri available for use.
 
 This kit provides Apple's AVFoundation voices available and easy to use, so you do not need to know all the voice codes, among many other things.
 
-To say things correctly in each language, you need to set the voice to the correct langauge and supply that languages text; this SDK is not a translator. 
+To say things correctly in each language, you need to set the voice to the correct language and supply that languages text; this SDK is not a translator. 
 
 ### Code Example:
 
 You wish for you app to use a Chinese voice, you will need to ensure the text being passed in is Chinese. 
 
-_Disclaimer: I do not know how to speak Chinese, I have used Google translate for the chinese characters._
+_Disclaimer: I do not know how to speak Chinese, I have used Google translate for the Chinese characters._
 
 #### Correct:
 ```swift

@@ -117,20 +117,6 @@ public enum OSSSpeechKitErrorType: Int {
     }
 }
 
-/// Delegate to handle events such as failed authentication for microphone among many more.
-public protocol OSSSpeechDelegate: class {
-    /// When the microphone has finished accepting audio, this delegate will be called with the final best text output.
-    func didFinishListening(withText text: String)
-    /// Handle returning authentication status to user - primary use is for non-authorized state.
-    func authorizationToMicrophone(withAuthentication type: OSSSpeechKitAuthorizationStatus)
-    /// If the speech recogniser and request fail to set up, this method will be called.
-    func didFailToCommenceSpeechRecording()
-    /// Method for real time recpetion of translated text.
-    func didCompleteTranslation(withText text: String)
-    /// Error handling function.
-    func didFailToProcessRequest(withError error: Error?)
-}
-
 /// The speech recognition task type.
 public enum OSSSpeechRecognitionTaskType: Int {
     /// Undefined is the standard recognition type and allows the system to decide which type of task is best.
@@ -157,6 +143,20 @@ public enum OSSSpeechRecognitionTaskType: Int {
             return .confirmation
         }
     }
+}
+
+/// Delegate to handle events such as failed authentication for microphone among many more.
+public protocol OSSSpeechDelegate: class {
+    /// When the microphone has finished accepting audio, this delegate will be called with the final best text output.
+    func didFinishListening(withText text: String)
+    /// Handle returning authentication status to user - primary use is for non-authorized state.
+    func authorizationToMicrophone(withAuthentication type: OSSSpeechKitAuthorizationStatus)
+    /// If the speech recogniser and request fail to set up, this method will be called.
+    func didFailToCommenceSpeechRecording()
+    /// Method for real time recpetion of translated text.
+    func didCompleteTranslation(withText text: String)
+    /// Error handling function.
+    func didFailToProcessRequest(withError error: Error?)
 }
 
 /// Speech is the primary interface. To use, set the voice and then call `.speak(string: "your string")`
