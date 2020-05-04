@@ -18,7 +18,7 @@ Apple does not make it easy to get the right voice, nor do they provide a simple
 
 - Swift 5.0 or higher
 - iOS 12.0 or higher
-- Cocoapods or higher
+- Cocoapods
 - A real device
 
 # Supported Languages
@@ -102,9 +102,8 @@ speechKit.speakText(text: utterance.speechString)
 
 Currently speech to text is offered in a very simple format. Starting and stopping of recording is handled by the app. 
 
-_The next release is expected to contain auto ending of recording along with features such as returning sound wave float variables for use in User Interfaces._
 
-### NOTE: iOS 13 Local-to-Device Speech to Text support will be introduced.
+### iOS 13 On-Device Speech to Text support is now available as of 0.3.0 🎉
 
 SpeechKit implements delegates to handle the recording authorization, output of text and failure to record.
 
