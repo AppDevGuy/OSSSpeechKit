@@ -92,10 +92,10 @@ extension CountryLanguageListTableViewController {
         speechKit.utterance?.rate = 0.45
         // Test attributed string vs normal string
         if indexPath.item % 2 == 0 {
-            self.speechKit.speakText(OSSVoiceEnum.allCases[indexPath.item].demoMessage)
+            speechKit.speakText(OSSVoiceEnum.allCases[indexPath.item].demoMessage)
         } else {
             let attributedString = NSAttributedString(string: OSSVoiceEnum.allCases[indexPath.item].demoMessage)
-            self.speechKit.speakAttributedText(attributedText: attributedString)
+            speechKit.speakAttributedText(attributedText: attributedString)
         }
     }
 }
@@ -123,9 +123,10 @@ extension CountryLanguageListTableViewController: OSSSpeechDelegate {
     }
     
     func didFinishListening(withText text: String) {
+        weak var weakSelf = self
         OperationQueue.main.addOperation {
-            self.microphoneButton.tintColor = .black
-            self.speechKit.speakText(text)
+            weakSelf?.microphoneButton.tintColor = .black
+            weakSelf?.speechKit.speakText(text)
         }
     }
 }

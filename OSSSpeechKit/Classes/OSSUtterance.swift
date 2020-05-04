@@ -43,8 +43,8 @@ public class OSSUtterance: AVSpeechUtterance {
             return stringToSpeak
         }
         set {
-            self.stringToSpeak = newValue
-            self.attributedStringToSpeak = NSAttributedString(string: newValue)
+            stringToSpeak = newValue
+            attributedStringToSpeak = NSAttributedString(string: newValue)
         }
     }
     
@@ -54,11 +54,11 @@ public class OSSUtterance: AVSpeechUtterance {
     /// Default value in an empty string.
     override public var attributedSpeechString: NSAttributedString {
         get {
-            return self.attributedStringToSpeak
+            return attributedStringToSpeak
         }
         set {
-            self.stringToSpeak = newValue.string
-            self.attributedStringToSpeak = newValue
+            stringToSpeak = newValue.string
+            attributedStringToSpeak = newValue
         }
     }
     
@@ -67,25 +67,25 @@ public class OSSUtterance: AVSpeechUtterance {
     public override init() {
         super.init(string: "ERROR")
         debugLog(object: self, message: "ERROR: You must use the `init(string:)` or `init(attributedString:` methods.")
-        self.speechString = "ERROR"
-        self.attributedSpeechString = NSAttributedString(string: "ERROR")
-        self.commonInit()
+        speechString = "ERROR"
+        attributedSpeechString = NSAttributedString(string: "ERROR")
+        commonInit()
     }
     
     /// Init method which will set the speechString value.
     public override init(string: String) {
         super.init(string: string)
-        self.speechString = string
-        self.attributedSpeechString = NSAttributedString(string: string)
-        self.commonInit()
+        speechString = string
+        attributedSpeechString = NSAttributedString(string: string)
+        commonInit()
     }
     
     /// Init method which will set the attributedSpeechString value.
     public override init(attributedString: NSAttributedString) {
         super.init(attributedString: attributedString)
-        self.attributedSpeechString = attributedString
-        self.speechString = attributedString.string
-        self.commonInit()
+        attributedSpeechString = attributedString
+        speechString = attributedString.string
+        commonInit()
     }
     
     /// Required. Do not recommend using.
@@ -99,9 +99,9 @@ public class OSSUtterance: AVSpeechUtterance {
     /// Common init is used for testing purposes only.
     private func commonInit() {
         // Init default values
-        self.rate = AVSpeechUtteranceDefaultSpeechRate
-        self.pitchMultiplier = 1.0
-        self.volume = 1.0
-        self.voice = AVSpeechSynthesisVoice(identifier: AVSpeechSynthesisVoiceIdentifierAlex)
+        rate = AVSpeechUtteranceDefaultSpeechRate
+        pitchMultiplier = 1.0
+        volume = 1.0
+        voice = AVSpeechSynthesisVoice(identifier: AVSpeechSynthesisVoiceIdentifierAlex)
     }
 }

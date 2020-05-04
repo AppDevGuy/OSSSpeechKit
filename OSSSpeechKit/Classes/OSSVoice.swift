@@ -121,12 +121,12 @@ public enum OSSVoiceEnum: String, CaseIterable {
     /// Will return specific information about the language as an OSSVoiceInfo object.
     public func getDetails() -> OSSVoiceInfo {
         var voiceInfo: OSSVoiceInfo = OSSVoiceInfo()
-        if let voice = AVSpeechSynthesisVoice(language: self.rawValue) {
+        if let voice = AVSpeechSynthesisVoice(language: rawValue) {
             if #available(iOS 9.0, *) {
                 voiceInfo.name = voice.name
                 voiceInfo.identifier = voice.identifier
             }
-            voiceInfo.languageCode = self.rawValue
+            voiceInfo.languageCode = rawValue
             voiceInfo.language = "\(self)"
         }
         return voiceInfo
@@ -140,7 +140,7 @@ public enum OSSVoiceEnum: String, CaseIterable {
     /// Demo message is for returning a string in the language that will be read while also providing the name of the voice that Apple have provided.
     public var demoMessage: String {
         var voiceName = ""
-        if let name = self.getDetails().name {
+        if let name = getDetails().name {
             voiceName = name
         }
         switch self {
@@ -227,10 +227,10 @@ public enum OSSVoiceEnum: String, CaseIterable {
     ///
     /// If no image is found in the application bundle, the image from the SDK bundle will be provided.
     public var flag: UIImage? {
-        if let mainBundleImage = UIImage(named: self.rawValue, in: Bundle.main, compatibleWith: nil) {
+        if let mainBundleImage = UIImage(named: rawValue, in: Bundle.main, compatibleWith: nil) {
             return mainBundleImage
         }
-        return UIImage(named: self.rawValue, in: Bundle.getResourcesBundle(), compatibleWith: nil)
+        return UIImage(named: rawValue, in: Bundle.getResourcesBundle(), compatibleWith: nil)
     }
 }
 
@@ -254,10 +254,10 @@ public class OSSVoice: AVSpeechSynthesisVoice {
     /// You have access to set the voice quality or use the default which is set to .default
     override public var quality: AVSpeechSynthesisVoiceQuality {
         get {
-            return self.voiceQuality
+            return voiceQuality
         }
         set {
-            self.voiceQuality = newValue
+            voiceQuality = newValue
         }
     }
     
@@ -267,9 +267,9 @@ public class OSSVoice: AVSpeechSynthesisVoice {
             return voiceLanguage
         }
         set {
-            self.voiceLanguage = newValue
+            voiceLanguage = newValue
             if let valueEnum = OSSVoiceEnum(rawValue: newValue) {
-                self.voiceTypeValue = valueEnum
+                voiceTypeValue = valueEnum
             }            
         }
     }
@@ -290,15 +290,15 @@ public class OSSVoice: AVSpeechSynthesisVoice {
     /// Quality defaults to .default.
     public override init() {
         super.init()
-        self.commonInit()
+        commonInit()
     }
     
     /// This init method is required as it sets the voice quality and language in order to speak the text passed in.
     public init?(quality: AVSpeechSynthesisVoiceQuality, language: OSSVoiceEnum) {
         super.init()
-        self.voiceTypeValue = language
-        self.voiceLanguage = language.rawValue
-        self.voiceQuality = quality
+        voiceTypeValue = language
+        voiceLanguage = language.rawValue
+        voiceQuality = quality
     }
     
     /// Required: Do not recommend using.
@@ -316,8 +316,8 @@ public class OSSVoice: AVSpeechSynthesisVoice {
     /// Quality defaults to .default.
     private func commonInit() {
         // Set the default values
-        self.voiceTypeValue = OSSVoiceEnum.UnitedStatesEnglish
-        self.voiceLanguage = OSSVoiceEnum.UnitedStatesEnglish.rawValue
-        self.voiceQuality = .default
+        voiceTypeValue = OSSVoiceEnum.UnitedStatesEnglish
+        voiceLanguage = OSSVoiceEnum.UnitedStatesEnglish.rawValue
+        voiceQuality = .default
     }
 }
