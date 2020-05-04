@@ -127,10 +127,73 @@ class OSSSpeechTests: XCTestCase {
     }
     
     func testAuthEnumValues() {
-        XCTAssert(OSSSpeechKitAuthorizationStatus.notDetermined.message == "The app's authorization status has not yet been determined.", "Test uncertain authorization message.")
-        XCTAssert(OSSSpeechKitAuthorizationStatus.denied.message == "The user denied your app's request to perform speech recognition.", "Test denied authorization message.")
-        XCTAssert(OSSSpeechKitAuthorizationStatus.restricted.message == "The device prevents your app from performing speech recognition.", "Test restricted authorization message.")
-        XCTAssert(OSSSpeechKitAuthorizationStatus.authorized.message == "The user granted your app's request to perform speech recognition.", "Test authorized message.")
+        var status = OSSSpeechKitAuthorizationStatus.notDetermined
+        XCTAssert(status.rawValue == 0)
+        XCTAssert(status.message == "The app's authorization status has not yet been determined.", "Test uncertain authorization message.")
+        status = OSSSpeechKitAuthorizationStatus.denied
+        XCTAssert(status.rawValue == 1)
+        XCTAssert(status.message == "The user denied your app's request to perform speech recognition.", "Test denied authorization message.")
+        status = OSSSpeechKitAuthorizationStatus.restricted
+        XCTAssert(status.rawValue == 2)
+        XCTAssert(status.message == "The device prevents your app from performing speech recognition.", "Test restricted authorization message.")
+        status = OSSSpeechKitAuthorizationStatus.authorized
+        XCTAssert(status.rawValue == 3)
+        XCTAssert(status.message == "The user granted your app's request to perform speech recognition.", "Test authorized message.")
+    }
+    
+    func testErrorEnumValues() {
+        var errorType = OSSSpeechKitErrorType.noMicrophoneAccess
+        XCTAssert(errorType.rawValue == -1)
+        XCTAssert(errorType.errorMessage == "Access to the microphone is unavailable.")
+        XCTAssert(errorType.errorRequestType == "Recording")
+        errorType = OSSSpeechKitErrorType.invalidUtterance
+        XCTAssert(errorType.rawValue == -2)
+        XCTAssert(errorType.errorMessage == "The utterance is invalid. Please ensure you have created one or passed in valid text to speak.")
+        XCTAssert(errorType.errorRequestType == "Speech or Recording")
+        errorType = OSSSpeechKitErrorType.invalidText
+        XCTAssert(errorType.rawValue == -3)
+        XCTAssert(errorType.errorMessage == "The text provided to the utterance is either empty or has not been set.")
+        XCTAssert(errorType.errorRequestType == "Speech")
+        errorType = OSSSpeechKitErrorType.invalidVoice
+        XCTAssert(errorType.rawValue == -4)
+        XCTAssert(errorType.errorMessage == "In order to speak text, a valid voice is required.")
+        XCTAssert(errorType.errorRequestType == "Speech")
+        errorType = OSSSpeechKitErrorType.invalidSpeechRequest
+        XCTAssert(errorType.rawValue == -5)
+        XCTAssert(errorType.errorMessage == "The speech request is invalid. Please ensure the string provided contains text.")
+        XCTAssert(errorType.errorRequestType == "Speech")
+        errorType = OSSSpeechKitErrorType.invalidAudioEngine
+        XCTAssert(errorType.rawValue == -6)
+        XCTAssert(errorType.errorMessage == "The audio engine is unavailable. Please try again soon.")
+        XCTAssert(errorType.errorRequestType == "Recording")
+        errorType = OSSSpeechKitErrorType.recogniserUnavailble
+        XCTAssert(errorType.rawValue == -7)
+        XCTAssert(errorType.errorMessage == "The Speech Recognition service is currently unavailable.")
+        XCTAssert(errorType.errorRequestType == "Speech")
+        guard let error = OSSSpeechKitErrorType.noMicrophoneAccess.error as NSError? else {
+            XCTAssert(true == false, "Error must not be nil.")
+            return
+        }
+        let message = error.userInfo["message"] as? String
+        let requestType = error.userInfo["request"] as? String
+        XCTAssert(error.code == -1)
+        XCTAssert(message != nil)
+        XCTAssert(requestType != nil)
+        if let aMessage = message, let rqType = requestType {
+            XCTAssert(aMessage == "Access to the microphone is unavailable.")
+            XCTAssert(rqType == "Recording")
+        }
+    }
+    
+    func testRecognitionTaskTypeEnum() {
+        XCTAssert(OSSSpeechRecognitionTaskType.undefined.rawValue == 0)
+        XCTAssert(OSSSpeechRecognitionTaskType.undefined.taskType.rawValue == 0)
+        XCTAssert(OSSSpeechRecognitionTaskType.dictation.rawValue == 1)
+        XCTAssert(OSSSpeechRecognitionTaskType.dictation.taskType.rawValue == 1)
+        XCTAssert(OSSSpeechRecognitionTaskType.search.rawValue == 2)
+        XCTAssert(OSSSpeechRecognitionTaskType.search.taskType.rawValue == 2)
+        XCTAssert(OSSSpeechRecognitionTaskType.confirmation.rawValue == 3)
+        XCTAssert(OSSSpeechRecognitionTaskType.confirmation.taskType.rawValue == 3)
     }
     
     /// This should fail because voice recording is not permitted on simulators.
@@ -145,6 +208,22 @@ class OSSSpeechTests: XCTestCase {
             })
         })
         self.wait(for: [expectation], timeout: 5.0)
+    }
+    
+    func testUtilityClassStrings() {
+        let util = OSSSpeechUtility()
+        var mainBundleStringNotSDKString = util.getString(forLocalizedName: "OSSSpeechKitTests_testString", defaultValue: "")
+        XCTAssert(mainBundleStringNotSDKString.isEmpty, "Localized string does not exist in the SDK; the default value (\"\") should be returned.")
+        util.stringsTableName = "LocalizableTests"
+        XCTAssert(util.stringsTableName == "LocalizableTests", "The table name did not override the default value.")
+        mainBundleStringNotSDKString = util.getString(forLocalizedName: "OSSSpeechKitTests_testString", defaultValue: "")
+        XCTAssert(mainBundleStringNotSDKString == "This is a test string.", "The name of the localized string should now be found.")
+        let blankKey = util.getString(forLocalizedName: "", defaultValue: "")
+        XCTAssert(blankKey == "!&!&!&!&!&!&!&!&!&!&!&!&!&!&!", "Passing in an empty string should return an obvious error string.")
+        let testString = util.getString(forLocalizedName: "OSSSpeechKitAuthorizationStatus_messageNotDetermined",
+                                        defaultValue: "The app's authorization status has not yet been determined.")
+        let expectedString = "The test class is overriding the message: The app's authorization status has not yet been determined."
+        XCTAssert(testString == expectedString, "The SDK string was not overridden.")
     }
 
 }

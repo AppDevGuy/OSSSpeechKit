@@ -28,7 +28,7 @@
 "OSSSpeechKitErrorType_messageNoMicAccess" = "Access to the microphone is unavailable.";
 "OSSSpeechKitErrorType_messageInvalidUtterance" = "The utterance is invalid. Please ensure you have created one or passed in valid text to speak.";
 "OSSSpeechKitErrorType_messageInvalidText" = "The text provided to the utterance is either empty or has not been set.";
-"OSSSpeechKitErrorType_messageInvalidVoice" = "In order to speak text, a valid voice is required..";
+"OSSSpeechKitErrorType_messageInvalidVoice" = "In order to speak text, a valid voice is required.";
 "OSSSpeechKitErrorType_messageInvalidSpeechRequest" = "The speech request is invalid. Please ensure the string provided contains text.";
 "OSSSpeechKitErrorType_messageInvalidAudioEngine" = "The audio engine is unavailable. Please try again soon.";
 "OSSSpeechKitErrorType_messageRecogniserUnavailable" = "The Speech Recognition service is currently unavailable.";

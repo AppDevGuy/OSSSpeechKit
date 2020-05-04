@@ -325,15 +325,3 @@ public class OSSVoice: AVSpeechSynthesisVoice {
         self.voiceQuality = .default
     }
 }
-
-/// Bundle extension to aid in retrieving the SDK resources for getting SDK images.
-extension Bundle {
-    /// Will return the Bundle for the SDK if it can be found.
-    static func getResourcesBundle() -> Bundle? {
-        let bundle = Bundle(for: OSSSpeech.self)
-        guard let resourcesBundleUrl = bundle.resourceURL?.appendingPathComponent("OSSSpeechKit.bundle") else {
-            return nil
-        }
-        return Bundle(url: resourcesBundleUrl)
-    }
-}

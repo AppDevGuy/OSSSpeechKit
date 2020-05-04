@@ -37,7 +37,7 @@ class CountryLanguageListTableViewController: UITableViewController {
         } else {
             micImage = UIImage(named: "oss-microphone-icon")?.withRenderingMode(.alwaysTemplate)
         }
-        let button = UIBarButtonItem(image: micImage, style:.plain, target: self, action: #selector(recordVoice))
+        let button = UIBarButtonItem(image: micImage, style: .plain, target: self, action: #selector(recordVoice))
         button.tintColor = .black
         return button
     }()
@@ -49,7 +49,8 @@ class CountryLanguageListTableViewController: UITableViewController {
         title = "Languages"
         speechKit.delegate = self
         navigationItem.rightBarButtonItem = microphoneButton
-        tableView.register(CountryLanguageTableViewCell.self, forCellReuseIdentifier: CountryLanguageTableViewCell.reuseIdentifier)
+        tableView.register(CountryLanguageTableViewCell.self,
+                           forCellReuseIdentifier: CountryLanguageTableViewCell.reuseIdentifier)
     }
     
     // MARK: - Voice Recording
@@ -66,7 +67,7 @@ class CountryLanguageListTableViewController: UITableViewController {
 
 extension CountryLanguageListTableViewController {
 
-    // MARK: - Table view data source
+    // MARK: - Table View Data Source and Delegate
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -77,7 +78,10 @@ extension CountryLanguageListTableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CountryLanguageTableViewCell.reuseIdentifier, for: indexPath) as! CountryLanguageTableViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryLanguageTableViewCell.reuseIdentifier,
+                                                       for: indexPath) as? CountryLanguageTableViewCell else {
+            return UITableViewCell(style: .subtitle, reuseIdentifier: UITableViewCell.reuseIdentifier)
+        }
         cell.language = OSSVoiceEnum.allCases[indexPath.row]
         return cell
     }

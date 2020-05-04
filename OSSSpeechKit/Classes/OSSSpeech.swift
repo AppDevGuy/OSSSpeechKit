@@ -28,25 +28,25 @@ import Speech
 /// The authorization status of the Microphone and recording, imitating the native `SFSpeechRecognizerAuthorizationStatus`
 public enum OSSSpeechKitAuthorizationStatus: Int {
     /// The app's authorization status has not yet been determined.
-    case notDetermined
+    case notDetermined = 0
     /// The user denied your app's request to perform speech recognition.
-    case denied
+    case denied = 1
     /// The device prevents your app from performing speech recognition.
-    case restricted
+    case restricted = 2
     /// The user granted your app's request to perform speech recognition.
-    case authorized
+    case authorized = 3
     
     /// A public message that can be displayed to the user.
     public var message: String {
         switch self {
         case .notDetermined:
-            return NSLocalizedString("OSSSpeechKitAuthorizationStatus_messageNotDetermined", comment:"The app's authorization status has not yet been determined.")
+            return OSSSpeechUtility().getString(forLocalizedName:"OSSSpeechKitAuthorizationStatus_messageNotDetermined", defaultValue:"The app's authorization status has not yet been determined.")
         case .denied:
-            return NSLocalizedString("OSSSpeechKitAuthorizationStatus_messageDenied", comment:"The user denied your app's request to perform speech recognition.")
+            return OSSSpeechUtility().getString(forLocalizedName:"OSSSpeechKitAuthorizationStatus_messageDenied", defaultValue:"The user denied your app's request to perform speech recognition.")
         case .restricted:
-            return NSLocalizedString("OSSSpeechKitAuthorizationStatus_messageRestricted", comment:"The device prevents your app from performing speech recognition.")
+            return OSSSpeechUtility().getString(forLocalizedName:"OSSSpeechKitAuthorizationStatus_messageRestricted", defaultValue:"The device prevents your app from performing speech recognition.")
         case .authorized:
-            return NSLocalizedString("OSSSpeechKitAuthorizationStatus_messageAuthorized", comment:"The user granted your app's request to perform speech recognition.")
+            return OSSSpeechUtility().getString(forLocalizedName:"OSSSpeechKitAuthorizationStatus_messageAuthorized", defaultValue:"The user granted your app's request to perform speech recognition.")
         }
     }
 }
@@ -71,51 +71,48 @@ public enum OSSSpeechKitErrorType: Int {
     /// The OSSSpeechKit error message string.
     ///
     /// The error message strings can be altered in the Localized strings file.
-    var errorMessage: String {
+    public var errorMessage: String {
         switch self {
         case .noMicrophoneAccess:
-            return NSLocalizedString("OSSSpeechKitErrorType_messageNoMicAccess", comment:"Access to the microphone is unavailable.")
+            return OSSSpeechUtility().getString(forLocalizedName:"OSSSpeechKitErrorType_messageNoMicAccess", defaultValue:"Access to the microphone is unavailable.")
         case .invalidUtterance:
-            return NSLocalizedString("OSSSpeechKitErrorType_messageInvalidUtterance", comment:"The utterance is invalid. Please ensure you have created one or passed in valid text to speak.")
+            return OSSSpeechUtility().getString(forLocalizedName:"OSSSpeechKitErrorType_messageInvalidUtterance", defaultValue:"The utterance is invalid. Please ensure you have created one or passed in valid text to speak.")
         case .invalidText:
-            return NSLocalizedString("OSSSpeechKitErrorType_messageInvalidText", comment:"The text provided to the utterance is either empty or has not been set.")
+            return OSSSpeechUtility().getString(forLocalizedName:"OSSSpeechKitErrorType_messageInvalidText", defaultValue:"The text provided to the utterance is either empty or has not been set.")
         case .invalidVoice:
-            return NSLocalizedString("OSSSpeechKitErrorType_messageInvalidVoice", comment:"In order to speak text, a valid voice is required..")
+            return OSSSpeechUtility().getString(forLocalizedName:"OSSSpeechKitErrorType_messageInvalidVoice", defaultValue:"In order to speak text, a valid voice is required.")
         case .invalidSpeechRequest:
-            return NSLocalizedString("OSSSpeechKitErrorType_messageInvalidSpeechRequest", comment:"The speech request is invalid. Please ensure the string provided contains text.")
+            return OSSSpeechUtility().getString(forLocalizedName:"OSSSpeechKitErrorType_messageInvalidSpeechRequest", defaultValue:"The speech request is invalid. Please ensure the string provided contains text.")
         case .invalidAudioEngine:
-            return NSLocalizedString("OSSSpeechKitErrorType_messageInvalidAudioEngine", comment:"The audio engine is unavailable. Please try again soon.")
+            return OSSSpeechUtility().getString(forLocalizedName:"OSSSpeechKitErrorType_messageInvalidAudioEngine", defaultValue:"The audio engine is unavailable. Please try again soon.")
         case .recogniserUnavailble:
-            return NSLocalizedString("OSSSpeechKitErrorType_messageRecogniserUnavailable", comment:"The Speech Recognition service is currently unavailable.")
+            return OSSSpeechUtility().getString(forLocalizedName:"OSSSpeechKitErrorType_messageRecogniserUnavailable", defaultValue:"The Speech Recognition service is currently unavailable.")
         }
     }
     
     /// The highlevel type of error that occured.
     ///
     /// A String will be used in the OSSSpeechKitErrorType error: Error? that is returned when an exception is thrown.
-    var errorRequestType: String {
+    public var errorRequestType: String {
         switch self {
         case .noMicrophoneAccess,
             .invalidAudioEngine:
-            return NSLocalizedString("OSSSpeechKitErrorType_requestTypeNoMicAccess", comment:"Recording")
+            return OSSSpeechUtility().getString(forLocalizedName:"OSSSpeechKitErrorType_requestTypeNoMicAccess", defaultValue:"Recording")
         case .invalidUtterance:
-            return NSLocalizedString("OSSSpeechKitErrorType_requestTypeInvalidUtterance", comment:"Speech or Recording")
+            return OSSSpeechUtility().getString(forLocalizedName:"OSSSpeechKitErrorType_requestTypeInvalidUtterance", defaultValue:"Speech or Recording")
         case .invalidText,
              .invalidVoice,
              .invalidSpeechRequest,
              .recogniserUnavailble:
-            return NSLocalizedString("OSSSpeechKitErrorType_requestTypeInvalidSpeech", comment:"Speech")
+            return OSSSpeechUtility().getString(forLocalizedName:"OSSSpeechKitErrorType_requestTypeInvalidSpeech", defaultValue:"Speech")
         }
     }
+    
     /// An error that is used to capture details of the error event.
-    var error: Error? {
+    public var error: Error? {
         let err = NSError(domain: "au.com.appdevguy.ossspeechkit",
                           code: self.rawValue,
-                          userInfo: [
-                            "message": self.errorMessage,
-                            "request": self.errorRequestType
-            ]
-        )
+                          userInfo: ["message": self.errorMessage, "request": self.errorRequestType])
         return err
     }
 }
@@ -142,10 +139,10 @@ public enum OSSSpeechRecognitionTaskType: Int {
     ///
     /// Use this when doing a similar task that of the keyboard voice to text function.
     case dictation = 1
-    /// Use this for short speechs such as "Yes", "No", "Thanks", etc.
-    case confirmation = 2
     /// Use this short speechs that have specific words or terms.
-    case search = 3
+    case search = 2
+    /// Use this for short speechs such as "Yes", "No", "Thanks", etc.
+    case confirmation = 3
     
     /// Returns a speech recognition hint based on the enum value.
     public var taskType: SFSpeechRecognitionTaskHint {
@@ -154,10 +151,10 @@ public enum OSSSpeechRecognitionTaskType: Int {
             return .unspecified
         case .dictation:
             return .dictation
-        case .confirmation:
-            return .confirmation
         case .search:
             return .search
+        case .confirmation:
+            return .confirmation
         }
     }
 }
@@ -349,25 +346,25 @@ public class OSSSpeech: NSObject {
     // MARK: - Private Voice Recording
     
     private func getMicroPhoneAuthorization() {
-        AVAudioSession.sharedInstance().requestRecordPermission { (allowed) in
+        weak var weakSelf = self
+        AVAudioSession.sharedInstance().requestRecordPermission { allowed in
             if !allowed {
-                self.debugLog(object: self, message: "Microphone permission was denied.")
-                self.delegate?.authorizationToMicrophone(withAuthentication: .denied)
+                weakSelf?.debugLog(object: self, message: "Microphone permission was denied.")
+                weakSelf?.delegate?.authorizationToMicrophone(withAuthentication: .denied)
                 return
             }
-            SFSpeechRecognizer.requestAuthorization {
-                [unowned self] (authStatus) in
+            SFSpeechRecognizer.requestAuthorization { authStatus in
                 let status = OSSSpeechKitAuthorizationStatus(rawValue: authStatus.rawValue)
                 switch authStatus {
                 case .authorized:
                     OperationQueue.main.addOperation {
-                        self.delegate?.authorizationToMicrophone(withAuthentication: status!)
-                        self.recordAndRecognizeSpeech()
+                        weakSelf?.delegate?.authorizationToMicrophone(withAuthentication: status!)
+                        weakSelf?.recordAndRecognizeSpeech()
                     }
                     break
                 default:
                     OperationQueue.main.addOperation {
-                        self.delegate?.authorizationToMicrophone(withAuthentication: status!)
+                        weakSelf?.delegate?.authorizationToMicrophone(withAuthentication: status!)
                     }
                     break
                 }
@@ -520,23 +517,5 @@ extension OSSSpeech: SFSpeechRecognitionTaskDelegate, SFSpeechRecognizerDelegate
     
     /// Docs available by Google searching for SFSpeechRecognizerDelegate
     public func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {}
-    
-    // MARK: - Public Debug Output
-    
-    /// Method outputs a debug statement containing necessary information to resolve issues.
-    ///
-    ///  Only works with debug/dev builds.
-    ///
-    ///  - Parameters:
-    ///     - object: Any object type
-    ///     - functionName: Automatically populated by the application
-    ///     - fileName: Automatically populated by the application
-    ///     - lineNumber: Automatically populated by the application
-    ///     - message: The message you wish to output.
-    public func debugLog(object: Any, functionName: String = #function, fileName: String = #file, lineNumber: Int = #line, message: String) {
-        #if DEBUG
-        let className = (fileName as NSString).lastPathComponent
-        print("\n\n******************\tBegin Debug Log\t******************\n\n\tClass: <\(className)>\n\tFunction: \(functionName)\n\tLine: #\(lineNumber)\n\tObject: \(object)\n\tLog Message: \(message)\n\n******************\tEnd Debug Log\t******************\n\n")
-        #endif
-    }
+
 }
