@@ -22,7 +22,6 @@
 //
 
 import UIKit
-import AVKit
 import Speech
 
 class SFSpeechRecognizerMock: SFSpeechRecognizer {

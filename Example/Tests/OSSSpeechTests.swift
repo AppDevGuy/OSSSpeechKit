@@ -23,6 +23,7 @@
 
 import XCTest
 import OSSSpeechKit
+import AVKit
 
 class OSSSpeechTests: XCTestCase {
 
@@ -244,11 +245,27 @@ class OSSSpeechTests: XCTestCase {
         let exp = expectation(description: "Record voice")
         speechKit?.recordVoice(requestMicPermission: false)
         var hasCompleted = false
-        sleep(2)
+        sleep(1)
         exp.fulfill()
+        speechKit?.endVoiceRecording()
         hasCompleted = true
+        sleep(1)
         waitForExpectations(timeout: 3)
         XCTAssert(hasCompleted, "Did not complete the Speech Recording expectation")
+    }
+    
+    func testRecordPermission() {
+        speechKit?.recordVoice(requestMicPermission: true)
+        let recPermission = AVAudioSession.sharedInstance().recordPermission
+        XCTAssert(recPermission != .granted, "AVAudioSession returned incorrect permission.")
+    }
+    
+    func testAudioSessionSetting() {
+        XCTAssertNotNil(speechKit?.audioSession)
+        let customSession = AVAudioSession()
+        speechKit?.audioSession = customSession
+        try? customSession.setCategory(.ambient)
+        XCTAssert(customSession.category == .ambient)
     }
     
     func testUtilityClassStrings() {
