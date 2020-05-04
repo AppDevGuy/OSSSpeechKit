@@ -32,6 +32,7 @@ class OSSSpeechTests: XCTestCase {
         speechKit = OSSSpeech.shared
         speechKit.utterance = nil
         speechKit.voice = nil
+        speechKit.audioSession = AVAudioSessionMock.sharedInstance()
         print("Reset Speech Kit details")
     }
 

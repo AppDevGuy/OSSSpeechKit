@@ -111,8 +111,8 @@ public enum OSSSpeechKitErrorType: Int {
     /// An error that is used to capture details of the error event.
     public var error: Error? {
         let err = NSError(domain: "au.com.appdevguy.ossspeechkit",
-                          code: self.rawValue,
-                          userInfo: ["message": self.errorMessage, "request": self.errorRequestType])
+                          code: rawValue,
+                          userInfo: ["message": errorMessage, "request": errorRequestType])
         return err
     }
 }
@@ -193,7 +193,17 @@ public class OSSSpeech: NSObject {
     public var utterance: OSSUtterance?
     
     /// An AVAudioSession that ensure volume controls are correct in various scenarios
-    private let session = AVAudioSession.sharedInstance()
+    private var session = AVAudioSession.sharedInstance()
+    
+    /// Audio Session can be overriden should you choose to.
+    public var audioSession: AVAudioSession {
+        get {
+            return session
+        }
+        set {
+            session = newValue
+        }
+    }
     
     // Voice to text
     private var audioEngine: AVAudioEngine?
@@ -204,8 +214,8 @@ public class OSSSpeech: NSObject {
     
     // MARK: - Lifecycle
     
-    private override init(){
-        self.speechSynthesizer = AVSpeechSynthesizer()
+    private override init() {
+        speechSynthesizer = AVSpeechSynthesizer()
     }
     
     private static let sharedInstance: OSSSpeech = {
@@ -223,29 +233,29 @@ public class OSSSpeech: NSObject {
     /// This will set the speechString on the utterance.
     /// - Parameter text: An String object.
     public func speakText(_ text: String? = nil) {
-        if !self.utteranceIsValid() {
+        if !utteranceIsValid() {
             guard let speechText = text else {
-                self.debugLog(object: self, message: "Text is empty or nil. Please confirm text has been passed in.")
-                self.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidUtterance.error)
+                debugLog(object: self, message: "Text is empty or nil. Please confirm text has been passed in.")
+                delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidUtterance.error)
                 return
             }
             // Handle empty text gracefully.
             if speechText.isEmpty {
-                self.debugLog(object: self, message: "Text is empty or nil. Please confirm text has been passed in.")
-                self.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidUtterance.error)
+                debugLog(object: self, message: "Text is empty or nil. Please confirm text has been passed in.")
+                delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidUtterance.error)
                 return
             }
-            self.utterance = OSSUtterance(string: speechText)
+            utterance = OSSUtterance(string: speechText)
         }
         if let speechText = text, !speechText.isEmpty {
-            self.utterance?.speechString = speechText
+            utterance?.speechString = speechText
         }
-        guard let _ = self.utterance?.speechString else {
-            self.debugLog(object: self, message: "Text is empty or nil. Please confirm text has been passed in.")
-            self.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidUtterance.error)
+        guard let _ = utterance?.speechString else {
+            debugLog(object: self, message: "Text is empty or nil. Please confirm text has been passed in.")
+            delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidUtterance.error)
              return
         }
-        self.speak()
+        speak()
     }
     
     /// Pass in an attributed string to speak.
@@ -254,40 +264,40 @@ public class OSSSpeech: NSObject {
     public func speakAttributedText(attributedText: NSAttributedString) {
         // Handle empty text gracefully.
         if attributedText.string.isEmpty {
-            self.debugLog(object: self, message: "Attributed text is empty or nil. Please confirm text has been passed in.")
-            self.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidText.error)
+            debugLog(object: self, message: "Attributed text is empty or nil. Please confirm text has been passed in.")
+            delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidText.error)
             return
         }
-        if !self.utteranceIsValid() {
+        if !utteranceIsValid() {
             // Initialize default utterance
-            self.utterance = OSSUtterance(attributedString: attributedText)
+            utterance = OSSUtterance(attributedString: attributedText)
         }
-        if self.utterance!.attributedSpeechString.string != attributedText.string {
-            self.utterance!.attributedSpeechString = attributedText
+        if utterance!.attributedSpeechString.string != attributedText.string {
+            utterance!.attributedSpeechString = attributedText
         }
-        self.speak()
+        speak()
     }
     
     // MARK: - Private Methods
     
     private func voiceIsValid() -> Bool {
-        guard let _ = self.voice else {
-            if self.utteranceIsValid() {
-                guard let _ = self.utterance!.voice else {
-                    self.debugLog(object: self, message: "No valid utterance voice.")
+        guard let _ = voice else {
+            if utteranceIsValid() {
+                guard let _ = utterance!.voice else {
+                    debugLog(object: self, message: "No valid utterance voice.")
                     return false
                 }
                 return true
             }
-            self.debugLog(object: self, message: "No valid voice.")
+            debugLog(object: self, message: "No valid voice.")
             return false
         }
         return true
     }
 
     private func utteranceIsValid() -> Bool {
-        guard let _ = self.utterance else {
-            self.debugLog(object: self, message: "No valid utterance.")
+        guard let _ = utterance else {
+            debugLog(object: self, message: "No valid utterance.")
             return false
         }
         return true
@@ -295,19 +305,19 @@ public class OSSSpeech: NSObject {
     
     private func speak() {
         // While unlikely to be invalid or null, safety first.
-        guard let validUtterance = self.utterance else {
-            self.debugLog(object: self, message: "No valid utterance.")
-            self.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidUtterance.error)
+        guard let validUtterance = utterance else {
+            debugLog(object: self, message: "No valid utterance.")
+            delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidUtterance.error)
             return
         }
         var speechVoice = OSSVoice()
-        if let aVoice = self.voice {
+        if let aVoice = voice {
             speechVoice = aVoice
         }
         let validString = validUtterance.speechString
         if validString.isEmpty {
-            self.debugLog(object: self, message: "No valid utterance string, please ensure you are passing a string to your speak call.")
-            self.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidText.error)
+            debugLog(object: self, message: "No valid utterance string, please ensure you are passing a string to your speak call.")
+            delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidText.error)
             return
         }
         // Utterance must be an original object in order to be spoken. We redefine an new instance of Utterance each time using the values in the existing utterance.
@@ -317,14 +327,14 @@ public class OSSSpeech: NSObject {
         newUtterance.volume = validUtterance.volume
         newUtterance.voice = speechVoice
         // Ensure volume is correct each time
-        self.setSession(isRecording: false)
-        self.speechSynthesizer.speak(newUtterance)
+        setSession(isRecording: false)
+        speechSynthesizer.speak(newUtterance)
     }
     
     private func setSession(isRecording: Bool) {
         let category: AVAudioSession.Category = isRecording ? .playAndRecord : .playback
-        try? self.session.setCategory(category, options: .duckOthers)
-        try? self.session.setActive(true, options: .notifyOthersOnDeactivation)
+        try? audioSession.setCategory(category, options: .duckOthers)
+        try? audioSession.setActive(true, options: .notifyOthersOnDeactivation)
     }
     
     // MARK: - Public Voice Recording Methods
@@ -347,7 +357,7 @@ public class OSSSpeech: NSObject {
     
     private func getMicroPhoneAuthorization() {
         weak var weakSelf = self
-        AVAudioSession.sharedInstance().requestRecordPermission { allowed in
+        audioSession.requestRecordPermission { allowed in
             if !allowed {
                 weakSelf?.debugLog(object: self, message: "Microphone permission was denied.")
                 weakSelf?.delegate?.authorizationToMicrophone(withAuthentication: .denied)
@@ -395,13 +405,13 @@ public class OSSSpeech: NSObject {
         let bus = 0
         let inputFormat = input.outputFormat(forBus: 0)
         guard let outputFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: 8000, channels: 1, interleaved: true) else {
-            self.delegate?.didFailToCommenceSpeechRecording()
-            self.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidAudioEngine.error)
+            delegate?.didFailToCommenceSpeechRecording()
+            delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidAudioEngine.error)
             return false
         }
         guard let converter = AVAudioConverter(from: inputFormat, to: outputFormat) else {
-            self.delegate?.didFailToCommenceSpeechRecording()
-            self.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidAudioEngine.error)
+            delegate?.didFailToCommenceSpeechRecording()
+            delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidAudioEngine.error)
             return false
         }
         weak var weakSelf = self
@@ -435,40 +445,40 @@ public class OSSSpeech: NSObject {
             try engine.start()
             return true
         } catch {
-            self.delegate?.didFailToCommenceSpeechRecording()
-            self.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidAudioEngine.error)
+            delegate?.didFailToCommenceSpeechRecording()
+            delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidAudioEngine.error)
             return false
         }
     }
     
     private func recordAndRecognizeSpeech() {
-        if let engine = self.audioEngine {
+        if let engine = audioEngine {
             if engine.isRunning {
                 cancelRecording()
             }
         }
-        self.setSession(isRecording: true)
+        setSession(isRecording: true)
         request = SFSpeechAudioBufferRecognitionRequest()
         audioEngine = AVAudioEngine()
         let identifier = voice?.voiceType.rawValue ?? OSSVoiceEnum.UnitedStatesEnglish.rawValue
         speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: identifier))
         guard let engine = audioEngine else {
-            self.debugLog(object: self, message: "The audio engine is nil.")
-            self.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidAudioEngine.error)
+            debugLog(object: self, message: "The audio engine is nil.")
+            delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidAudioEngine.error)
             return
         }
         if !engineSetup(engine) {
-            self.debugLog(object: self, message: "The audio engine is nil.")
+            debugLog(object: self, message: "The audio engine is nil.")
             return
         }
         guard let recogniser = SFSpeechRecognizer() else {
-            self.delegate?.didFailToCommenceSpeechRecording()
-            self.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidSpeechRequest.error)
+            delegate?.didFailToCommenceSpeechRecording()
+            delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidSpeechRequest.error)
             return
         }
         if !recogniser.isAvailable {
-            self.delegate?.didFailToCommenceSpeechRecording()
-            self.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.recogniserUnavailble.error)
+            delegate?.didFailToCommenceSpeechRecording()
+            delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.recogniserUnavailble.error)
             return
         }
         speechRecognizer = recogniser
@@ -482,8 +492,8 @@ public class OSSSpeech: NSObject {
             speechRecog.defaultTaskHint = recognitionTaskType.taskType
             recognitionTask = speechRecog.recognitionTask(with: audioRequest, delegate: self)
         } else {
-            self.delegate?.didFailToCommenceSpeechRecording()
-            self.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidSpeechRequest.error)
+            delegate?.didFailToCommenceSpeechRecording()
+            delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidSpeechRequest.error)
         }
     }
 }
@@ -496,18 +506,18 @@ extension OSSSpeech: SFSpeechRecognitionTaskDelegate, SFSpeechRecognizerDelegate
     /// Docs available by Google searching for SFSpeechRecognitionTaskDelegate
     public func speechRecognitionTask(_ task: SFSpeechRecognitionTask, didFinishSuccessfully successfully: Bool) {
         recognitionTask = nil
-        self.delegate?.didFinishListening(withText: self.spokenText)
-        self.setSession(isRecording: false)
+        delegate?.didFinishListening(withText: spokenText)
+        setSession(isRecording: false)
     }
     
     /// Docs available by Google searching for SFSpeechRecognitionTaskDelegate
     public func speechRecognitionTask(_ task: SFSpeechRecognitionTask, didHypothesizeTranscription transcription: SFTranscription) {
-        self.delegate?.didCompleteTranslation(withText: transcription.formattedString)
+        delegate?.didCompleteTranslation(withText: transcription.formattedString)
     }
     
     /// Docs available by Google searching for SFSpeechRecognitionTaskDelegate
     public func speechRecognitionTask(_ task: SFSpeechRecognitionTask, didFinishRecognition recognitionResult: SFSpeechRecognitionResult) {
-        self.spokenText = recognitionResult.bestTranscription.formattedString
+        spokenText = recognitionResult.bestTranscription.formattedString
     }
     
     public func speechRecognitionDidDetectSpeech(_ task: SFSpeechRecognitionTask) {}

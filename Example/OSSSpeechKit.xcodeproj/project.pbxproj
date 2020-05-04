@@ -12,6 +12,8 @@
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		64EA52AEB7F1C16E3DA6FF13 /* Pods_OSSSpeechKit_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72EC396A97B53B0AF569DE1A /* Pods_OSSSpeechKit_Example.framework */; };
 		B042F2D1245FC24100958719 /* LocalizableTests.strings in Resources */ = {isa = PBXBuildFile; fileRef = B042F2D0245FC24100958719 /* LocalizableTests.strings */; };
+		B042F2D4245FEDC600958719 /* AVAudioSessionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B042F2D3245FEDC600958719 /* AVAudioSessionMock.swift */; };
+		B042F2D5245FEDC600958719 /* AVAudioSessionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B042F2D3245FEDC600958719 /* AVAudioSessionMock.swift */; };
 		B04ABC992458500100ACE8F2 /* CountryLanguageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04ABC982458500100ACE8F2 /* CountryLanguageTableViewCell.swift */; };
 		B04ABC9B2458502C00ACE8F2 /* CountryLanguageListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04ABC9A2458502C00ACE8F2 /* CountryLanguageListTableViewController.swift */; };
 		B06260E122ABCA2600069801 /* OSSSpeechTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06260E022ABCA2600069801 /* OSSSpeechTests.swift */; };
@@ -44,6 +46,7 @@
 		969F0DB7618212626605C72B /* Pods-OSSSpeechKit_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OSSSpeechKit_Example.release.xcconfig"; path = "Target Support Files/Pods-OSSSpeechKit_Example/Pods-OSSSpeechKit_Example.release.xcconfig"; sourceTree = "<group>"; };
 		AD7924CA4244888FD94ED9C6 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		B042F2D0245FC24100958719 /* LocalizableTests.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = LocalizableTests.strings; sourceTree = "<group>"; };
+		B042F2D3245FEDC600958719 /* AVAudioSessionMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAudioSessionMock.swift; sourceTree = "<group>"; };
 		B04ABC982458500100ACE8F2 /* CountryLanguageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryLanguageTableViewCell.swift; sourceTree = "<group>"; };
 		B04ABC9A2458502C00ACE8F2 /* CountryLanguageListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryLanguageListTableViewController.swift; sourceTree = "<group>"; };
 		B06260E022ABCA2600069801 /* OSSSpeechTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSSSpeechTests.swift; sourceTree = "<group>"; };
@@ -148,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				607FACEA1AFB9204008FA782 /* Info.plist */,
+				B042F2D3245FEDC600958719 /* AVAudioSessionMock.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -365,6 +369,7 @@
 			files = (
 				B04ABC9B2458502C00ACE8F2 /* CountryLanguageListTableViewController.swift in Sources */,
 				B04ABC992458500100ACE8F2 /* CountryLanguageTableViewCell.swift in Sources */,
+				B042F2D4245FEDC600958719 /* AVAudioSessionMock.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -373,6 +378,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B042F2D5245FEDC600958719 /* AVAudioSessionMock.swift in Sources */,
 				B06260E122ABCA2600069801 /* OSSSpeechTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
