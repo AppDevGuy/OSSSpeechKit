@@ -291,28 +291,19 @@ public class OSSSpeech: NSObject {
     }
     
     private func speak() {
-        // While unlikely to be invalid or null, safety first.
-        guard let validUtterance = utterance else {
-            debugLog(object: self, message: "No valid utterance.")
-            delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidUtterance.error)
-            return
-        }
         var speechVoice = OSSVoice()
         if let aVoice = voice {
             speechVoice = aVoice
         }
-        let validString = validUtterance.speechString
-        if validString.isEmpty {
-            debugLog(object: self, message: "No valid utterance string, please ensure you are passing a string to your speak call.")
-            delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidText.error)
-            return
-        }
+        let validString = utterance?.speechString ?? "error"
         // Utterance must be an original object in order to be spoken. We redefine an new instance of Utterance each time using the values in the existing utterance.
         let newUtterance = AVSpeechUtterance(string: validString)
-        newUtterance.rate = validUtterance.rate
-        newUtterance.pitchMultiplier = validUtterance.pitchMultiplier
-        newUtterance.volume = validUtterance.volume
         newUtterance.voice = speechVoice
+        if let validUtterance = utterance {
+            newUtterance.rate = validUtterance.rate
+            newUtterance.pitchMultiplier = validUtterance.pitchMultiplier
+            newUtterance.volume = validUtterance.volume
+        }
         // Ensure volume is correct each time
         setSession(isRecording: false)
         speechSynthesizer.speak(newUtterance)
@@ -363,19 +354,12 @@ public class OSSSpeech: NSObject {
     private func getMicroPhoneAuthorization() {
         weak var weakSelf = self
         weakSelf?.srp.requestAuthorization { authStatus in
-            let status = OSSSpeechKitAuthorizationStatus(rawValue: authStatus.rawValue)
-            switch authStatus {
-            case .authorized:
+            let status = OSSSpeechKitAuthorizationStatus(rawValue: authStatus.rawValue) ?? .notDetermined
+            weakSelf?.delegate?.authorizationToMicrophone(withAuthentication: status)
+            if status == .authorized {
                 OperationQueue.main.addOperation {
-                    weakSelf?.delegate?.authorizationToMicrophone(withAuthentication: status!)
                     weakSelf?.recordAndRecognizeSpeech()
                 }
-                break
-            default:
-                OperationQueue.main.addOperation {
-                    weakSelf?.delegate?.authorizationToMicrophone(withAuthentication: status!)
-                }
-                break
             }
         }
     }

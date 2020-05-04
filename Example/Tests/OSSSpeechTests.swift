@@ -71,6 +71,12 @@ class OSSSpeechTests: XCTestCase {
         XCTAssert(speechKit.voice == nil, "The voice should be nil.")
     }
     
+    func testSpeakWithNoSetup() {
+        speechKit.speakText(nil)
+        XCTAssertNil(speechKit.voice)
+        XCTAssertNil(speechKit.utterance)
+    }
+    
     func testSpeechStringSetupInvalid() {
         speechKit.voice = OSSVoice(quality: .enhanced, language: .Australian)
         speechKit.speakText(nil)
