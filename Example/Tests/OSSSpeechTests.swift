@@ -239,16 +239,16 @@ class OSSSpeechTests: XCTestCase {
     
     /// This should fail because voice recording is not permitted on simulators.
     func testSpeechRecording() {
-        speechKit!.recordVoice(requestMicPermission: false)
-        speechKit!.delegate = self
-        let expectation = XCTestExpectation()
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0, execute: {
-            self.speechKit!.recordVoice(requestMicPermission: false)
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3, execute: {
-                expectation.fulfill()
-            })
-        })
-        wait(for: [expectation], timeout: 5.0)
+        speechKit?.recordVoice(requestMicPermission: false)
+        speechKit?.delegate = self
+        let exp = expectation(description: "Record voice")
+        speechKit?.recordVoice(requestMicPermission: false)
+        var hasCompleted = false
+        sleep(2)
+        exp.fulfill()
+        hasCompleted = true
+        waitForExpectations(timeout: 3)
+        XCTAssert(hasCompleted, "Did not complete the Speech Recording expectation")
     }
     
     func testUtilityClassStrings() {

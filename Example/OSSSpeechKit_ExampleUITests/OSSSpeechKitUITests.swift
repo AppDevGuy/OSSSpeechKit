@@ -50,14 +50,12 @@ class OSSSpeechKitUITests: XCTestCase {
         XCTAssert(XCTWaiter.Result.completed == waiter, "Test Case Failed.")
         firstCell.tap()
         // Enable playing of audio
-        sleep(5)
+        sleep(3)
     }
     
     func testButtonRecordsAndCancels() {
-//        app.navigationBars.buttons.element(boundBy: 0).tap()
         app.navigationBars.buttons.matching(identifier: micButtonIdentifier).element.tap()
         sleep(3)
-//        app.navigationBars.buttons.element(boundBy: 0).tap()
         app.navigationBars.buttons.matching(identifier: micButtonIdentifier).element.tap()
         sleep(2)
     }
