@@ -257,6 +257,7 @@ class OSSSpeechTests: XCTestCase {
     func testRecordPermission() {
         speechKit?.recordVoice(requestMicPermission: true)
         let recPermission = AVAudioSession.sharedInstance().recordPermission
+        sleep(2)
         XCTAssert(recPermission != .granted, "AVAudioSession returned incorrect permission.")
     }
     
