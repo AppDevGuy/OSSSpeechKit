@@ -3,7 +3,7 @@ platform :ios, '12.0'
 
 target 'OSSSpeechKit_Example' do
   pod 'OSSSpeechKit', :path => '../'
-  pod 'PureLayout'
+  pod 'PureLayout', :inhibit_warnings => true
   
   target 'OSSSpeechKit_Tests' do
     inherit! :search_paths

@@ -24,16 +24,16 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>To use commands, we need to access the microphone.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Would you like to use voice commands?</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
 	</array>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Would you like to use voice commands?</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>To use commands, we need to access the microphone.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

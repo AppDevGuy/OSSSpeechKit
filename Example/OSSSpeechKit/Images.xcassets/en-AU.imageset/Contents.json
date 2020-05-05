@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "oss-microphone-icon@1x.png",
+      "filename" : "en-AU@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "oss-microphone-icon@2x.png",
+      "filename" : "en-AU@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "oss-microphone-icon@3x.png",
+      "filename" : "en-AU@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

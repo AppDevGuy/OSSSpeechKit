@@ -1,9 +1,24 @@
+//  Copyright © 2018-2020 App Dev Guy. All rights reserved.
 //
-//  OSSUtterance.swift
-//  OSSSpeechKit
+//  This code is distributed under the terms and conditions of the MIT license.
 //
-//  Created by Sean Smith on 29/12/18.
-//  Copyright © 2018 App Dev Guy. All rights reserved.
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to
+//  deal in the Software without restriction, including without limitation the
+//  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+//  sell copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+//  IN THE SOFTWARE.
 //
 
 import AVFoundation
@@ -28,8 +43,8 @@ public class OSSUtterance: AVSpeechUtterance {
             return stringToSpeak
         }
         set {
-            self.stringToSpeak = newValue
-            self.attributedStringToSpeak = NSAttributedString(string: newValue)
+            stringToSpeak = newValue
+            attributedStringToSpeak = NSAttributedString(string: newValue)
         }
     }
     
@@ -39,40 +54,44 @@ public class OSSUtterance: AVSpeechUtterance {
     /// Default value in an empty string.
     override public var attributedSpeechString: NSAttributedString {
         get {
-            return self.attributedStringToSpeak
+            return attributedStringToSpeak
         }
         set {
-            self.stringToSpeak = newValue.string
-            self.attributedStringToSpeak = newValue
+            stringToSpeak = newValue.string
+            attributedStringToSpeak = newValue
         }
     }
     
     // MARK: - Lifecycle
     
-    private override init() {
-        super.init()
+    public override init() {
+        super.init(string: "ERROR")
+        debugLog(object: self, message: "ERROR: You must use the `init(string:)` or `init(attributedString:` methods.")
+        speechString = "ERROR"
+        attributedSpeechString = NSAttributedString(string: "ERROR")
+        commonInit()
     }
     
     /// Init method which will set the speechString value.
     public override init(string: String) {
         super.init(string: string)
-        self.speechString = string
-        self.attributedSpeechString = NSAttributedString(string: string)
-        self.commonInit()
+        speechString = string
+        attributedSpeechString = NSAttributedString(string: string)
+        commonInit()
     }
     
     /// Init method which will set the attributedSpeechString value.
     public override init(attributedString: NSAttributedString) {
         super.init(attributedString: attributedString)
-        self.attributedSpeechString = attributedString
-        self.speechString = attributedString.string
-        self.commonInit()
+        attributedSpeechString = attributedString
+        speechString = attributedString.string
+        commonInit()
     }
     
-    
     /// Required. Do not recommend using.
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init()
+        return nil
     }
     
     // MARK: - Private Methods
@@ -80,9 +99,9 @@ public class OSSUtterance: AVSpeechUtterance {
     /// Common init is used for testing purposes only.
     private func commonInit() {
         // Init default values
-        self.rate = AVSpeechUtteranceDefaultSpeechRate
-        self.pitchMultiplier = 1.0
-        self.volume = 1.0
-        self.voice = AVSpeechSynthesisVoice(identifier: AVSpeechSynthesisVoiceIdentifierAlex)
+        rate = AVSpeechUtteranceDefaultSpeechRate
+        pitchMultiplier = 1.0
+        volume = 1.0
+        voice = AVSpeechSynthesisVoice(identifier: AVSpeechSynthesisVoiceIdentifierAlex)
     }
 }

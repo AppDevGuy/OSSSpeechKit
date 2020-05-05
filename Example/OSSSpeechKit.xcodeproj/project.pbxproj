@@ -8,11 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
-		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		64EA52AEB7F1C16E3DA6FF13 /* Pods_OSSSpeechKit_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72EC396A97B53B0AF569DE1A /* Pods_OSSSpeechKit_Example.framework */; };
-		B005BA2922A9430A0030E2F4 /* BasicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B005BA2822A9430A0030E2F4 /* BasicCollectionViewCell.swift */; };
+		B042F2D1245FC24100958719 /* LocalizableTests.strings in Resources */ = {isa = PBXBuildFile; fileRef = B042F2D0245FC24100958719 /* LocalizableTests.strings */; };
+		B042F2D4245FEDC600958719 /* SFSpeechRecognizerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B042F2D3245FEDC600958719 /* SFSpeechRecognizerMock.swift */; };
+		B042F2D5245FEDC600958719 /* SFSpeechRecognizerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B042F2D3245FEDC600958719 /* SFSpeechRecognizerMock.swift */; };
+		B04ABC992458500100ACE8F2 /* CountryLanguageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04ABC982458500100ACE8F2 /* CountryLanguageTableViewCell.swift */; };
+		B04ABC9B2458502C00ACE8F2 /* CountryLanguageListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04ABC9A2458502C00ACE8F2 /* CountryLanguageListTableViewController.swift */; };
 		B06260E122ABCA2600069801 /* OSSSpeechTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06260E022ABCA2600069801 /* OSSSpeechTests.swift */; };
 		E95D80055602E1F3DAB44DDC /* Pods_OSSSpeechKit_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59EABFEDF2B45A65EB1CA76E /* Pods_OSSSpeechKit_Tests.framework */; };
 /* End PBXBuildFile section */
@@ -33,7 +36,6 @@
 		607FACD01AFB9204008FA782 /* OSSSpeechKit_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSSSpeechKit_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* OSSSpeechKit_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OSSSpeechKit_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -43,7 +45,10 @@
 		8E50A387E6C9227B46CD07D5 /* Pods-OSSSpeechKit_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OSSSpeechKit_Tests.debug.xcconfig"; path = "Target Support Files/Pods-OSSSpeechKit_Tests/Pods-OSSSpeechKit_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		969F0DB7618212626605C72B /* Pods-OSSSpeechKit_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OSSSpeechKit_Example.release.xcconfig"; path = "Target Support Files/Pods-OSSSpeechKit_Example/Pods-OSSSpeechKit_Example.release.xcconfig"; sourceTree = "<group>"; };
 		AD7924CA4244888FD94ED9C6 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		B005BA2822A9430A0030E2F4 /* BasicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicCollectionViewCell.swift; sourceTree = "<group>"; };
+		B042F2D0245FC24100958719 /* LocalizableTests.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = LocalizableTests.strings; sourceTree = "<group>"; };
+		B042F2D3245FEDC600958719 /* SFSpeechRecognizerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFSpeechRecognizerMock.swift; sourceTree = "<group>"; };
+		B04ABC982458500100ACE8F2 /* CountryLanguageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryLanguageTableViewCell.swift; sourceTree = "<group>"; };
+		B04ABC9A2458502C00ACE8F2 /* CountryLanguageListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryLanguageListTableViewController.swift; sourceTree = "<group>"; };
 		B06260E022ABCA2600069801 /* OSSSpeechTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSSSpeechTests.swift; sourceTree = "<group>"; };
 		D9904FC64C70B4667E482942 /* Pods-OSSSpeechKit_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OSSSpeechKit_Example.debug.xcconfig"; path = "Target Support Files/Pods-OSSSpeechKit_Example/Pods-OSSSpeechKit_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		EB2636A7260A79C428DB0FCF /* Pods-OSSSpeechKit_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OSSSpeechKit_Tests.release.xcconfig"; path = "Target Support Files/Pods-OSSSpeechKit_Tests/Pods-OSSSpeechKit_Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -115,7 +120,7 @@
 			children = (
 				B005BA2722A942EF0030E2F4 /* Subviews */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
-				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				B04ABC9A2458502C00ACE8F2 /* CountryLanguageListTableViewController.swift */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
@@ -127,6 +132,7 @@
 		607FACD31AFB9204008FA782 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B042F2D0245FC24100958719 /* LocalizableTests.strings */,
 				607FACD41AFB9204008FA782 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -145,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				607FACEA1AFB9204008FA782 /* Info.plist */,
+				B042F2D3245FEDC600958719 /* SFSpeechRecognizerMock.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -162,7 +169,7 @@
 		B005BA2722A942EF0030E2F4 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
-				B005BA2822A9430A0030E2F4 /* BasicCollectionViewCell.swift */,
+				B04ABC982458500100ACE8F2 /* CountryLanguageTableViewCell.swift */,
 			);
 			name = Subviews;
 			sourceTree = "<group>";
@@ -179,6 +186,7 @@
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
 				5004C6A87EB6F934EFA310F2 /* [CP] Embed Pods Frameworks */,
+				B042F2D2245FCDD900958719 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -214,8 +222,8 @@
 		607FACC81AFB9204008FA782 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 1020;
+				LastSwiftUpdateCheck = 1140;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
@@ -257,6 +265,7 @@
 			files = (
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
+				B042F2D1245FC24100958719 /* LocalizableTests.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,16 +284,12 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-OSSSpeechKit_Example/Pods-OSSSpeechKit_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/OSSSpeechKit/OSSSpeechKit.framework",
 				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OSSSpeechKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
@@ -293,6 +298,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-OSSSpeechKit_Example/Pods-OSSSpeechKit_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		B042F2D2245FCDD900958719 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 		EBB80964F428049277FF60C0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -345,8 +367,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
-				B005BA2922A9430A0030E2F4 /* BasicCollectionViewCell.swift in Sources */,
+				B04ABC9B2458502C00ACE8F2 /* CountryLanguageListTableViewController.swift in Sources */,
+				B04ABC992458500100ACE8F2 /* CountryLanguageTableViewCell.swift in Sources */,
+				B042F2D4245FEDC600958719 /* SFSpeechRecognizerMock.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -355,6 +378,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B042F2D5245FEDC600958719 /* SFSpeechRecognizerMock.swift in Sources */,
 				B06260E122ABCA2600069801 /* OSSSpeechTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -482,6 +506,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VALIDATE_PRODUCT = YES;
 			};

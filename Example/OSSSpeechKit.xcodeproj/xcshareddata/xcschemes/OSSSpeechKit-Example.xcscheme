@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1020"
+   LastUpgradeVersion = "1130"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -74,13 +74,22 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      shouldUseLaunchSchemeArgsEnv = "YES"
       codeCoverageEnabled = "YES"
-      onlyGenerateCoverageForSpecifiedTargets = "YES"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      onlyGenerateCoverageForSpecifiedTargets = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "607FACCF1AFB9204008FA782"
+            BuildableName = "OSSSpeechKit_Example.app"
+            BlueprintName = "OSSSpeechKit_Example"
+            ReferencedContainer = "container:OSSSpeechKit.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <CodeCoverageTargets>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "00DE7C439561495953CA831F6E0FC35F"
+            BlueprintIdentifier = "CC609081AFEBC1B2993C1780AA242BC0"
             BuildableName = "OSSSpeechKit.framework"
             BlueprintName = "OSSSpeechKit"
             ReferencedContainer = "container:Pods/Pods.xcodeproj">
@@ -97,18 +106,17 @@
                ReferencedContainer = "container:OSSSpeechKit.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B042F2DB245FF79100958719"
+               BuildableName = "OSSSpeechKit_ExampleUITests.xctest"
+               BlueprintName = "OSSSpeechKit_ExampleUITests"
+               ReferencedContainer = "container:OSSSpeechKit.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "OSSSpeechKit_Example.app"
-            BlueprintName = "OSSSpeechKit_Example"
-            ReferencedContainer = "container:OSSSpeechKit.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -130,8 +138,6 @@
             ReferencedContainer = "container:OSSSpeechKit.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

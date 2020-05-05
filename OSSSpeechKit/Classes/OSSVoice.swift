@@ -1,9 +1,24 @@
+//  Copyright © 2018-2020 App Dev Guy. All rights reserved.
 //
-//  OSSVoice.swift
-//  OSSSpeechKit
+//  This code is distributed under the terms and conditions of the MIT license.
 //
-//  Created by Sean Smith on 29/12/18.
-//  Copyright © 2018 App Dev Guy. All rights reserved.
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to
+//  deal in the Software without restriction, including without limitation the
+//  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+//  sell copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+//  IN THE SOFTWARE.
 //
 
 import UIKit
@@ -106,12 +121,12 @@ public enum OSSVoiceEnum: String, CaseIterable {
     /// Will return specific information about the language as an OSSVoiceInfo object.
     public func getDetails() -> OSSVoiceInfo {
         var voiceInfo: OSSVoiceInfo = OSSVoiceInfo()
-        if let voice = AVSpeechSynthesisVoice(language: self.rawValue) {
+        if let voice = AVSpeechSynthesisVoice(language: rawValue) {
             if #available(iOS 9.0, *) {
                 voiceInfo.name = voice.name
                 voiceInfo.identifier = voice.identifier
             }
-            voiceInfo.languageCode = self.rawValue
+            voiceInfo.languageCode = rawValue
             voiceInfo.language = "\(self)"
         }
         return voiceInfo
@@ -125,7 +140,7 @@ public enum OSSVoiceEnum: String, CaseIterable {
     /// Demo message is for returning a string in the language that will be read while also providing the name of the voice that Apple have provided.
     public var demoMessage: String {
         var voiceName = ""
-        if let name = self.getDetails().name {
+        if let name = getDetails().name {
             voiceName = name
         }
         switch self {
@@ -212,14 +227,10 @@ public enum OSSVoiceEnum: String, CaseIterable {
     ///
     /// If no image is found in the application bundle, the image from the SDK bundle will be provided.
     public var flag: UIImage? {
-        if let mainBundleImage = UIImage(named: self.rawValue, in: Bundle.main, compatibleWith: nil) {
+        if let mainBundleImage = UIImage(named: rawValue, in: Bundle.main, compatibleWith: nil) {
             return mainBundleImage
         }
-        if let bundle = Bundle.getResourcesBundle() {
-            let image = UIImage(named: self.rawValue, in: bundle, compatibleWith: nil)
-            return image
-        }
-        return nil
+        return UIImage(named: rawValue, in: Bundle.getResourcesBundle(), compatibleWith: nil)
     }
 }
 
@@ -243,10 +254,10 @@ public class OSSVoice: AVSpeechSynthesisVoice {
     /// You have access to set the voice quality or use the default which is set to .default
     override public var quality: AVSpeechSynthesisVoiceQuality {
         get {
-            return self.voiceQuality
+            return voiceQuality
         }
         set {
-            self.voiceQuality = newValue
+            voiceQuality = newValue
         }
     }
     
@@ -256,9 +267,9 @@ public class OSSVoice: AVSpeechSynthesisVoice {
             return voiceLanguage
         }
         set {
-            self.voiceLanguage = newValue
+            voiceLanguage = newValue
             if let valueEnum = OSSVoiceEnum(rawValue: newValue) {
-                self.voiceTypeValue = valueEnum
+                voiceTypeValue = valueEnum
             }            
         }
     }
@@ -279,19 +290,19 @@ public class OSSVoice: AVSpeechSynthesisVoice {
     /// Quality defaults to .default.
     public override init() {
         super.init()
-        self.commonInit()
+        commonInit()
     }
     
     /// This init method is required as it sets the voice quality and language in order to speak the text passed in.
     public init?(quality: AVSpeechSynthesisVoiceQuality, language: OSSVoiceEnum) {
         super.init()
-        self.voiceTypeValue = language
-        self.voiceLanguage = language.rawValue
-        self.voiceQuality = quality
+        voiceTypeValue = language
+        voiceLanguage = language.rawValue
+        voiceQuality = quality
     }
     
     /// Required: Do not recommend using.
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         return nil
     }
@@ -305,20 +316,8 @@ public class OSSVoice: AVSpeechSynthesisVoice {
     /// Quality defaults to .default.
     private func commonInit() {
         // Set the default values
-        self.voiceTypeValue = OSSVoiceEnum.UnitedStatesEnglish
-        self.voiceLanguage = OSSVoiceEnum.UnitedStatesEnglish.rawValue
-        self.voiceQuality = .default
-    }
-}
-
-/// Bundle extension to aid in retrieving the SDK resource budle for getting SDK images.
-extension Bundle {
-    /// Will return the Bundle for the SDK if it can be found. 
-    static func getResourcesBundle() -> Bundle? {
-        let bundle = Bundle(for: OSSSpeech.self)
-        guard let resourcesBundleUrl = bundle.resourceURL?.appendingPathComponent("OSSSpeechKit.bundle") else {
-            return nil
-        }
-        return Bundle(url: resourcesBundleUrl)
+        voiceTypeValue = OSSVoiceEnum.UnitedStatesEnglish
+        voiceLanguage = OSSVoiceEnum.UnitedStatesEnglish.rawValue
+        voiceQuality = .default
     }
 }

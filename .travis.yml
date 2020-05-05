@@ -1,8 +1,10 @@
+# Check Travis CI version info:
+# https://docs.travis-ci.com/user/reference/osx/
 language: objective-c
-osx_image: xcode10.2
+osx_image: xcode11.3
 xcode_workspace: OSSSpeechKit.xcworkspace
 xcode_scheme: OSSSpeechKit-Example
-xcode_destination: platform=iOS Simulator,OS=12.2,name=iPhone X
+xcode_destination: platform=iOS Simulator,OS=13.3,name=iPhone 11
 before_install:
 - cd Example
 - pod install
