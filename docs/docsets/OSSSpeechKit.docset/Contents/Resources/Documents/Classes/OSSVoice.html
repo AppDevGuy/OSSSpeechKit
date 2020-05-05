@@ -14,7 +14,7 @@
     <a title="OSSVoice Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">OSSSpeechKit Docs</a> (100% documented)</p>
+        <p><a href="../index.html">OSSSpeechKit 0.3.0 Docs</a> (95% documented)</p>
         <p class="header-right"><a href="https://github.com/AppDevGuy/OSSSpeechKit"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -35,6 +35,9 @@
                 <a href="../Classes/OSSSpeech.html">OSSSpeech</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/OSSSpeechUtility.html">OSSSpeechUtility</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/OSSUtterance.html">OSSUtterance</a>
               </li>
               <li class="nav-group-task">
@@ -46,7 +49,13 @@
             <a href="../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Enums/OSSSpeechAuthorizationStatus.html">OSSSpeechAuthorizationStatus</a>
+                <a href="../Enums/OSSSpeechKitAuthorizationStatus.html">OSSSpeechKitAuthorizationStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/OSSSpeechKitErrorType.html">OSSSpeechKitErrorType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/OSSSpeechRecognitionTaskType.html">OSSSpeechRecognitionTaskType</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/OSSVoiceEnum.html">OSSVoiceEnum</a>
@@ -58,6 +67,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Extensions/Bundle.html">Bundle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSObject.html">NSObject</a>
               </li>
             </ul>
           </li>
@@ -85,7 +97,7 @@
             <h1>OSSVoice</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">@available(iOS 9.0, *)</span>
+                  <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="n">iOS</span> <span class="mf">9.0</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="kt">OSSVoice</span> <span class="p">:</span> <span class="kt">AVSpeechSynthesisVoice</span></code></pre>
 
                 </div>
@@ -97,7 +109,7 @@
 <p>Setting the voice quality to be <code>.enhanced</code> instead of <code>.default</code> and the resetting of language after creation is not enabled in the AV provided API instance of AVSpeechSynthesisVoice.</p>
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
-    If init() is called, the default quality of OSSVoice will us <q>default</q> and the language will be <q>OSSVoiceEnum.UnitedStatesEnglish</q>.
+    If init() is called, the default quality of OSSVoice will us &ldquo;default&rdquo; and the language will be &ldquo;OSSVoiceEnum.UnitedStatesEnglish&rdquo;.
 
 </div>
 
@@ -107,9 +119,11 @@
               <div class="task-name-container">
                 <a name="/Private%20Properties"></a>
                 <a name="//apple_ref/swift/Section/Private Properties" class="dashAnchor"></a>
-                <a href="#/Private%20Properties">
-                  <h3 class="section-name">Private Properties</h3>
-                </a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Private%20Properties"></a>
+                  <h3 class="section-name"><p>Private Properties</p>
+</h3>
+                </div>
               </div>
               <ul>
                 <li class="item">
@@ -231,7 +245,7 @@
                     <code>
                     <a name="/s:12OSSSpeechKit8OSSVoiceC7quality8languageACSgSo29AVSpeechSynthesisVoiceQualityV_AA0C4EnumOtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(quality:language:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:12OSSSpeechKit8OSSVoiceC7quality8languageACSgSo29AVSpeechSynthesisVoiceQualityV_AA0C4EnumOtcfc">init(quality:language:)</a>
+                    <a class="token" href="#/s:12OSSSpeechKit8OSSVoiceC7quality8languageACSgSo29AVSpeechSynthesisVoiceQualityV_AA0C4EnumOtcfc">init(quality:<wbr>language:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -258,7 +272,7 @@
                     <code>
                     <a name="/c:@M@OSSSpeechKit@objc(cs)OSSVoice(im)initWithCoder:"></a>
                     <a name="//apple_ref/swift/Method/init(coder:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@OSSSpeechKit@objc(cs)OSSVoice(im)initWithCoder:">init(coder:)</a>
+                    <a class="token" href="#/c:@M@OSSSpeechKit@objc(cs)OSSVoice(im)initWithCoder:">init(coder:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -273,7 +287,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">required</span> <span class="nf">init</span><span class="p">?(</span><span class="n">coder</span> <span class="nv">aDecoder</span><span class="p">:</span> <span class="kt">NSCoder</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">required</span> <span class="nf">init</span><span class="p">?(</span><span class="n">coder</span> <span class="nv">aDecoder</span><span class="p">:</span> <span class="kt">NSCoder</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -285,8 +299,8 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2019 <a class="link" href="https://github.com/AppDevGuy" target="_blank" rel="external">AppDevGuy</a>. All rights reserved. (Last updated: 2019-06-22)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="https://github.com/AppDevGuy" target="_blank" rel="external">AppDevGuy</a>. All rights reserved. (Last updated: 2020-05-05)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

@@ -13,7 +13,7 @@
     <a title="OSSSpeechKit  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">OSSSpeechKit Docs</a> (100% documented)</p>
+        <p><a href="index.html">OSSSpeechKit 0.3.0 Docs</a> (95% documented)</p>
         <p class="header-right"><a href="https://github.com/AppDevGuy/OSSSpeechKit"><img src="img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -34,6 +34,9 @@
                 <a href="Classes/OSSSpeech.html">OSSSpeech</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/OSSSpeechUtility.html">OSSSpeechUtility</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/OSSUtterance.html">OSSUtterance</a>
               </li>
               <li class="nav-group-task">
@@ -45,7 +48,13 @@
             <a href="Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Enums/OSSSpeechAuthorizationStatus.html">OSSSpeechAuthorizationStatus</a>
+                <a href="Enums/OSSSpeechKitAuthorizationStatus.html">OSSSpeechKitAuthorizationStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/OSSSpeechKitErrorType.html">OSSSpeechKitErrorType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/OSSSpeechRecognitionTaskType.html">OSSSpeechRecognitionTaskType</a>
               </li>
               <li class="nav-group-task">
                 <a href="Enums/OSSVoiceEnum.html">OSSVoiceEnum</a>
@@ -57,6 +66,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Extensions/Bundle.html">Bundle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/NSObject.html">NSObject</a>
               </li>
             </ul>
           </li>
@@ -93,7 +105,7 @@
 <a href="https://codecov.io/gh/AppDevGuy/OSSSpeechKit"><img src="https://codecov.io/gh/AppDevGuy/OSSSpeechKit/branch/master/graph/badge.svg" alt="codecov"></a>
 <a href="https://appdevguy.github.io/OSSSpeechKit"><img src="https://appdevguy.github.io/OSSSpeechKit/badge.svg" alt="docs"></a></p>
 
-<p>OSSSpeechKit was developed to provide easier accesibility options to apps. </p>
+<p>OSSSpeechKit was developed to provide easier accessibility options to apps. </p>
 
 <p>Apple does not make it easy to get the right voice, nor do they provide a simple way of selecting a language or using speech to text. OSSSpeechKit makes the hassle of trying to find the right language go away. </p>
 <h1 id='requirements' class='heading'>Requirements</h1>
@@ -101,8 +113,8 @@
 <ul>
 <li>Swift 5.0 or higher</li>
 <li>iOS 12.0 or higher</li>
-<li>Cocoapods or higher</li>
-<li>A real device (for microphone)</li>
+<li>Cocoapods</li>
+<li>A real device</li>
 </ul>
 <h1 id='supported-languages' class='heading'>Supported Languages</h1>
 
@@ -155,6 +167,8 @@ it, simply add the following line to your Podfile:</p>
 <span class="n">speechKit</span><span class="o">.</span><span class="n">voice</span> <span class="o">=</span> <span class="n">newVoice</span>
 <span class="c1">// Initialise an utterance</span>
 <span class="k">let</span> <span class="nv">utterance</span> <span class="o">=</span> <span class="kt">OSSUtterance</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="s">"Testing"</span><span class="p">)</span>
+<span class="c1">// Set the recognition task type </span>
+<span class="n">speechKit</span><span class="o">.</span><span class="n">recognitionTaskType</span> <span class="o">=</span> <span class="o">.</span><span class="n">dictation</span>
 <span class="c1">// Set volume</span>
 <span class="n">utterance</span><span class="o">.</span><span class="n">volume</span> <span class="o">=</span> <span class="mf">0.5</span>
 <span class="c1">// Set rate of speech</span>
@@ -169,9 +183,7 @@ it, simply add the following line to your Podfile:</p>
 <h2 id='speech-to-text' class='heading'>Speech to Text</h2>
 
 <p>Currently speech to text is offered in a very simple format. Starting and stopping of recording is handled by the app. </p>
-
-<p><em>The next release is expected to contain auto ending of recording along with features such as returning sound wave float variables for use in User Interfaces.</em></p>
-<h3 id='note-ios-13-local-to-device-speech-to-text-support-will-be-introduced' class='heading'>NOTE: iOS 13 Local-to-Device Speech to Text support will be introduced.</h3>
+<h3 id='ios-13-on-device-speech-to-text-support-is-now-available-as-of-0-3-0' class='heading'>iOS 13 On-Device Speech to Text support is now available as of 0.3.0 🎉</h3>
 
 <p>SpeechKit implements delegates to handle the recording authorization, output of text and failure to record.</p>
 <pre class="highlight swift"><code><span class="n">speechKit</span><span class="o">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="k">self</span>
@@ -195,7 +207,7 @@ it, simply add the following line to your Podfile:</p>
 <p>Handle returning authentication status to user - primary use is for non-authorized state.</p>
 
 <blockquote>
-<p><code>func authorizationToMicrophone(withAuthentication type: OSSSpeechAuthorizationStatus)</code></p>
+<p><code>func authorizationToMicrophone(withAuthentication type: OSSSpeechKitAuthorizationStatus)</code></p>
 </blockquote>
 
 <p>When the microphone has finished accepting audio, this delegate will be called with the final best text output.</p>
@@ -255,7 +267,7 @@ it, simply add the following line to your Podfile:</p>
 <p>If the language or voice you require is not available, this is either due to:</p>
 
 <ul>
-<li>Apple have not made it avaiable through their AVFoundation;</li>
+<li>Apple have not made it available through their AVFoundation;</li>
 <li>or the SDK has not been updated to include the newly added voice.</li>
 </ul>
 <h1 id='important-information' class='heading'>Important Information</h1>
@@ -264,12 +276,12 @@ it, simply add the following line to your Podfile:</p>
 
 <p>This kit provides Apple&rsquo;s AVFoundation voices available and easy to use, so you do not need to know all the voice codes, among many other things.</p>
 
-<p>To say things correctly in each language, you need to set the voice to the correct langauge and supply that languages text; this SDK is not a translator. </p>
+<p>To say things correctly in each language, you need to set the voice to the correct language and supply that languages text; this SDK is not a translator. </p>
 <h3 id='code-example' class='heading'>Code Example:</h3>
 
 <p>You wish for you app to use a Chinese voice, you will need to ensure the text being passed in is Chinese. </p>
 
-<p><em>Disclaimer: I do not know how to speak Chinese, I have used Google translate for the chinese characters.</em></p>
+<p><em>Disclaimer: I do not know how to speak Chinese, I have used Google translate for the Chinese characters.</em></p>
 <h4 id='correct' class='heading'>Correct:</h4>
 <pre class="highlight swift"><code><span class="n">speechKit</span><span class="o">.</span><span class="n">voice</span> <span class="o">=</span> <span class="kt">OSSVoice</span><span class="p">(</span><span class="nv">quality</span><span class="p">:</span> <span class="o">.</span><span class="n">enhanced</span><span class="p">,</span> <span class="nv">language</span><span class="p">:</span> <span class="o">.</span><span class="kt">Chinese</span><span class="p">)</span>
 <span class="n">speechKit</span><span class="o">.</span><span class="nf">speakText</span><span class="p">(</span><span class="nv">text</span><span class="p">:</span> <span class="s">"你好我的名字是 ..."</span><span class="p">)</span>
@@ -308,8 +320,8 @@ it, simply add the following line to your Podfile:</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2019 <a class="link" href="https://github.com/AppDevGuy" target="_blank" rel="external">AppDevGuy</a>. All rights reserved. (Last updated: 2019-06-22)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="https://github.com/AppDevGuy" target="_blank" rel="external">AppDevGuy</a>. All rights reserved. (Last updated: 2020-05-05)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>
