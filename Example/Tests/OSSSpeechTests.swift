@@ -34,7 +34,6 @@ class OSSSpeechTests: XCTestCase {
         speechKit.utterance = nil
         speechKit.voice = nil
         speechKit.srp = SFSpeechRecognizerMock.self
-        print("Reset Speech Kit details")
     }
 
     override func tearDown() {
