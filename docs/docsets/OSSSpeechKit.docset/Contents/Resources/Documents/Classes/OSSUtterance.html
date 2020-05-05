@@ -14,7 +14,7 @@
     <a title="OSSUtterance Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">OSSSpeechKit Docs</a> (100% documented)</p>
+        <p><a href="../index.html">OSSSpeechKit 0.3.0 Docs</a> (95% documented)</p>
         <p class="header-right"><a href="https://github.com/AppDevGuy/OSSSpeechKit"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -35,6 +35,9 @@
                 <a href="../Classes/OSSSpeech.html">OSSSpeech</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/OSSSpeechUtility.html">OSSSpeechUtility</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/OSSUtterance.html">OSSUtterance</a>
               </li>
               <li class="nav-group-task">
@@ -46,7 +49,13 @@
             <a href="../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Enums/OSSSpeechAuthorizationStatus.html">OSSSpeechAuthorizationStatus</a>
+                <a href="../Enums/OSSSpeechKitAuthorizationStatus.html">OSSSpeechKitAuthorizationStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/OSSSpeechKitErrorType.html">OSSSpeechKitErrorType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/OSSSpeechRecognitionTaskType.html">OSSSpeechRecognitionTaskType</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/OSSVoiceEnum.html">OSSVoiceEnum</a>
@@ -58,6 +67,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Extensions/Bundle.html">Bundle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSObject.html">NSObject</a>
               </li>
             </ul>
           </li>
@@ -101,9 +113,11 @@
               <div class="task-name-container">
                 <a name="/Variables"></a>
                 <a name="//apple_ref/swift/Section/Variables" class="dashAnchor"></a>
-                <a href="#/Variables">
-                  <h3 class="section-name">Variables</h3>
-                </a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Variables"></a>
+                  <h3 class="section-name"><p>Variables</p>
+</h3>
+                </div>
               </div>
               <ul>
                 <li class="item">
@@ -172,17 +186,46 @@ Default value in an empty string.</p>
               <div class="task-name-container">
                 <a name="/Lifecycle"></a>
                 <a name="//apple_ref/swift/Section/Lifecycle" class="dashAnchor"></a>
-                <a href="#/Lifecycle">
-                  <h3 class="section-name">Lifecycle</h3>
-                </a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Lifecycle"></a>
+                  <h3 class="section-name"><p>Lifecycle</p>
+</h3>
+                </div>
               </div>
               <ul>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/c:@M@OSSSpeechKit@objc(cs)OSSUtterance(im)init"></a>
+                    <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@OSSSpeechKit@objc(cs)OSSUtterance(im)init">init()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">override</span> <span class="nf">init</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/c:@M@OSSSpeechKit@objc(cs)OSSUtterance(im)initWithString:"></a>
                     <a name="//apple_ref/swift/Method/init(string:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@OSSSpeechKit@objc(cs)OSSUtterance(im)initWithString:">init(string:)</a>
+                    <a class="token" href="#/c:@M@OSSSpeechKit@objc(cs)OSSUtterance(im)initWithString:">init(string:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -209,7 +252,7 @@ Default value in an empty string.</p>
                     <code>
                     <a name="/c:@M@OSSSpeechKit@objc(cs)OSSUtterance(im)initWithAttributedString:"></a>
                     <a name="//apple_ref/swift/Method/init(attributedString:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@OSSSpeechKit@objc(cs)OSSUtterance(im)initWithAttributedString:">init(attributedString:)</a>
+                    <a class="token" href="#/c:@M@OSSSpeechKit@objc(cs)OSSUtterance(im)initWithAttributedString:">init(attributedString:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -236,7 +279,7 @@ Default value in an empty string.</p>
                     <code>
                     <a name="/c:@M@OSSSpeechKit@objc(cs)OSSUtterance(im)initWithCoder:"></a>
                     <a name="//apple_ref/swift/Method/init(coder:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@OSSSpeechKit@objc(cs)OSSUtterance(im)initWithCoder:">init(coder:)</a>
+                    <a class="token" href="#/c:@M@OSSSpeechKit@objc(cs)OSSUtterance(im)initWithCoder:">init(coder:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -251,7 +294,7 @@ Default value in an empty string.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">required</span> <span class="nf">init</span><span class="p">?(</span><span class="n">coder</span> <span class="nv">aDecoder</span><span class="p">:</span> <span class="kt">NSCoder</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">required</span> <span class="nf">init</span><span class="p">?(</span><span class="n">coder</span> <span class="nv">aDecoder</span><span class="p">:</span> <span class="kt">NSCoder</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -263,8 +306,8 @@ Default value in an empty string.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2019 <a class="link" href="https://github.com/AppDevGuy" target="_blank" rel="external">AppDevGuy</a>. All rights reserved. (Last updated: 2019-06-22)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="https://github.com/AppDevGuy" target="_blank" rel="external">AppDevGuy</a>. All rights reserved. (Last updated: 2020-05-05)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

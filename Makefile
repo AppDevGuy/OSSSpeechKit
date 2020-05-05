@@ -1,4 +1,5 @@
 documentation:
+	@echo " Info..."
 	@jazzy \
 		--clean \
 		--author AppDevGuy \

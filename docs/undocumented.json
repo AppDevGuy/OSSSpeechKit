@@ -1,6 +1,40 @@
 {
   "warnings": [
-
+    {
+      "file": "/Users/seansmith/SeansDev/OSSSpeechKit/OSSSpeechKit/Classes/OSSSpeech.swift",
+      "line": 385,
+      "symbol": "OSSSpeech.engineSetup(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/seansmith/SeansDev/OSSSpeechKit/OSSSpeechKit/Classes/OSSSpeech.swift",
+      "line": 505,
+      "symbol": "OSSSpeech.speechRecognitionDidDetectSpeech(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/seansmith/SeansDev/OSSSpeechKit/OSSSpeechKit/Classes/OSSSpeech.swift",
+      "line": 507,
+      "symbol": "OSSSpeech.speechRecognitionTaskFinishedReadingAudio(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/seansmith/SeansDev/OSSSpeechKit/OSSSpeechKit/Classes/OSSSpeechUtility.swift",
+      "line": 26,
+      "symbol": "OSSSpeechUtility",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/seansmith/SeansDev/OSSSpeechKit/OSSSpeechKit/Classes/OSSUtterance.swift",
+      "line": 67,
+      "symbol": "OSSUtterance.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    }
   ],
   "source_directory": "/Users/seansmith/SeansDev/OSSSpeechKit"
 }
