@@ -12,10 +12,10 @@ after_success:
   - bash <(curl -s https://codecov.io/bash)
   - gem install jazzy
   - make documentation
-# deploy:
-#   provider: pages
-#   skip-cleanup: true
-#   github-token: $GH_TOKEN  # Set in the settings page of your repository, as a secure variable
-#   local-dir: docs
-#   on:
-#     branch: master
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GH_TOKEN  # Set in the settings page of your repository, as a secure variable
+  local-dir: docs
+  on:
+    branch: master
