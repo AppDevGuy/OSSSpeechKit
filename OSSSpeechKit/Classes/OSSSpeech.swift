@@ -160,6 +160,7 @@ public protocol OSSSpeechDelegate: class {
     /// When speech kit begins speaking, this delegate method will be called.
     func didStartSpeaking()
     /// When speech kit finishes speaking, this delegate method will be called.
+    func didFinishSpeaking()
 }
 
 /// Speech is the primary interface. To use, set the voice and then call `.speak(string: "your string")`
