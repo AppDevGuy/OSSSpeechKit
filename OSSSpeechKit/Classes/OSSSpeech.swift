@@ -157,6 +157,9 @@ public protocol OSSSpeechDelegate: class {
     func didCompleteTranslation(withText text: String)
     /// Error handling function.
     func didFailToProcessRequest(withError error: Error?)
+    /// When speech kit begins speaking, this delegate method will be called.
+    func didStartSpeaking()
+    /// When speech kit finishes speaking, this delegate method will be called.
 }
 
 /// Speech is the primary interface. To use, set the voice and then call `.speak(string: "your string")`
@@ -165,7 +168,11 @@ public class OSSSpeech: NSObject {
     // MARK: - Private Properties
     
     /// An object that produces synthesized speech from text utterances and provides controls for monitoring or controlling ongoing speech.
-    private var speechSynthesizer: AVSpeechSynthesizer!
+    private lazy var speechSynthesizer: AVSpeechSynthesizer = {
+        let sps = AVSpeechSynthesizer()
+        sps.delegate = self
+        return sps
+    }()
     
     // MARK: - Variables
     
@@ -191,6 +198,13 @@ public class OSSSpeech: NSObject {
     
     /// The object used to enable translation of strings to synthsized voice.
     public var utterance: OSSUtterance?
+    
+    /// Check of SpeechKit is currently speaking.
+    public var isSpeaking: Bool {
+        get {
+            return speechSynthesizer.isSpeaking
+        }
+    }
     
     /// An AVAudioSession that ensure volume controls are correct in various scenarios
     private var session: AVAudioSession?
@@ -221,9 +235,7 @@ public class OSSSpeech: NSObject {
     
     // MARK: - Lifecycle
     
-    private override init() {
-        speechSynthesizer = AVSpeechSynthesizer()
-    }
+    private override init() {}
     
     private static let sharedInstance: OSSSpeech = {
         return OSSSpeech()
@@ -511,4 +523,16 @@ extension OSSSpeech: SFSpeechRecognitionTaskDelegate, SFSpeechRecognizerDelegate
     /// Docs available by Google searching for SFSpeechRecognizerDelegate
     public func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {}
 
+}
+
+extension OSSSpeech: AVSpeechSynthesizerDelegate {
+    
+    public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {
+        delegate?.didStartSpeaking()
+    }
+    
+    public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        delegate?.didFinishSpeaking()
+    }
+    
 }
