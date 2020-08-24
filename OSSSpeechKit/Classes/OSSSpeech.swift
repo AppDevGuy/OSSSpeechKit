@@ -23,6 +23,7 @@
 
 import UIKit
 import AVFoundation
+import Accelerate
 import Speech
 
 /// The authorization status of the Microphone and recording, imitating the native `SFSpeechRecognizerAuthorizationStatus`
@@ -161,6 +162,14 @@ public protocol OSSSpeechDelegate: class {
     func didStartSpeaking()
     /// When speech kit finishes speaking, this delegate method will be called.
     func didFinishSpeaking()
+    /// When the audio recording is active supply the loudness magnitude for use in visualization.
+    ///
+    /// This method will be called on a loop.
+    func didUpdateAudioRecording(withLoudnessMagnitude magnitude: Float)
+    /// When the audio recording is active supply the frequency vertices.
+    ///
+    /// This method will be called once per audio event.
+    func didUpdateAudioRecording(withFrequencyVertices vertices: [Float])
 }
 
 /// Speech is the primary interface. To use, set the voice and then call `.speak(string: "your string")`
@@ -412,6 +421,7 @@ public class OSSSpeech: NSObject {
         weak var weakSelf = self
         input.installTap(onBus: bus, bufferSize: 8192, format: inputFormat) { (buffer, time) -> Void in
             var newBufferAvailable = true
+            weakSelf?.processAudioData(withBuffer: buffer)
             let inputCallback: AVAudioConverterInputBlock = { inNumPackets, outStatus in
                 if newBufferAvailable {
                     outStatus.pointee = .haveData
@@ -490,6 +500,28 @@ public class OSSSpeech: NSObject {
             delegate?.didFailToCommenceSpeechRecording()
             delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidSpeechRequest.error)
         }
+    }
+    
+    // MARK: - Visualizer
+    
+    private var prevRMSValue: Float = 0.3
+    // fft setup object for 1024 values going forward (time domain -> frequency domain)
+    private let fftSetup = vDSP_DFT_zop_CreateSetup(nil, 1024, vDSP_DFT_Direction.FORWARD)
+    
+    private func processAudioData(withBuffer buffer: AVAudioPCMBuffer){
+        guard let channelData = buffer.floatChannelData?[0] else { return }
+        let frames = buffer.frameLength
+        //rms
+        let rmsValue = OSSVisualizerHelper.rms(data: channelData, frameLength: UInt(frames))
+        let interpolatedResults = OSSVisualizerHelper.interpolate(current: rmsValue, previous: prevRMSValue)
+        prevRMSValue = rmsValue
+        // pass values to the audiovisualizer for the rendering
+        for rms in interpolatedResults {
+            delegate?.didUpdateAudioRecording(withLoudnessMagnitude: rms)
+        }
+        // fft
+        let fftMagnitudes = OSSVisualizerHelper.fft(data: channelData, setup: fftSetup!)
+        delegate?.didUpdateAudioRecording(withFrequencyVertices: fftMagnitudes)
     }
 }
 
