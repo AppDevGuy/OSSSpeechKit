@@ -38,7 +38,7 @@ class OSSVisualizerHelper {
         var realOut = [Float](repeating: 0, count: countValue)
         var imagOut = [Float](repeating: 0, count: countValue)
         //fill in real input part with audio samples
-        for i in 0...countValue {
+        for i in 0..<countValue {
             realIn[i] = data[i]
         }
         vDSP_DFT_Execute(setup, &realIn, &imagIn, &realOut, &imagOut)

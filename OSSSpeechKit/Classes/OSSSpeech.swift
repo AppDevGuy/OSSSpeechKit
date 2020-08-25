@@ -162,14 +162,10 @@ public protocol OSSSpeechDelegate: class {
     func didStartSpeaking()
     /// When speech kit finishes speaking, this delegate method will be called.
     func didFinishSpeaking()
-    /// When the audio recording is active supply the loudness magnitude for use in visualization.
+    /// When the audio recording is active supply the average loudness magnitude and average frequence for use in visualization.
     ///
     /// This method will be called on a loop.
-    func didUpdateAudioRecording(withLoudnessMagnitude magnitude: Float)
-    /// When the audio recording is active supply the frequency vertices.
-    ///
-    /// This method will be called once per audio event.
-    func didUpdateAudioRecording(withFrequencyVertices vertices: [Float])
+    func didUpdateAudioRecording(withAverageLoudnessMagnitude magnitude: Float, averageFrequency: Float)
 }
 
 /// Speech is the primary interface. To use, set the voice and then call `.speak(string: "your string")`
@@ -515,13 +511,18 @@ public class OSSSpeech: NSObject {
         let rmsValue = OSSVisualizerHelper.rms(data: channelData, frameLength: UInt(frames))
         let interpolatedResults = OSSVisualizerHelper.interpolate(current: rmsValue, previous: prevRMSValue)
         prevRMSValue = rmsValue
+        var rmsResultsTotal: Float = 0.0
         // pass values to the audiovisualizer for the rendering
         for rms in interpolatedResults {
-            delegate?.didUpdateAudioRecording(withLoudnessMagnitude: rms)
+            rmsResultsTotal = rmsResultsTotal + rms
         }
         // fft
         let fftMagnitudes = OSSVisualizerHelper.fft(data: channelData, setup: fftSetup!)
-        delegate?.didUpdateAudioRecording(withFrequencyVertices: fftMagnitudes)
+        var freqTotal: Float = 0.0
+        for mag in fftMagnitudes {
+            freqTotal = freqTotal + mag
+        }
+        delegate?.didUpdateAudioRecording(withAverageLoudnessMagnitude: rmsResultsTotal / Float(interpolatedResults.count), averageFrequency: freqTotal / Float(fftMagnitudes.count))
     }
 }
 

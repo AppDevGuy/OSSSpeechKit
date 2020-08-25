@@ -6,137 +6,118 @@
 //
 
 import UIKit
-import MetalKit
-import simd
 
-// Code attribution: https://github.com/barbulescualex/MetalAudioVisualizer
-
-class OSSVisualizerView: UIView {
-    // MARK: Metal Properties
-    private var metalView : MTKView!
-    private var metalDevice : MTLDevice!
-    private var metalCommandQueue : MTLCommandQueue!
-    private var metalRenderPipelineState : MTLRenderPipelineState!
-    // MARK: Vertex Properties
-    private var circleVertices = [simd_float2]()
-    private var vertexBuffer : MTLBuffer!
-    private var loudnessUniformBuffer : MTLBuffer!
-    public var loudnessMagnitude : Float = 0.3 {
-        didSet{
-            loudnessUniformBuffer = metalDevice.makeBuffer(bytes: &loudnessMagnitude, length: MemoryLayout<Float>.stride, options: [])!
-            metalView.draw()
-        }
-    }
-    private var freqeuencyBuffer : MTLBuffer!
-    public var frequencyVertices : [Float] = [Float](repeating: 0, count: 361) {
-        didSet{
-            let sliced = Array(frequencyVertices[76..<438])
-            freqeuencyBuffer = metalDevice.makeBuffer(bytes: sliced, length: sliced.count * MemoryLayout<Float>.stride, options: [])!
-            metalView.draw()
-        }
-    }
+public class OSSVisualizerView: UIView {
     
-    // MARK: Lifecycle
-    public required init() {
+    /// The number of bars for the view to display.
+    ///
+    /// Default is 10
+    public var barsViewsCount: Int = 10
+    /// Visualizer color
+    ///
+    /// Default is system blue.
+    public var visualizerColor: UIColor = .systemBlue
+    private var rectViewArray: [UIView] = []
+    private var waveFormArray: [Int] = []
+    private var hasSetLayout = false
+    private var animateDuration = 0.15
+    private var initialBarHeight: CGFloat = 0.0
+    
+    // MARK: - Lifecycle
+    
+    init() {
         super.init(frame: .zero)
-        setupView()
-        createVertexPoints()
-        setupMetal()
+        commonInit()
     }
     
-    public required init?(coder aDecoder: NSCoder) {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+    
+    required init?(coder: NSCoder) {
         fatalError()
     }
     
-    fileprivate func setupView() {
-        translatesAutoresizingMaskIntoConstraints = false
+    private func commonInit() {
+        backgroundColor = .clear
     }
     
-    fileprivate func setupMetal() {
-        // view
-        metalView = MTKView()
-        addSubview(metalView)
-        metalView.translatesAutoresizingMaskIntoConstraints = false
-        metalView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        metalView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        metalView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        metalView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        metalView.delegate = self
-        // updates
-        metalView.isPaused = true
-        metalView.enableSetNeedsDisplay = false
-        // connect to the gpu
-        metalDevice = MTLCreateSystemDefaultDevice()!
-        metalView.device = metalDevice
-        // creating the command queue
-        metalCommandQueue = metalDevice.makeCommandQueue()!
-        // creating the render pipeline state
-        createPipelineState()
-        // turn the vertex points into buffer data
-        vertexBuffer = metalDevice.makeBuffer(bytes: circleVertices, length: circleVertices.count * MemoryLayout<simd_float2>.stride, options: [])!
-        // initialize the loudnessUniform buffer data
-        loudnessUniformBuffer = metalDevice.makeBuffer(bytes: &loudnessMagnitude, length: MemoryLayout<Float>.stride, options: [])!
-        // initialize the freqeuencyBuffer data
-        freqeuencyBuffer = metalDevice.makeBuffer(bytes: frequencyVertices, length: frequencyVertices.count * MemoryLayout<Float>.stride, options: [])!
-        // draw
-        metalView.draw()
-    }
+    // MARK: - Layout
     
-    fileprivate func createPipelineState() {
-        let pipelineDescriptor = MTLRenderPipelineDescriptor()
-        // finds the metal file from the main bundle
-        let library = metalDevice.makeDefaultLibrary()!
-        // give the names of the function to the pipelineDescriptor
-        pipelineDescriptor.vertexFunction = library.makeFunction(name: "vertexShader")
-        pipelineDescriptor.fragmentFunction = library.makeFunction(name: "fragmentShader")
-        // set the pixel format to match the MetalView's pixel format
-        pipelineDescriptor.colorAttachments[0].pixelFormat = metalView.colorPixelFormat
-        // make the pipelinestate using the gpu interface and the pipelineDescriptor
-        metalRenderPipelineState = try! metalDevice.makeRenderPipelineState(descriptor: pipelineDescriptor)
-    }
-    
-    fileprivate func createVertexPoints() {
-        
-        func rads(forDegree d: Float) -> Float32{
-            return (Float.pi * d) / 180
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        if !hasSetLayout && frame.size != .zero {
+            hasSetLayout = true
+            addEqualizerBars()
         }
-        
-        let origin = simd_float2(0, 0)
-        for i in 0...720 {
-            let position: simd_float2 = [cos(rads(forDegree: Float(Float(i) / 2.0))), sin(rads(forDegree: Float(Float(i) / 2.0)))]
-            circleVertices.append(position)
-            if (i + 1) % 2 == 0 {
-                circleVertices.append(origin)
+    }
+    
+    // MARK: - Private Methods
+    
+    private func addEqualizerBars() {
+        waveFormArray.removeAll()
+        rectViewArray.removeAll()
+        let barCount = CGFloat(barsViewsCount)
+        let padding: CGFloat = (frame.size.width / barCount) / 3
+        let rectHeight: CGFloat = frame.size.height - padding
+        let rectWidth: CGFloat = (frame.size.width - padding * (barCount + 1)) / barCount
+        for i in 0...barsViewsCount {
+            let barView = UIView()
+            let rect = CGRect(x: padding + (padding + rectWidth) * CGFloat(i), y: padding + (rectHeight - rectWidth), width: rectWidth, height: rectHeight)
+            barView.frame = rect
+            initialBarHeight = rect.height
+            barView.backgroundColor = visualizerColor
+            barView.layer.cornerRadius = rectWidth / 2
+            addSubview(barView)
+            rectViewArray.append(barView)
+        }
+        let waveFormVals = [5, 10, 15, 10, 5, 1]
+        var j = 0
+        for _ in 0...barsViewsCount {
+            waveFormArray.append(waveFormVals[j])
+            j += 1
+            if j == waveFormVals.count {
+                j = 0
             }
         }
     }
     
-}
-
-extension OSSVisualizerView : MTKViewDelegate {
-    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
-        //not worried about this
+    // MARK: - Public Methods
+    
+    public func animateAudioVisualizer(withChanelOneValue channelOneValue: Float, channelTwoValue: Float) {
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: self.animateDuration, delay: 0.0, options: .beginFromCurrentState) {
+                for i in 0...self.barsViewsCount {
+                    let channelValue = arc4random_uniform(2)
+                    let wavePeak = arc4random_uniform(UInt32(self.waveFormArray[i]))
+                    let barView = self.rectViewArray[i]
+                    barView.alpha = 1.0
+                    var barFrame = barView.frame
+                    let selectedLevel = channelValue == 0 ? channelOneValue : channelTwoValue
+                    var newHeight = self.frame.size.height - CGFloat(1.0 / (selectedLevel * Float(self.barsViewsCount))) + CGFloat(wavePeak)
+                    if newHeight < 4 || newHeight > self.frame.size.height {
+                        newHeight = self.initialBarHeight + CGFloat(wavePeak)
+                    }
+                    barFrame.size.height = newHeight
+                    barView.frame = barFrame
+                }
+            } completion: { (complete) in }
+        }
     }
     
-    func draw(in view: MTKView) {
-        // Creating the commandBuffer for the queue
-        guard let commandBuffer = metalCommandQueue.makeCommandBuffer() else { return }
-        // Creating the interface for the pipeline
-        guard let renderDescriptor = view.currentRenderPassDescriptor else { return }
-        // Setting a "background color"
-        renderDescriptor.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 0, 1)
-        // Creating the command encoder, or the "inside" of the pipeline
-        guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderDescriptor) else { return }
-        // We tell it what render pipeline to use
-        renderEncoder.setRenderPipelineState(metalRenderPipelineState)
-        /*********** Encoding the commands **************/
-        renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
-        renderEncoder.setVertexBuffer(loudnessUniformBuffer, offset: 0, index: 1)
-        renderEncoder.setVertexBuffer(freqeuencyBuffer, offset: 0, index: 2)
-        renderEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 1081)
-        renderEncoder.drawPrimitives(type: .lineStrip, vertexStart: 1081, vertexCount: 1081)
-        renderEncoder.endEncoding()
-        commandBuffer.present(view.currentDrawable!)
-        commandBuffer.commit()
+    public func endAnimatingAudioVisualizer() {
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: self.animateDuration, delay: 0.0, options: .beginFromCurrentState) {
+                for i in 0...self.barsViewsCount {
+                    let barView = self.rectViewArray[i]
+                    barView.alpha = 0.5
+                    var barFrame = barView.frame
+                    barFrame.size.height = self.initialBarHeight
+                    barView.frame = barFrame
+                }
+            } completion: { (complete) in }
+        }
     }
+    
 }
