@@ -1,8 +1,24 @@
+//  Copyright © 2018-2020 App Dev Guy. All rights reserved.
 //
-//  OSSVisualizerHelper.swift
-//  OSSSpeechKit
+//  This code is distributed under the terms and conditions of the MIT license.
 //
-//  Created by Sean Smith on 24/8/20.
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to
+//  deal in the Software without restriction, including without limitation the
+//  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+//  sell copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+//  IN THE SOFTWARE.
 //
 
 import Foundation
@@ -30,7 +46,7 @@ class OSSVisualizerHelper {
         return adjustedVal
     }
     
-    static func fft(data: UnsafeMutablePointer<Float>, setup: OpaquePointer) -> [Float]{
+    static func fft(data: UnsafeMutablePointer<Float>, setup: OpaquePointer) -> [Float] {
         let countValue = 1024
         //output setup
         var realIn = [Float](repeating: 0, count: countValue)
@@ -42,21 +58,28 @@ class OSSVisualizerHelper {
             realIn[i] = data[i]
         }
         vDSP_DFT_Execute(setup, &realIn, &imagIn, &realOut, &imagOut)
+        var normalizedMagnitudes: [Float] = []
         // our results are now inside realOut and imagOut
         // package it inside a complex vector representation used in the vDSP framework
-        var complex = DSPSplitComplex(realp: &realOut, imagp: &imagOut)
-        // setup magnitude output
-        var magnitudes = [Float](repeating: 0, count: countValue / 2)
-        // calculate magnitude results
-        vDSP_zvabs(&complex, 1, &magnitudes, 1, UInt(countValue / 2))
-        // normalize
-        var normalizedMagnitudes = [Float](repeating: 0.0, count: (countValue / 2))
-        var scalingFactor = Float(25.0 / Double(countValue / 2))
-        vDSP_vsmul(&magnitudes, 1, &scalingFactor, &normalizedMagnitudes, 1, UInt(countValue / 2))
+        realOut.withUnsafeMutableBufferPointer { realBP in
+            imagOut.withUnsafeMutableBufferPointer { imaginaryBP in
+                let realPtr = UnsafeMutablePointer(mutating: realBP.baseAddress!)
+                let imaginaryPtr = UnsafeMutablePointer(mutating: imaginaryBP.baseAddress!)
+                var complex = DSPSplitComplex(realp: realPtr, imagp: imaginaryPtr)
+                // setup magnitude output
+                var magnitudes = [Float](repeating: 0, count: countValue / 2)
+                // calculate magnitude results
+                vDSP_zvabs(&complex, 1, &magnitudes, 1, UInt(countValue / 2))
+                // normalize
+                normalizedMagnitudes = [Float](repeating: 0.0, count: (countValue / 2))
+                var scalingFactor = Float(25.0 / Double(countValue / 2))
+                vDSP_vsmul(&magnitudes, 1, &scalingFactor, &normalizedMagnitudes, 1, UInt(countValue / 2))
+            }
+        }
         return normalizedMagnitudes
     }
     
-    static func interpolate(current: Float, previous: Float) -> [Float]{
+    static func interpolate(current: Float, previous: Float) -> [Float] {
         var vals = [Float](repeating: 0, count: 11)
         vals[10] = current
         vals[5] = (current + previous) / 2

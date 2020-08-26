@@ -165,7 +165,7 @@ public protocol OSSSpeechDelegate: class {
     /// When the audio recording is active supply the average loudness magnitude and average frequence for use in visualization.
     ///
     /// This method will be called on a loop.
-    func didUpdateAudioRecording(withAverageLoudnessMagnitude magnitude: Float, averageFrequency: Float)
+    func didUpdateAudioRecording(withLoudnessMagnitudes magnitudes: [Float], frequencies: [Float])
 }
 
 /// Speech is the primary interface. To use, set the voice and then call `.speak(string: "your string")`
@@ -511,18 +511,9 @@ public class OSSSpeech: NSObject {
         let rmsValue = OSSVisualizerHelper.rms(data: channelData, frameLength: UInt(frames))
         let interpolatedResults = OSSVisualizerHelper.interpolate(current: rmsValue, previous: prevRMSValue)
         prevRMSValue = rmsValue
-        var rmsResultsTotal: Float = 0.0
-        // pass values to the audiovisualizer for the rendering
-        for rms in interpolatedResults {
-            rmsResultsTotal = rmsResultsTotal + rms
-        }
         // fft
         let fftMagnitudes = OSSVisualizerHelper.fft(data: channelData, setup: fftSetup!)
-        var freqTotal: Float = 0.0
-        for mag in fftMagnitudes {
-            freqTotal = freqTotal + mag
-        }
-        delegate?.didUpdateAudioRecording(withAverageLoudnessMagnitude: rmsResultsTotal / Float(interpolatedResults.count), averageFrequency: freqTotal / Float(fftMagnitudes.count))
+        delegate?.didUpdateAudioRecording(withLoudnessMagnitudes: interpolatedResults, frequencies: fftMagnitudes)
     }
 }
 
