@@ -223,6 +223,9 @@ public class OSSVisualizerCircularView: UIView {
     public func animateAudioVisualizer(withChanelOneValue channelOneValue: Float, channelTwoValue: Float) {
         isVisualizerActive = true
         DispatchQueue.main.async {
+            // Ensure that bras can exceed the view size
+            self.clipsToBounds = false
+            self.layer.masksToBounds = false
             UIView.animateKeyframes(withDuration: self.animateDuration, delay: 0, options: .beginFromCurrentState, animations: {
                 for i in 0..<self.barsViewsCount {
                     let channelValue: Int = Int(arc4random_uniform(2))
@@ -238,8 +241,11 @@ public class OSSVisualizerCircularView: UIView {
                     } else {
                         barViewUn.bounds.size.height = calc1
                     }
-                    if barViewUn.bounds.height < CGFloat(4) || barViewUn.bounds.height > ((self.bounds.size.height / 2) - self.radius) {
+                    if barViewUn.bounds.height < CGFloat(4) {
                         barViewUn.bounds.size.height = self.initialBarHeight + CGFloat(wavePeak)
+                    } else if barViewUn.bounds.height > 50.0 {
+                        // 50 seems to be a great height. Could make this dynamic
+                        barViewUn.bounds.size.height = 50.0
                     }
                     barViewUn.backgroundColor = self.visualizerColor
                 }
