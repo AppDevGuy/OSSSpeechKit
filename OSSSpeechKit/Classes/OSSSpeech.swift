@@ -489,8 +489,6 @@ extension OSSSpeech: SFSpeechRecognitionTaskDelegate, SFSpeechRecognizerDelegate
     
     /// Docs available by Google searching for SFSpeechRecognitionTaskDelegate
     public func speechRecognitionTask(_ task: SFSpeechRecognitionTask, didHypothesizeTranscription transcription: SFTranscription) {
-        let finalTranscript = transcription
-        print(finalTranscript)
         delegate?.didCompleteTranslation(withText: transcription.formattedString)
     }
     

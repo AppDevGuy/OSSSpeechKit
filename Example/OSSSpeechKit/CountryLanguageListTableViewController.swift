@@ -91,11 +91,8 @@ extension CountryLanguageListTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let voice = OSSVoice()
-        voice.language = OSSVoiceEnum.allCases[indexPath.item].rawValue
-        voice.quality = .enhanced
         // NOTE: Must set the voice before requesting speech. This can be set once.
-        speechKit.voice = voice // OSSVoice(quality: .enhanced, language: OSSVoiceEnum.allCases[indexPath.item])
+        speechKit.voice = OSSVoice(quality: .enhanced, language: OSSVoiceEnum.allCases[indexPath.item])
         speechKit.utterance?.rate = 0.45
         // Test attributed string vs normal string
         if indexPath.item % 2 == 0 {

@@ -14,7 +14,7 @@ after_success:
   - make documentation
 # deploy:
 #   provider: pages
-#   skip-cleanup: true
+#   cleanup: false
 #   github-token: $GH_TOKEN  # Set in the settings page of your repository, as a secure variable
 #   local-dir: docs
 #   on:
