@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name                = 'OSSSpeechKit'
-  s.version             = '0.3.1'
+  s.version             = '0.3.2'
   s.summary             = 'OSSSpeechKit provides developers easy text to voice integration.'
   s.swift_version       = "5.0"
   s.platform            = :ios, "12.0"
