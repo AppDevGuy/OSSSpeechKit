@@ -111,6 +111,7 @@ extension CountryLanguageListTableViewController: OSSSpeechDelegate {
     }
     
     func didFailToProcessRequest(withError error: Error?) {
+        recordVoice()
         guard let err = error else {
             print("Error with the request but the error returned is nil")
             return
@@ -124,6 +125,7 @@ extension CountryLanguageListTableViewController: OSSSpeechDelegate {
     
     func didFailToCommenceSpeechRecording() {
         print("Failed to record speech.")
+        recordVoice()
     }
     
     func didFinishListening(withText text: String) {
