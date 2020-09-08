@@ -444,16 +444,12 @@ public class OSSSpeech: NSObject {
         audioEngine = AVAudioEngine()
         let identifier = voice?.voiceType.rawValue ?? OSSVoiceEnum.UnitedStatesEnglish.rawValue
         speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: identifier))
-        guard let engine = audioEngine else {
+        guard let engine = audioEngine, !engineSetup(engine) else {
             debugLog(object: self, message: "The audio engine is nil.")
             delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidAudioEngine.error)
             return
         }
-        if !engineSetup(engine) {
-            debugLog(object: self, message: "The audio engine is nil.")
-            return
-        }
-        guard let recogniser = SFSpeechRecognizer() else {
+        guard let recogniser = speechRecognizer else {
             delegate?.didFailToCommenceSpeechRecording()
             delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidSpeechRequest.error)
             return
@@ -463,16 +459,15 @@ public class OSSSpeech: NSObject {
             delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.recogniserUnavailble.error)
             return
         }
-        speechRecognizer = recogniser
-        if let audioRequest = request, let speechRecog = speechRecognizer {
+        if let audioRequest = request {
             if #available(iOS 13, *) {
-                if speechRecog.supportsOnDeviceRecognition {
+                if recogniser.supportsOnDeviceRecognition {
                     audioRequest.requiresOnDeviceRecognition = shouldUseOnDeviceRecognition
                 }
             }
-            speechRecog.delegate = self
-            speechRecog.defaultTaskHint = recognitionTaskType.taskType
-            recognitionTask = speechRecog.recognitionTask(with: audioRequest, delegate: self)
+            recogniser.delegate = self
+            recogniser.defaultTaskHint = recognitionTaskType.taskType
+            recognitionTask = recogniser.recognitionTask(with: audioRequest, delegate: self)
         } else {
             delegate?.didFailToCommenceSpeechRecording()
             delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidSpeechRequest.error)
@@ -494,6 +489,8 @@ extension OSSSpeech: SFSpeechRecognitionTaskDelegate, SFSpeechRecognizerDelegate
     
     /// Docs available by Google searching for SFSpeechRecognitionTaskDelegate
     public func speechRecognitionTask(_ task: SFSpeechRecognitionTask, didHypothesizeTranscription transcription: SFTranscription) {
+        let finalTranscript = transcription
+        print(finalTranscript)
         delegate?.didCompleteTranslation(withText: transcription.formattedString)
     }
     
