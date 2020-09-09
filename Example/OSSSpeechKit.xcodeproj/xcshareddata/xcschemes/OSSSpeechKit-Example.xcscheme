@@ -77,15 +77,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       codeCoverageEnabled = "YES"
       onlyGenerateCoverageForSpecifiedTargets = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "OSSSpeechKit_Example.app"
-            BlueprintName = "OSSSpeechKit_Example"
-            ReferencedContainer = "container:OSSSpeechKit.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <CodeCoverageTargets>
          <BuildableReference
             BuildableIdentifier = "primary"
@@ -103,16 +94,6 @@
                BlueprintIdentifier = "607FACE41AFB9204008FA782"
                BuildableName = "OSSSpeechKit_Tests.xctest"
                BlueprintName = "OSSSpeechKit_Tests"
-               ReferencedContainer = "container:OSSSpeechKit.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B042F2DB245FF79100958719"
-               BuildableName = "OSSSpeechKit_ExampleUITests.xctest"
-               BlueprintName = "OSSSpeechKit_ExampleUITests"
                ReferencedContainer = "container:OSSSpeechKit.xcodeproj">
             </BuildableReference>
          </TestableReference>
