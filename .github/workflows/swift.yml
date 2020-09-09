@@ -13,12 +13,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Start - Where are we?
-      run: pwd
     - name: Open Example
-      run: cd ../Example/
+      run: cd Example
     - name: Where are we
-      run: echo pwd
+      run: |
+        pwd
+        ls -la
     - name: Install Pods
       run: pod install
     - name: Build
