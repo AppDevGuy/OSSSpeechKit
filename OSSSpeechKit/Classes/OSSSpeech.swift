@@ -400,19 +400,19 @@ public class OSSSpeech: NSObject {
         }
     }
     
-    func engineSetup(_ engine: AVAudioEngine) -> Bool {
+    func engineSetup(_ engine: AVAudioEngine) {
         let input = engine.inputNode
         let bus = 0
         let inputFormat = input.outputFormat(forBus: 0)
         guard let outputFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: 8000, channels: 1, interleaved: true) else {
             delegate?.didFailToCommenceSpeechRecording()
             delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidAudioEngine.error)
-            return false
+            return
         }
         guard let converter = AVAudioConverter(from: inputFormat, to: outputFormat) else {
             delegate?.didFailToCommenceSpeechRecording()
             delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidAudioEngine.error)
-            return false
+            return
         }
         weak var weakSelf = self
         input.installTap(onBus: bus, bufferSize: 8192, format: inputFormat) { (buffer, time) -> Void in
@@ -444,11 +444,11 @@ public class OSSSpeech: NSObject {
         engine.prepare()
         do {
             try engine.start()
-            return true
+            return
         } catch {
             delegate?.didFailToCommenceSpeechRecording()
             delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidAudioEngine.error)
-            return false
+            return
         }
     }
     
@@ -457,22 +457,15 @@ public class OSSSpeech: NSObject {
             if engine.isRunning {
                 cancelRecording()
             }
+        } else {
+            audioEngine = AVAudioEngine()
         }
         setSession(isRecording: true)
         request = SFSpeechAudioBufferRecognitionRequest()
-        audioEngine = AVAudioEngine()
+        engineSetup(audioEngine!)
         let identifier = voice?.voiceType.rawValue ?? OSSVoiceEnum.UnitedStatesEnglish.rawValue
         speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: identifier))
-        guard let engine = audioEngine else {
-            debugLog(object: self, message: "The audio engine is nil.")
-            delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidAudioEngine.error)
-            return
-        }
-        if !engineSetup(engine) {
-            debugLog(object: self, message: "The audio engine is nil.")
-            return
-        }
-        guard let recogniser = SFSpeechRecognizer() else {
+        guard let recogniser = speechRecognizer else {
             delegate?.didFailToCommenceSpeechRecording()
             delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidSpeechRequest.error)
             return
@@ -482,16 +475,15 @@ public class OSSSpeech: NSObject {
             delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.recogniserUnavailble.error)
             return
         }
-        speechRecognizer = recogniser
-        if let audioRequest = request, let speechRecog = speechRecognizer {
+        if let audioRequest = request {
             if #available(iOS 13, *) {
-                if speechRecog.supportsOnDeviceRecognition {
+                if recogniser.supportsOnDeviceRecognition {
                     audioRequest.requiresOnDeviceRecognition = shouldUseOnDeviceRecognition
                 }
             }
-            speechRecog.delegate = self
-            speechRecog.defaultTaskHint = recognitionTaskType.taskType
-            recognitionTask = speechRecog.recognitionTask(with: audioRequest, delegate: self)
+            recogniser.delegate = self
+            recogniser.defaultTaskHint = recognitionTaskType.taskType
+            recognitionTask = recogniser.recognitionTask(with: audioRequest, delegate: self)
         } else {
             delegate?.didFailToCommenceSpeechRecording()
             delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidSpeechRequest.error)
