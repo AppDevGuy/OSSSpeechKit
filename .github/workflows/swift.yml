@@ -13,11 +13,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Open Example
-      run: cd Example
     - name: Where are we
       run: |
         pwd
+        ls -la
+        cd Example
         ls -la
     - name: Install Pods
       run: pod install
