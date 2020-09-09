@@ -13,17 +13,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Where are we
+    - name: Build and Run
       run: |
-        pwd
-        ls -la
         cd Example
-        ls -la
-    - name: Install Pods
-      run: pod install
-    - name: Build
-      run: swift build -v
-    - name: Run tests
-      run: swift test -v
-    - name: Upload code cov
-      run: bash <(curl https://codecov.io/bash | sed 's/"$beta_xcode_partials"//g')
+        pod install
+        swift build -v
+        swift test -v
+        bash <(curl https://codecov.io/bash | sed 's/"$beta_xcode_partials"//g')
