@@ -17,6 +17,5 @@ jobs:
       run: |
         cd Example
         pod install
-        swift build -v
-        swift test -v
+        xcodebuild clean test -project *.xcworkspace
         bash <(curl https://codecov.io/bash | sed 's/"$beta_xcode_partials"//g')
