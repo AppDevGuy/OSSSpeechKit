@@ -13,9 +13,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build and Run
+    - name: Build and Test
       run: |
         cd Example
         pod install
-        xcodebuild clean test -workspace *.xcworkspace -scheme OSSSpeechKit -destination 'platform=iOS Simulator,OS=13.6,name=iPhone 11 Pro Max'
+        xcodebuild test -workspace *.xcworkspace -scheme OSSSpeechKit -destination 'platform=iOS Simulator,OS=13.6,name=iPhone 11 Pro Max' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
         bash <(curl https://codecov.io/bash | sed 's/"$beta_xcode_partials"//g')
