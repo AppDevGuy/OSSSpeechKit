@@ -10,9 +10,6 @@ jobs:
   test:
     name: Test
     runs-on: macOS-latest
-    strategy:
-        matrix:
-          destination: ['platform=iOS Simulator, OS:13.7, name:iPhone 11 Pro Max']
 
     steps:
     - uses: actions/checkout@v2
@@ -20,7 +17,7 @@ jobs:
       run: |
         cd Example
         pod install
-        xcodebuild clean test -workspace OSSSpeechKit.xcworkspace -scheme OSSSpeechKit-Example -destination "${destination}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
+        xcodebuild clean test -workspace OSSSpeechKit.xcworkspace -scheme OSSSpeechKit-Example -destination "platform=iOS Simulator,OS=13.7,name=iPhone 11 Pro Max" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
         bash <(curl https://codecov.io/bash | sed 's/"$beta_xcode_partials"//g')
       env:
-         destination: ${{ matrix.destination }}
+         destination: "platform=iOS Simulator,OS=13.7,name=iPhone 11 Pro Max"
