@@ -14,7 +14,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Open Example
-      run: cd Example/
+      run: cd ../../../Example/
+    - name: Where are we
+      run: echo pwd
     - name: Install Pods
       run: pod install
     - name: Build
