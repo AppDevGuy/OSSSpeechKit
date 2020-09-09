@@ -17,5 +17,5 @@ jobs:
       run: |
         cd Example
         pod install
-        xcodebuild clean test -workspace *.xcworkspace
+        xcodebuild clean test -workspace *.xcworkspace -scheme OSSSpeechKit
         bash <(curl https://codecov.io/bash | sed 's/"$beta_xcode_partials"//g')
