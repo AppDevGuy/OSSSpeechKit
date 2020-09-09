@@ -20,7 +20,7 @@ jobs:
       run: |
         cd Example
         pod install
-        xcodebuild test -workspace OSSSpeechKit.xcworkspace -scheme OSSSpeechKit -destination "${destination}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
+        xcodebuild clean test -workspace OSSSpeechKit.xcworkspace -scheme OSSSpeechKit-Example -destination "${destination}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
         bash <(curl https://codecov.io/bash | sed 's/"$beta_xcode_partials"//g')
       env:
          destination: ${{ matrix.destination }}
