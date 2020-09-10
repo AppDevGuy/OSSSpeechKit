@@ -3,7 +3,7 @@
 
 [![OSSSpeechKit Logo](https://appdevguy.github.io/OSSSpeechKit/OSSSpeechKit-Logo.png)](https://github.com/AppDevGuy/OSSSpeechKit)
 
-[![CI Status](https://img.shields.io/travis/appdevguy/OSSSpeechKit.svg?style=flat)](https://travis-ci.org/appdevguy/OSSSpeechKit)
+[![Build Status](https://travis-ci.org/AppDevGuy/OSSSpeechKit.svg?branch=master)](https://travis-ci.org/AppDevGuy/OSSSpeechKit)
 [![Version](https://img.shields.io/cocoapods/v/OSSSpeechKit.svg?style=flat)](https://cocoapods.org/pods/OSSSpeechKit)
 [![License](https://img.shields.io/cocoapods/l/OSSSpeechKit.svg?style=flat)](https://cocoapods.org/pods/OSSSpeechKit)
 [![Platform](https://img.shields.io/cocoapods/p/OSSSpeechKit.svg?style=flat)](https://cocoapods.org/pods/OSSSpeechKit)
