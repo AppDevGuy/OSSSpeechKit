@@ -457,9 +457,8 @@ public class OSSSpeech: NSObject {
             if engine.isRunning {
                 cancelRecording()
             }
-        } else {
-            audioEngine = AVAudioEngine()
         }
+        audioEngine = AVAudioEngine()
         setSession(isRecording: true)
         request = SFSpeechAudioBufferRecognitionRequest()
         engineSetup(audioEngine!)

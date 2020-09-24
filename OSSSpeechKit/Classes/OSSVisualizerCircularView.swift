@@ -262,6 +262,7 @@ public class OSSVisualizerCircularView: UIView {
                     let barView = self.rectArray[i]
                     barView.bounds.size.height = self.initialBarHeight
                     barView.bounds.origin.y = 120 - barView.bounds.size.height
+                    barView.backgroundColor = self.visualizerColor
                 }
                 self.imageView.alpha = 0.3
             }, completion: nil)
