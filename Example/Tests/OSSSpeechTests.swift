@@ -294,6 +294,8 @@ class OSSSpeechTests: XCTestCase {
 }
 
 extension OSSSpeechTests: OSSSpeechDelegate {
+   func speechSynthesiser(didPerform speechSynthesizerAction: SpeechSynthesizerAction) { }
+  
     func didCompleteTranslation(withText text: String) {
         print("Translation completed with text: \(text)")
     }

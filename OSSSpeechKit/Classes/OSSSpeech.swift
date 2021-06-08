@@ -25,6 +25,46 @@ import UIKit
 import AVFoundation
 import Speech
 
+//MARK: AVSpeechSynthesis Delegate
+
+extension OSSSpeech: AVSpeechSynthesizerDelegate {
+  
+  public func speechSynthesizer(
+    _ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {
+    delegate?.speechSynthesiser(didPerform: .start(utterance))
+  }
+  
+  public func speechSynthesizer(
+    _ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+    delegate?.speechSynthesiser(didPerform: .finish(utterance))
+  }
+  
+  public func speechSynthesizer(
+    _ synthesizer: AVSpeechSynthesizer, didPause utterance: AVSpeechUtterance) {
+    delegate?.speechSynthesiser(didPerform: .pause(utterance))
+  }
+  
+  public func speechSynthesizer(
+    _ synthesizer: AVSpeechSynthesizer,
+    didCancel utterance: AVSpeechUtterance) {
+    delegate?.speechSynthesiser(didPerform: .cancel(utterance))
+  }
+  public func speechSynthesizer(
+    _ synthesizer: AVSpeechSynthesizer,
+    willSpeakRangeOfSpeechString characterRange: NSRange, utterance: AVSpeechUtterance) {
+    delegate?.speechSynthesiser(didPerform: .willSpeakRange(characterRange, utterance))
+  }
+}
+
+//A Simplified CallBack For AVSpeechSynthesizerDelegate
+public enum SpeechSynthesizerAction {
+  case start(AVSpeechUtterance)
+  case finish(AVSpeechUtterance)
+  case pause(AVSpeechUtterance)
+  case cancel(AVSpeechUtterance)
+  case willSpeakRange(NSRange, AVSpeechUtterance)
+}
+
 /// The authorization status of the Microphone and recording, imitating the native `SFSpeechRecognizerAuthorizationStatus`
 public enum OSSSpeechKitAuthorizationStatus: Int {
     /// The app's authorization status has not yet been determined.
@@ -157,6 +197,8 @@ public protocol OSSSpeechDelegate: class {
     func didCompleteTranslation(withText text: String)
     /// Error handling function.
     func didFailToProcessRequest(withError error: Error?)
+    //When AVSpeechSynthesizerDelegate Performas An Action
+    func speechSynthesiser(didPerform speechSynthesizerAction: SpeechSynthesizerAction)
 }
 
 /// Speech is the primary interface. To use, set the voice and then call `.speak(string: "your string")`
@@ -221,9 +263,11 @@ public class OSSSpeech: NSObject {
     
     // MARK: - Lifecycle
     
-    private override init() {
-        speechSynthesizer = AVSpeechSynthesizer()
-    }
+  private override init() {
+    super.init()
+    speechSynthesizer = AVSpeechSynthesizer()
+    speechSynthesizer.delegate = self
+  }
     
     private static let sharedInstance: OSSSpeech = {
         return OSSSpeech()
