@@ -57,7 +57,7 @@ extension OSSSpeech: AVSpeechSynthesizerDelegate {
 }
 
 /// The `AVSpeeechSynthesizerDelegate` methods returned as an Enum for use in the the OSSSpeechDelegate
-public enum SpeechSynthesizerAction {
+public enum OSSSpeechKitSynthesizerAction {
   /// The AVSpeechUtterance has started.
   case start(AVSpeechUtterance)
   /// The AVSpeechUtterence has finished.
@@ -203,7 +203,7 @@ public protocol OSSSpeechDelegate: class {
     /// Error handling function.
     func didFailToProcessRequest(withError error: Error?)
     /// Method for observing all delegate functions from `AVSpeeechSynthesizerDelegate`
-    func speechSynthesizer(didPerform speechSynthesizerAction: SpeechSynthesizerAction)
+    func speechSynthesizer(didPerform speechSynthesizerAction: OSSSpeechKitSynthesizerAction)
 }
 
 /// Speech is the primary interface. To use, set the voice and then call `.speak(string: "your string")`
