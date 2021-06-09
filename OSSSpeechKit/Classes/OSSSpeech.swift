@@ -25,6 +25,51 @@ import UIKit
 import AVFoundation
 import Speech
 
+// MARK: - AVSpeechSynthesizerDelegate
+
+extension OSSSpeech: AVSpeechSynthesizerDelegate {
+  
+  public func speechSynthesizer(
+    _ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {
+    delegate?.speechSynthesizer(didPerform: .start(utterance))
+  }
+  
+  public func speechSynthesizer(
+    _ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+    delegate?.speechSynthesizer(didPerform: .finish(utterance))
+  }
+  
+  public func speechSynthesizer(
+    _ synthesizer: AVSpeechSynthesizer, didPause utterance: AVSpeechUtterance) {
+    delegate?.speechSynthesizer(didPerform: .pause(utterance))
+  }
+  
+  public func speechSynthesizer(
+    _ synthesizer: AVSpeechSynthesizer,
+    didCancel utterance: AVSpeechUtterance) {
+    delegate?.speechSynthesizer(didPerform: .cancel(utterance))
+  }
+  public func speechSynthesizer(
+    _ synthesizer: AVSpeechSynthesizer,
+    willSpeakRangeOfSpeechString characterRange: NSRange, utterance: AVSpeechUtterance) {
+    delegate?.speechSynthesizer(didPerform: .willSpeakRange(characterRange, utterance))
+  }
+}
+
+/// The `AVSpeeechSynthesizerDelegate` methods returned as an Enum for use in the the OSSSpeechDelegate
+public enum OSSSpeechKitSynthesizerAction {
+  /// The AVSpeechUtterance has started.
+  case start(AVSpeechUtterance)
+  /// The AVSpeechUtterence has finished.
+  case finish(AVSpeechUtterance)
+  /// The AVSpeechUtterance has been paused.
+  case pause(AVSpeechUtterance)
+  /// The AVSpeechUtterance has been cancelled.
+  case cancel(AVSpeechUtterance)
+  /// The AVSpeechUtterance us being spoken at the given range.
+  case willSpeakRange(NSRange, AVSpeechUtterance)
+}
+
 /// The authorization status of the Microphone and recording, imitating the native `SFSpeechRecognizerAuthorizationStatus`
 public enum OSSSpeechKitAuthorizationStatus: Int {
     /// The app's authorization status has not yet been determined.
@@ -157,6 +202,8 @@ public protocol OSSSpeechDelegate: class {
     func didCompleteTranslation(withText text: String)
     /// Error handling function.
     func didFailToProcessRequest(withError error: Error?)
+    /// Method for observing all delegate functions from `AVSpeeechSynthesizerDelegate`
+    func speechSynthesizer(didPerform speechSynthesizerAction: OSSSpeechKitSynthesizerAction)
 }
 
 /// Speech is the primary interface. To use, set the voice and then call `.speak(string: "your string")`
@@ -221,9 +268,11 @@ public class OSSSpeech: NSObject {
     
     // MARK: - Lifecycle
     
-    private override init() {
-        speechSynthesizer = AVSpeechSynthesizer()
-    }
+  private override init() {
+    super.init()
+    speechSynthesizer = AVSpeechSynthesizer()
+    speechSynthesizer.delegate = self
+  }
     
     private static let sharedInstance: OSSSpeech = {
         return OSSSpeech()
