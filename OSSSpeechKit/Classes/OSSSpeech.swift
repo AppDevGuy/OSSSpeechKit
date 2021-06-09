@@ -202,7 +202,7 @@ public protocol OSSSpeechDelegate: class {
     func didCompleteTranslation(withText text: String)
     /// Error handling function.
     func didFailToProcessRequest(withError error: Error?)
-    /// Method for observing all delegate functions from AVSpeechSynthesizerDelegate
+    /// Method for observing all delegate functions from `AVSpeeechSynthesizerDelegate`
     func speechSynthesizer(didPerform speechSynthesizerAction: SpeechSynthesizerAction)
 }
 
