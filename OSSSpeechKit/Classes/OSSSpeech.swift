@@ -25,7 +25,7 @@ import UIKit
 import AVFoundation
 import Speech
 
-// MARK: - AVSpeechSynthesis Delegate
+// MARK: - AVSpeechSynthesizerDelegate
 
 extension OSSSpeech: AVSpeechSynthesizerDelegate {
   
