@@ -25,43 +25,48 @@ import UIKit
 import AVFoundation
 import Speech
 
-//MARK: AVSpeechSynthesis Delegate
+// MARK: - AVSpeechSynthesis Delegate
 
 extension OSSSpeech: AVSpeechSynthesizerDelegate {
   
   public func speechSynthesizer(
     _ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {
-    delegate?.speechSynthesiser(didPerform: .start(utterance))
+    delegate?.speechSynthesizer(didPerform: .start(utterance))
   }
   
   public func speechSynthesizer(
     _ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
-    delegate?.speechSynthesiser(didPerform: .finish(utterance))
+    delegate?.speechSynthesizer(didPerform: .finish(utterance))
   }
   
   public func speechSynthesizer(
     _ synthesizer: AVSpeechSynthesizer, didPause utterance: AVSpeechUtterance) {
-    delegate?.speechSynthesiser(didPerform: .pause(utterance))
+    delegate?.speechSynthesizer(didPerform: .pause(utterance))
   }
   
   public func speechSynthesizer(
     _ synthesizer: AVSpeechSynthesizer,
     didCancel utterance: AVSpeechUtterance) {
-    delegate?.speechSynthesiser(didPerform: .cancel(utterance))
+    delegate?.speechSynthesizer(didPerform: .cancel(utterance))
   }
   public func speechSynthesizer(
     _ synthesizer: AVSpeechSynthesizer,
     willSpeakRangeOfSpeechString characterRange: NSRange, utterance: AVSpeechUtterance) {
-    delegate?.speechSynthesiser(didPerform: .willSpeakRange(characterRange, utterance))
+    delegate?.speechSynthesizer(didPerform: .willSpeakRange(characterRange, utterance))
   }
 }
 
-//A Simplified CallBack For AVSpeechSynthesizerDelegate
+/// The `AVSpeeechSynthesizerDelegate` methods returned as an Enum for use in the the OSSSpeechDelegate
 public enum SpeechSynthesizerAction {
+  /// The AVSpeechUtterance has started.
   case start(AVSpeechUtterance)
+  /// The AVSpeechUtterence has finished.
   case finish(AVSpeechUtterance)
+  /// The AVSpeechUtterance has been paused.
   case pause(AVSpeechUtterance)
+  /// The AVSpeechUtterance has been cancelled.
   case cancel(AVSpeechUtterance)
+  /// The AVSpeechUtterance us being spoken at the given range.
   case willSpeakRange(NSRange, AVSpeechUtterance)
 }
 
@@ -197,8 +202,8 @@ public protocol OSSSpeechDelegate: class {
     func didCompleteTranslation(withText text: String)
     /// Error handling function.
     func didFailToProcessRequest(withError error: Error?)
-    //When AVSpeechSynthesizerDelegate Performas An Action
-    func speechSynthesiser(didPerform speechSynthesizerAction: SpeechSynthesizerAction)
+    /// Method for observing all delegate functions from AVSpeechSynthesizerDelegate
+    func speechSynthesizer(didPerform speechSynthesizerAction: SpeechSynthesizerAction)
 }
 
 /// Speech is the primary interface. To use, set the voice and then call `.speak(string: "your string")`

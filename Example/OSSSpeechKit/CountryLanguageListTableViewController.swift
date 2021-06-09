@@ -106,7 +106,7 @@ extension CountryLanguageListTableViewController {
 
 extension CountryLanguageListTableViewController: OSSSpeechDelegate {
   
-  func speechSynthesiser(didPerform speechSynthesizerAction: SpeechSynthesizerAction) {
+  func speechSynthesizer(didPerform speechSynthesizerAction: SpeechSynthesizerAction) {
     
     switch speechSynthesizerAction {
     case .start(let utterance):
