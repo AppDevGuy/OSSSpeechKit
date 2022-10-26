@@ -280,6 +280,21 @@ public class OSSSpeech: NSObject {
         speak()
     }
     
+    /// Stop speaking text
+    public func stopSpeaking() {
+        speechSynthesizer.stopSpeaking(at: .immediate)
+    }
+    
+    /// Pause speaking text
+    public func pauseSpeaking() {
+        speechSynthesizer.pauseSpeaking(at: .immediate)
+    }
+    
+    /// Continue speaking text
+    public func continueSpeaking() {
+        speechSynthesizer.continueSpeaking()
+    }
+    
     // MARK: - Private Methods
 
     private func utteranceIsValid() -> Bool {
