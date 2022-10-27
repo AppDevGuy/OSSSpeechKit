@@ -294,7 +294,7 @@ public class OSSSpeech: NSObject {
     
     /// Continue speaking text
     public func continueSpeaking() -> Bool {
-        if !speechSynthesizer.isPaused {return false}
+        if !speechSynthesizer.isPaused { return false }
         return speechSynthesizer.continueSpeaking()
     }
     
@@ -324,6 +324,7 @@ public class OSSSpeech: NSObject {
         }
         // Ensure volume is correct each time
         setSession(isRecording: false)
+        let _ = stopSpeaking()
         speechSynthesizer.speak(newUtterance)
     }
     
@@ -460,6 +461,7 @@ public class OSSSpeech: NSObject {
             audioEngine = AVAudioEngine()
         }
         setSession(isRecording: true)
+        let _ = stopSpeaking()
         request = SFSpeechAudioBufferRecognitionRequest()
         engineSetup(audioEngine!)
         let identifier = voice?.voiceType.rawValue ?? OSSVoiceEnum.UnitedStatesEnglish.rawValue
