@@ -281,18 +281,21 @@ public class OSSSpeech: NSObject {
     }
     
     /// Stop speaking text
-    public func stopSpeaking() {
-        speechSynthesizer.stopSpeaking(at: .immediate)
+    public func stopSpeaking() -> Bool {
+        if !speechSynthesizer.isSpeaking { return false }
+        return speechSynthesizer.stopSpeaking(at: .immediate)
     }
     
     /// Pause speaking text
-    public func pauseSpeaking() {
-        speechSynthesizer.pauseSpeaking(at: .immediate)
+    public func pauseSpeaking() -> Bool {
+        if !speechSynthesizer.isSpeaking { return false }
+        return speechSynthesizer.pauseSpeaking(at: .immediate)
     }
     
     /// Continue speaking text
-    public func continueSpeaking() {
-        speechSynthesizer.continueSpeaking()
+    public func continueSpeaking() -> Bool {
+        if !speechSynthesizer.isPaused {return false}
+        return speechSynthesizer.continueSpeaking()
     }
     
     // MARK: - Private Methods
