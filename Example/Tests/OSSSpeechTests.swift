@@ -21,6 +21,7 @@
 //  IN THE SOFTWARE.
 //
 
+#if canImport(Speech)
 import XCTest
 @testable import OSSSpeechKit
 import AVKit
@@ -53,9 +54,11 @@ class OSSSpeechTests: XCTestCase {
     }
 
     func testVoiceDecoderNil() {
-		XCTAssertNoThrow({try NSKeyedUnarchiver.init(forReadingFrom: Data())})
-		// swiftlint:disable:next force_try
-		let archiver: NSKeyedUnarchiver = try! .init(forReadingFrom: Data())
+		guard let archiver: NSKeyedUnarchiver = try? NSKeyedUnarchiver(forReadingFrom: Data()) else {
+			XCTFail("archiver was nil.")
+			return
+		}
+
         let voice = OSSVoice(coder: archiver)
         let utterance = OSSUtterance(coder: archiver)
         XCTAssertNil(voice)
@@ -261,7 +264,8 @@ class OSSSpeechTests: XCTestCase {
         waitForExpectations(timeout: 3)
         XCTAssert(hasCompleted, "Did not complete the Speech Recording expectation")
     }
-    
+
+	#if !os(macOS)
     func testRecordPermission() {
         speechKit?.recordVoice(requestMicPermission: true)
         let recPermission = AVAudioSession.sharedInstance().recordPermission
@@ -276,6 +280,7 @@ class OSSSpeechTests: XCTestCase {
         try? customSession.setCategory(.ambient)
         XCTAssert(customSession.category == .ambient)
     }
+	#endif
     
     func testUtilityClassStrings() {
         let util = OSSSpeechUtility()
@@ -329,3 +334,4 @@ extension OSSSpeechTests: OSSSpeechDelegate {
         speech.debugLog(object: self, message: "Did fail to commence speech.")
     }
 }
+#endif

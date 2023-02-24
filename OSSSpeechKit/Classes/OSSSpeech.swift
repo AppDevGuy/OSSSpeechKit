@@ -192,7 +192,8 @@ public class OSSSpeech: NSObject {
     
     /// The object used to enable translation of strings to synthsized voice.
     public var utterance: OSSUtterance?
-    
+
+	#if !os(macOS)
     /// An AVAudioSession that ensure volume controls are correct in various scenarios
     private var session: AVAudioSession?
     
@@ -208,7 +209,8 @@ public class OSSSpeech: NSObject {
             session = newValue
         }
     }
-    
+	#endif
+
     /// This property handles permission authorization.
     /// This property is intentionally named vaguely to prevent accidental overriding.
     public var srp = SFSpeechRecognizer.self
@@ -337,13 +339,15 @@ public class OSSSpeech: NSObject {
         stopSpeaking()
         speechSynthesizer.speak(newUtterance)
     }
-    
+
     private func setSession(isRecording: Bool) {
+#if !os(macOS)
         let category: AVAudioSession.Category = isRecording ? .playAndRecord : .playback
         try? audioSession.setCategory(category, options: .duckOthers)
         try? audioSession.setActive(true, options: .notifyOthersOnDeactivation)
+#endif
     }
-    
+
     // MARK: - Public Voice Recording Methods
     
     /// Record and recognise speech
@@ -352,12 +356,14 @@ public class OSSSpeech: NSObject {
     ///
     /// Upon checking the authorisation and being registered successful, a check to determine if a recording session is active will be made and any active session will be cancelled.
     public func recordVoice(requestMicPermission requested: Bool = true) {
+#if !os(macOS)
         if requested {
             if audioSession.recordPermission != .granted {
                 self.requestMicPermission()
                 return
             }
         }
+#endif
         getMicroPhoneAuthorization()
     }
     
@@ -369,15 +375,17 @@ public class OSSSpeech: NSObject {
     // MARK: - Private Voice Recording
     
     private func requestMicPermission() {
-        weak var weakSelf = self
-        audioSession.requestRecordPermission { allowed in
+#if !os(macOS)
+        audioSession.requestRecordPermission {[weak self] allowed in
+			guard let self = self else { return }
             if !allowed {
-                weakSelf?.debugLog(object: self, message: "Microphone permission was denied.")
-                weakSelf?.delegate?.authorizationToMicrophone(withAuthentication: .denied)
+				self.debugLog(object: self, message: "Microphone permission was denied.")
+				self.delegate?.authorizationToMicrophone(withAuthentication: .denied)
                 return
             }
-            weakSelf?.getMicroPhoneAuthorization()
+            self.getMicroPhoneAuthorization()
         }
+#endif
     }
     
     private func getMicroPhoneAuthorization() {
@@ -487,7 +495,7 @@ public class OSSSpeech: NSObject {
             return
         }
         if let audioRequest = request {
-            if #available(iOS 13, *) {
+            if #available(iOS 13, macOS 15, *) {
                 if recogniser.supportsOnDeviceRecognition {
                     audioRequest.requiresOnDeviceRecognition = shouldUseOnDeviceRecognition
                 }

@@ -7,6 +7,7 @@ let package = Package(
     platforms: [
         .iOS(.v12),
         .tvOS(.v13),
+		.macOS(.v11)
     ],
     products: [
         .library(
@@ -38,9 +39,10 @@ let package = Package(
                 .process("Assets/")
             ],
             linkerSettings: [
-                .linkedFramework("UIKit", .when(platforms: [.iOS])),
-                .linkedFramework("AVFoundation"),
-				.linkedFramework("Speech", .when(platforms: [.iOS]))
+				.linkedFramework("AVFoundation"),
+				.linkedFramework("AppKit", .when(platforms: [.macOS])),
+				.linkedFramework("Speech", .when(platforms: [.iOS])),
+				.linkedFramework("UIKit", .when(platforms: [.iOS]))
             ]
         ),
 		

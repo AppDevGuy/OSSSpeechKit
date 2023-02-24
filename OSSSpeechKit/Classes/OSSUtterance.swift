@@ -102,6 +102,6 @@ public class OSSUtterance: AVSpeechUtterance {
         rate = AVSpeechUtteranceDefaultSpeechRate
         pitchMultiplier = 1.0
         volume = 1.0
-        voice = AVSpeechSynthesisVoice(identifier: AVSpeechSynthesisVoiceIdentifierAlex)
+		voice = AVSpeechSynthesisVoice(identifier: AVSpeechSynthesisVoiceIdentifierAlex)
     }
 }

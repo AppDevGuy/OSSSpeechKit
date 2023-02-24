@@ -25,6 +25,8 @@ import Foundation
 import AVFoundation
 #if canImport(UIKit)
 import UIKit
+#elseif canImport(AppKit)
+import AppKit
 #endif
 
 /// The voice infor struct ensures that the data structure has conformity and consistency.
@@ -236,6 +238,13 @@ public enum OSSVoiceEnum: String, CaseIterable {
         }
         return UIImage(named: rawValue, in: Bundle.getResourcesBundle(), compatibleWith: nil)
     }
+	#elseif canImport(AppKit)
+	public var flag: NSImage? {
+		if let mainBundleImage = NSImage(named: rawValue) {
+			return mainBundleImage
+		}
+		return NSImage(named: rawValue)
+	}
 	#endif
 }
 
