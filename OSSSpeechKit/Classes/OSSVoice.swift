@@ -21,8 +21,11 @@
 //  IN THE SOFTWARE.
 //
 
-import UIKit
+import Foundation
 import AVFoundation
+#if canImport(UIKit)
+import UIKit
+#endif
 
 /// The voice infor struct ensures that the data structure has conformity and consistency.
 public struct OSSVoiceInfo {
@@ -226,12 +229,14 @@ public enum OSSVoiceEnum: String, CaseIterable {
     /// You can supply your own flag image, provided is has the same name (.rawValue) as the image in the pod assets.
     ///
     /// If no image is found in the application bundle, the image from the SDK bundle will be provided.
+	#if canImport(UIKit)
     public var flag: UIImage? {
         if let mainBundleImage = UIImage(named: rawValue, in: Bundle.main, compatibleWith: nil) {
             return mainBundleImage
         }
         return UIImage(named: rawValue, in: Bundle.getResourcesBundle(), compatibleWith: nil)
     }
+	#endif
 }
 
 /** OSSVoice overides some of the properties provided to enable setting as well as getting.

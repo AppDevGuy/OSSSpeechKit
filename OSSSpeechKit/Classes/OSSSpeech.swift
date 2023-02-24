@@ -21,9 +21,10 @@
 //  IN THE SOFTWARE.
 //
 
-import UIKit
-import AVFoundation
+#if canImport(Speech)
 import Speech
+import Foundation
+import AVFoundation
 
 /// The authorization status of the Microphone and recording, imitating the native `SFSpeechRecognizerAuthorizationStatus`
 public enum OSSSpeechKitAuthorizationStatus: Int {
@@ -533,3 +534,4 @@ extension OSSSpeech: SFSpeechRecognitionTaskDelegate, SFSpeechRecognizerDelegate
     public func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {}
 
 }
+#endif

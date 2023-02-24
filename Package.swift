@@ -1,4 +1,4 @@
-// swift-tools-version:5.7
+// swift-tools-version:5.3
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 import PackageDescription
 
@@ -7,7 +7,6 @@ let package = Package(
     platforms: [
         .iOS(.v12),
         .tvOS(.v13),
-        .macCatalyst(.v13),
     ],
     products: [
         .library(
@@ -23,10 +22,7 @@ let package = Package(
             targets: ["OSSSpeechKit"])
     ],
 
-    dependencies: [
-    ],
-
-    // MARK: - Targets
+	// MARK: - Targets
     targets: [
         // // MARK: - OSSSpeachKit
         .target(
@@ -42,9 +38,9 @@ let package = Package(
                 .process("Assets/")
             ],
             linkerSettings: [
-                .linkedFramework("UIKit"),
+                .linkedFramework("UIKit", .when(platforms: [.iOS])),
                 .linkedFramework("AVFoundation"),
-                .linkedFramework("Speech")
+				.linkedFramework("Speech", .when(platforms: [.iOS]))
             ]
         ),
 		
