@@ -54,7 +54,8 @@ class OSSSpeechTests: XCTestCase {
 
     func testVoiceDecoderNil() {
 		XCTAssertNoThrow({try NSKeyedUnarchiver.init(forReadingFrom: Data())})
-		let archiver :NSKeyedUnarchiver = try! .init(forReadingFrom: Data())
+		// swiftlint:disable:next force_try
+		let archiver: NSKeyedUnarchiver = try! .init(forReadingFrom: Data())
         let voice = OSSVoice(coder: archiver)
         let utterance = OSSUtterance(coder: archiver)
         XCTAssertNil(voice)
