@@ -32,11 +32,7 @@ class CountryLanguageListTableViewController: UITableViewController {
     
     private lazy var microphoneButton: UIBarButtonItem = {
         var micImage: UIImage?
-        if #available(iOS 13.0, *) {
-            micImage = UIImage(systemName: "mic.fill")?.withRenderingMode(.alwaysTemplate)
-        } else {
-            micImage = UIImage(named: "oss-microphone-icon")?.withRenderingMode(.alwaysTemplate)
-        }
+        micImage = UIImage(systemName: "mic.fill")?.withRenderingMode(.alwaysTemplate)
         let button = UIBarButtonItem(image: micImage, style: .plain, target: self, action: #selector(recordVoice))
         button.tintColor = .black
         button.accessibilityIdentifier = "OSSSpeechKitMicButton"

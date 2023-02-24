@@ -146,7 +146,7 @@ public enum OSSSpeechRecognitionTaskType: Int {
 }
 
 /// Delegate to handle events such as failed authentication for microphone among many more.
-public protocol OSSSpeechDelegate: class {
+public protocol OSSSpeechDelegate: AnyObject {
     /// When the microphone has finished accepting audio, this delegate will be called with the final best text output.
     func didFinishListening(withText text: String)
     /// Handle returning authentication status to user - primary use is for non-authorized state.
@@ -279,7 +279,34 @@ public class OSSSpeech: NSObject {
         }
         speak()
     }
-    
+
+    /// Pause speaking text
+    ///
+    /// Will check if the current speech synthesizer session is speaking before attempting to pause.
+    public func pauseSpeaking() {
+        if !speechSynthesizer.isSpeaking { return }
+        speechSynthesizer.pauseSpeaking(at: .immediate)
+    }
+
+    /// Continue speaking text
+    ///
+    /// Will check if the current speech synthesizer session is paused before attempting to continue speaking.
+    public func continueSpeaking() {
+        if !speechSynthesizer.isPaused { return }
+        speechSynthesizer.continueSpeaking()
+    }
+
+    /// Force the ending of speaking.
+    ///
+    /// Does not remove or reset the utterance or voice - only stops the current speaking if it's active.
+    /// Also checks to see if the current synthesizer session is paused.
+    public func stopSpeaking() {
+        guard speechSynthesizer.isSpeaking || speechSynthesizer.isPaused else {
+             return
+        }
+        speechSynthesizer.stopSpeaking(at: .immediate)
+    }
+
     // MARK: - Private Methods
 
     private func utteranceIsValid() -> Bool {
@@ -306,6 +333,7 @@ public class OSSSpeech: NSObject {
         }
         // Ensure volume is correct each time
         setSession(isRecording: false)
+        stopSpeaking()
         speechSynthesizer.speak(newUtterance)
     }
     
@@ -441,6 +469,7 @@ public class OSSSpeech: NSObject {
         } else {
             audioEngine = AVAudioEngine()
         }
+        stopSpeaking()
         setSession(isRecording: true)
         request = SFSpeechAudioBufferRecognitionRequest()
         engineSetup(audioEngine!)

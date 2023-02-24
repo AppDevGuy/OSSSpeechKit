@@ -1,0 +1,23 @@
+PODS:
+  - OSSSpeechKit (0.3.3)
+  - PureLayout (3.1.6)
+
+DEPENDENCIES:
+  - OSSSpeechKit (from `../`)
+  - PureLayout
+
+SPEC REPOS:
+  trunk:
+    - PureLayout
+
+EXTERNAL SOURCES:
+  OSSSpeechKit:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  OSSSpeechKit: ea0fd8151e7e338bc6ddc6bb749455fc3b33cfde
+  PureLayout: bd3c4ec3a3819ad387c99ebb72c6b129c3ed4d2d
+
+PODFILE CHECKSUM: 763c35b8e31322f68dd764600ce7eb9213de7d80
+
+COCOAPODS: 1.11.3
