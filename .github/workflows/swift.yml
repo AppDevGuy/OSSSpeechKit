@@ -26,4 +26,4 @@ jobs:
         ONLY_ACTIVE_ARCH=NO
         bash <(curl https://codecov.io/bash | sed 's/"$beta_xcode_partials"//g')
       env:
-         destination: "platform=iOS Simulator"
+         destination: "platform=Any iOS Simulator Device"
