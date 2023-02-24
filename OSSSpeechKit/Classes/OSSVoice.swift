@@ -21,8 +21,13 @@
 //  IN THE SOFTWARE.
 //
 
-import UIKit
+import Foundation
 import AVFoundation
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
 
 /// The voice infor struct ensures that the data structure has conformity and consistency.
 public struct OSSVoiceInfo {
@@ -35,7 +40,7 @@ public struct OSSVoiceInfo {
     /// Identifier is a unique bundle url provided by Apple for each AVSpeechSynthesisVoice.
     public var identifier: Any?
 }
-
+// swiftlint:disable identifier_name
 /// The available system voices.
 ///
 /// The enum is iteratable; access to an array of the enum values can be accessed using:
@@ -47,12 +52,18 @@ public enum OSSVoiceEnum: String, CaseIterable {
     case Australian = "en-AU"
     /// Brazilian
     case Brazilian = "pt-BR"
+    /// Bulgarian
+    case Bulgarian = "bg-BG"
     /// CanadianFrench
     case CanadianFrench = "fr-CA"
-    /// Chinese
+    /// Chinese Traditional
     case Chinese = "zh-CH"
+    /// Chinese Simplified
+    case ChineseSimplified = "zh-CN"
     /// ChineseHongKong
     case ChineseHongKong = "zh-HK"
+    /// Croatian
+    case Croatian = "hr-HR"
     /// Czech
     case Czech = "cs-CZ"
     /// Danish
@@ -77,6 +88,8 @@ public enum OSSVoiceEnum: String, CaseIterable {
     case Hindi = "hi-IN"
     /// Hungarian
     case Hungarian = "hu-HU"
+    /// Indian English
+    case IndianEnglish = "en-IN"
     /// Indonesian
     case Indonesian = "id-ID"
     /// IrishEnglish
@@ -87,10 +100,14 @@ public enum OSSVoiceEnum: String, CaseIterable {
     case Japanese = "ja-JP"
     /// Korean
     case Korean = "ko-KR"
+    /// Malaysian
+    case Malay = "ms-MY"
     /// Mexican
     case Mexican = "es-MX"
     /// Norwegian
     case Norwegian = "no-NO"
+    /// Norwegian Bokmal
+    case NorwegianBokmal = "nb-NO"
     /// Polish
     case Polish = "pl-PL"
     /// Portuguese
@@ -107,6 +124,8 @@ public enum OSSVoiceEnum: String, CaseIterable {
     case SouthAfricanEnglish = "en-ZA"
     /// Spanish
     case Spanish = "es-ES"
+    /// Catalan
+    case SpanishCatalan = "ca-ES"
     /// Swedish
     case Swedish = "sv-SE"
     /// Taiwanese
@@ -115,9 +134,15 @@ public enum OSSVoiceEnum: String, CaseIterable {
     case Thai = "th-TH"
     /// Turkish
     case Turkish = "tr-TR"
+    /// Ukranian
+    case Ukranian = "uk-UA"
     /// USA English
     case UnitedStatesEnglish = "en-US"
-    
+    /// Vietnamese
+    case Vietnamese = "vi-VN"
+    /// Arabic World
+    case ArabicWorld = "ar-001"
+
     /// Will return specific information about the language as an OSSVoiceInfo object.
     public func getDetails() -> OSSVoiceInfo {
         var voiceInfo: OSSVoiceInfo = OSSVoiceInfo()
@@ -131,12 +156,12 @@ public enum OSSVoiceEnum: String, CaseIterable {
         }
         return voiceInfo
     }
-    
+
     /// Provides the Enum key itself as a String
     public var title: String {
         return String(describing: self)
     }
-    
+
     /// Demo message is for returning a string in the language that will be read while also providing the name of the voice that Apple have provided.
     public var demoMessage: String {
         var voiceName = ""
@@ -218,20 +243,49 @@ public enum OSSVoiceEnum: String, CaseIterable {
             return "你好我的名字是 \(voiceName)"
         case .Taiwanese:
             return "你好我的名字是 \(voiceName)"
+        case .Bulgarian:
+            return "Здравейте, казвам се \(voiceName)"
+        case .ChineseSimplified:
+            return "你好我的名字是 \(voiceName)"
+        case .Croatian:
+            return "Zdravo! Moje ime je \(voiceName)"
+        case .IndianEnglish:
+            return "Hello, my name is \(voiceName)"
+        case .Malay:
+            return "helo! Nama saya \(voiceName)"
+        case .NorwegianBokmal:
+            return "Hei, mitt navn er \(voiceName)"
+        case .SpanishCatalan:
+            return "Hola! Em dic \(voiceName)"
+        case .Ukranian:
+            return "Привіт! Мене звати \(voiceName)"
+        case .Vietnamese:
+            return "Xin chào! Tên của tôi là \(voiceName)"
+        case .ArabicWorld:
+            return "\(voiceName) مرحبا اسمي"
         }
     }
-    
+
     /// The flag for the selected language.
     ///
     /// You can supply your own flag image, provided is has the same name (.rawValue) as the image in the pod assets.
     ///
     /// If no image is found in the application bundle, the image from the SDK bundle will be provided.
+#if canImport(UIKit)
     public var flag: UIImage? {
         if let mainBundleImage = UIImage(named: rawValue, in: Bundle.main, compatibleWith: nil) {
             return mainBundleImage
         }
         return UIImage(named: rawValue, in: Bundle.getResourcesBundle(), compatibleWith: nil)
     }
+#elseif canImport(AppKit)
+	public var flag: NSImage? {
+		if let mainBundleImage = NSImage(named: rawValue) {
+			return mainBundleImage
+		}
+		return NSImage(named: rawValue)
+	}
+#endif
 }
 
 /** OSSVoice overides some of the properties provided to enable setting as well as getting.
@@ -244,13 +298,13 @@ public enum OSSVoiceEnum: String, CaseIterable {
 */
 @available(iOS 9.0, *)
 public class OSSVoice: AVSpeechSynthesisVoice {
-    
+
     // MARK: - Private Properties
-    
+
     private var voiceQuality: AVSpeechSynthesisVoiceQuality = .default
     private var voiceLanguage: String = OSSVoiceEnum.UnitedStatesEnglish.rawValue
     private var voiceTypeValue: OSSVoiceEnum = .UnitedStatesEnglish
-    
+
     /// You have access to set the voice quality or use the default which is set to .default
     override public var quality: AVSpeechSynthesisVoiceQuality {
         get {
@@ -260,7 +314,7 @@ public class OSSVoice: AVSpeechSynthesisVoice {
             voiceQuality = newValue
         }
     }
-    
+
     /// Language offers a get and set. The default value is United States English.
     override public var language: String {
         get {
@@ -270,17 +324,15 @@ public class OSSVoice: AVSpeechSynthesisVoice {
             voiceLanguage = newValue
             if let valueEnum = OSSVoiceEnum(rawValue: newValue) {
                 voiceTypeValue = valueEnum
-            }            
+            }
         }
     }
-    
+
     /// Returns the current voice type enum to allow for obtining details.
     public var voiceType: OSSVoiceEnum {
-        get {
-            return voiceTypeValue
-        }
+        voiceTypeValue
     }
-    
+
     /// If this init is used, defaults will be used.
     ///
     /// This method will set default values on the language and quality of voice.
@@ -292,7 +344,7 @@ public class OSSVoice: AVSpeechSynthesisVoice {
         super.init()
         commonInit()
     }
-    
+
     /// This init method is required as it sets the voice quality and language in order to speak the text passed in.
     public init?(quality: AVSpeechSynthesisVoiceQuality, language: OSSVoiceEnum) {
         super.init()
@@ -300,13 +352,13 @@ public class OSSVoice: AVSpeechSynthesisVoice {
         voiceLanguage = language.rawValue
         voiceQuality = quality
     }
-    
+
     /// Required: Do not recommend using.
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         return nil
     }
-    
+
     /// Used as a fail-safe should the custom init method not be used.
     ///
     /// This method will set default values on the language and quality of voice.

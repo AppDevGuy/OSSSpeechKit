@@ -21,8 +21,9 @@
 //  IN THE SOFTWARE.
 //
 
+#if canImport(Speech)
 import XCTest
-import OSSSpeechKit
+@testable import OSSSpeechKit
 import AVKit
 
 class OSSSpeechTests: XCTestCase {
@@ -52,7 +53,11 @@ class OSSSpeechTests: XCTestCase {
         XCTAssert(speechAuth == true)
     }
 
+    /// This test exists purely for code coverage. 
     func testVoiceDecoderNil() {
+        // Ignore the deprecation warning as the alternative solution returns nil, which is not what we want - we want a valid value.
+        // The below option is the non-deprectaed option however it returns nil, which we don't want.
+        // let archiver = NSKeyedUnarchiver(forReadingFrom: Data())
         let archiver = NSKeyedUnarchiver(forReadingWith: Data())
         let voice = OSSVoice(coder: archiver)
         let utterance = OSSUtterance(coder: archiver)
@@ -259,13 +264,16 @@ class OSSSpeechTests: XCTestCase {
         waitForExpectations(timeout: 3)
         XCTAssert(hasCompleted, "Did not complete the Speech Recording expectation")
     }
-    
-    func testRecordPermission() {
-        speechKit?.recordVoice(requestMicPermission: true)
-        let recPermission = AVAudioSession.sharedInstance().recordPermission
-        sleep(2)
-        XCTAssert(recPermission != .granted, "AVAudioSession returned incorrect permission.")
-    }
+
+	#if !os(macOS)
+    // TODO: Need to write a mock for authorizing speech and the recording functions.
+    // Cannot interact with UI to approve the use of Microphone which results in a crash when trying to call record functions.
+//    func testRecordPermission() {
+//        speechKit?.recordVoice(requestMicPermission: true)
+//        let recPermission = AVAudioSession.sharedInstance().recordPermission
+//        sleep(2)
+//        XCTAssertEqual(recPermission, .granted)
+//    }
     
     func testAudioSessionSetting() {
         XCTAssertNotNil(speechKit?.audioSession)
@@ -274,21 +282,32 @@ class OSSSpeechTests: XCTestCase {
         try? customSession.setCategory(.ambient)
         XCTAssert(customSession.category == .ambient)
     }
+	#endif
     
     func testUtilityClassStrings() {
         let util = OSSSpeechUtility()
         var mainBundleStringNotSDKString = util.getString(forLocalizedName: "OSSSpeechKitTests_testString", defaultValue: "")
         XCTAssert(mainBundleStringNotSDKString.isEmpty, "Localized string does not exist in the SDK; the default value (\"\") should be returned.")
         util.stringsTableName = "LocalizableTests"
-        XCTAssert(util.stringsTableName == "LocalizableTests", "The table name did not override the default value.")
+        guard Bundle.main.path(forResource: util.stringsTableName, ofType: "strings") != nil else {
+            XCTFail("Strings file does not exist")
+            return
+        }
+        // Assert that we have overriden the table name.
+        XCTAssertEqual(util.stringsTableName, "LocalizableTests", "The table name did not override the default value.")
+
+        // Check that we are retrieveing the correct string.
         mainBundleStringNotSDKString = util.getString(forLocalizedName: "OSSSpeechKitTests_testString", defaultValue: "")
-        XCTAssert(mainBundleStringNotSDKString == "This is a test string.", "The name of the localized string should now be found.")
+        XCTAssertEqual(mainBundleStringNotSDKString, "This is a test string.", "The name of the localized string should now be found.")
+
+        // Check that we are retrieveing the correct string for key.
+        let testString = util.getString(forLocalizedName: "OSSSpeechKitAuthorizationStatus_messageNotDetermined", defaultValue: "")
+        let expectedString = "The test class is overriding the message: The app's authorization status has not yet been determined."
+        XCTAssertEqual(testString, expectedString)
+
+        // Check that we return the correct error string.
         let blankKey = util.getString(forLocalizedName: "", defaultValue: "")
         XCTAssert(blankKey == "!&!&!&!&!&!&!&!&!&!&!&!&!&!&!", "Passing in an empty string should return an obvious error string.")
-        let testString = util.getString(forLocalizedName: "OSSSpeechKitAuthorizationStatus_messageNotDetermined",
-                                        defaultValue: "The app's authorization status has not yet been determined.")
-        let expectedString = "The test class is overriding the message: The app's authorization status has not yet been determined."
-        XCTAssert(testString == expectedString, "The SDK string was not overridden.")
     }
 
 }
@@ -327,3 +346,4 @@ extension OSSSpeechTests: OSSSpeechDelegate {
         speech.debugLog(object: self, message: "Did fail to commence speech.")
     }
 }
+#endif

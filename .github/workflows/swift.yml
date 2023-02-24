@@ -2,22 +2,31 @@ name: Swift
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
+#list of jobs to perform
 jobs:
-  test:
-    name: Test
-    runs-on: macOS-latest
-
+  #the only job in the list, named `build`
+  build_and_test:
+    #specify OS to run the jobs on
+    runs-on: macos-latest
+    #sequential steps to run for the `build` job
     steps:
-    - uses: actions/checkout@v2
-    - name: Build and Test
+      # step 1, use Marketplace action called Checkout@v2, to checkout the code
+    - uses: actions/checkout@v2 #'uses' keyword launches the Marketplace action
+      # step 2, verbosely build the package using the `swift` CLI
+    - name: Build
+      run: swift build -v #'run' keyword executes the command, as if it's run in terminal
+      # step 3, run tests
+      # Note that you must use "=" and not ":" despite error logs for -destiation using ":"
+      # Also using "Any iOS Simulator" doesn't seem to work despite being an option.
+      # The using CODE_SIGN... and beyond are for Codecov purposes when generating results.
+    - name: Run tests
       run: |
-        cd Example
-        pod install
-        xcodebuild clean test -workspace OSSSpeechKit.xcworkspace -scheme OSSSpeechKit-Example -destination "platform=iOS Simulator,OS=13.7,name=iPhone 11 Pro Max" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
-        bash <(curl https://codecov.io/bash | sed 's/"$beta_xcode_partials"//g')
-      env:
-         destination: "platform=iOS Simulator,OS=13.7,name=iPhone 11 Pro Max"
+          cd Example
+          pod install
+          xcodebuild clean test -scheme OSSSpeechKit-Example -workspace OSSSpeechKit.xcworkspace -destination 'platform=iOS Simulator,OS=16.2,name=iPhone 14' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
+          bash <(curl https://codecov.io/bash | sed 's/"$beta_xcode_partials"//g')
+
