@@ -22,7 +22,7 @@
 //
 
 import XCTest
-import OSSSpeechKit
+@testable import OSSSpeechKit
 import AVKit
 
 class OSSSpeechTests: XCTestCase {
@@ -53,7 +53,8 @@ class OSSSpeechTests: XCTestCase {
     }
 
     func testVoiceDecoderNil() {
-        let archiver = NSKeyedUnarchiver(forReadingWith: Data())
+		XCTAssertNoThrow({try NSKeyedUnarchiver.init(forReadingFrom: Data())})
+		let archiver :NSKeyedUnarchiver = try! .init(forReadingFrom: Data())
         let voice = OSSVoice(coder: archiver)
         let utterance = OSSUtterance(coder: archiver)
         XCTAssertNil(voice)
