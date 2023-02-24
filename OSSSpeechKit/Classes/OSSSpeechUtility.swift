@@ -79,15 +79,15 @@ public class OSSSpeechUtility: NSObject {
 extension Bundle {
 	/// Will return the Bundle for the SDK if it can be found.
 	static func getResourcesBundle() -> Bundle? {
-		#if SWIFT_PACKAGE
+#if SWIFT_PACKAGE
 		return Bundle.module
-		#else
+#else
 		let bundle = Bundle(for: OSSVoice.self)
 		guard let resourcesBundleUrl = bundle.resourceURL?.appendingPathComponent("OSSSpeechKit.bundle") else {
 			return nil
 		}
 		return Bundle(url: resourcesBundleUrl)
-		#endif
+#endif
 	}
 }
 

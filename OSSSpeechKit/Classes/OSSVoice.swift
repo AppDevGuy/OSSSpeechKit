@@ -231,21 +231,21 @@ public enum OSSVoiceEnum: String, CaseIterable {
     /// You can supply your own flag image, provided is has the same name (.rawValue) as the image in the pod assets.
     ///
     /// If no image is found in the application bundle, the image from the SDK bundle will be provided.
-	#if canImport(UIKit)
+#if canImport(UIKit)
     public var flag: UIImage? {
         if let mainBundleImage = UIImage(named: rawValue, in: Bundle.main, compatibleWith: nil) {
             return mainBundleImage
         }
         return UIImage(named: rawValue, in: Bundle.getResourcesBundle(), compatibleWith: nil)
     }
-	#elseif canImport(AppKit)
+#elseif canImport(AppKit)
 	public var flag: NSImage? {
 		if let mainBundleImage = NSImage(named: rawValue) {
 			return mainBundleImage
 		}
 		return NSImage(named: rawValue)
 	}
-	#endif
+#endif
 }
 
 /** OSSVoice overides some of the properties provided to enable setting as well as getting.
