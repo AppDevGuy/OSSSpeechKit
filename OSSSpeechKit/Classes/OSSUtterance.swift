@@ -29,11 +29,11 @@ import AVFoundation
 ///
 /// As the developer, you can override the `volume`, `rate` and `pitchMultiplier` should you wish to.
 public class OSSUtterance: AVSpeechUtterance {
-    
+
     // MARK: - Variables
     private var stringToSpeak: String = ""
     private var attributedStringToSpeak: NSAttributedString = NSAttributedString(string: "")
-    
+
     /// The speechString can be a constant value or changed as frequently as you wish.
     ///
     /// The Speech String is what will be read out.
@@ -47,7 +47,7 @@ public class OSSUtterance: AVSpeechUtterance {
             attributedStringToSpeak = NSAttributedString(string: newValue)
         }
     }
-    
+
     /// The attributedSpeechString can be a constant value or changed as frequently as you wish.
     ///
     /// The Attributed Speech String is what will be read out if no speechString is set.
@@ -61,9 +61,9 @@ public class OSSUtterance: AVSpeechUtterance {
             attributedStringToSpeak = newValue
         }
     }
-    
+
     // MARK: - Lifecycle
-    
+
     public override init() {
         super.init(string: "ERROR")
         debugLog(object: self, message: "ERROR: You must use the `init(string:)` or `init(attributedString:` methods.")
@@ -71,7 +71,7 @@ public class OSSUtterance: AVSpeechUtterance {
         attributedSpeechString = NSAttributedString(string: "ERROR")
         commonInit()
     }
-    
+
     /// Init method which will set the speechString value.
     public override init(string: String) {
         super.init(string: string)
@@ -79,7 +79,7 @@ public class OSSUtterance: AVSpeechUtterance {
         attributedSpeechString = NSAttributedString(string: string)
         commonInit()
     }
-    
+
     /// Init method which will set the attributedSpeechString value.
     public override init(attributedString: NSAttributedString) {
         super.init(attributedString: attributedString)
@@ -87,15 +87,15 @@ public class OSSUtterance: AVSpeechUtterance {
         speechString = attributedString.string
         commonInit()
     }
-    
+
     /// Required. Do not recommend using.
     public required init?(coder aDecoder: NSCoder) {
         super.init()
         return nil
     }
-    
+
     // MARK: - Private Methods
-    
+
     /// Common init is used for testing purposes only.
     private func commonInit() {
         // Init default values

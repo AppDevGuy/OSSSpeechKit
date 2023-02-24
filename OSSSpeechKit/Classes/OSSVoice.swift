@@ -122,7 +122,7 @@ public enum OSSVoiceEnum: String, CaseIterable {
     case Turkish = "tr-TR"
     /// USA English
     case UnitedStatesEnglish = "en-US"
-    
+
     /// Will return specific information about the language as an OSSVoiceInfo object.
     public func getDetails() -> OSSVoiceInfo {
         var voiceInfo: OSSVoiceInfo = OSSVoiceInfo()
@@ -136,12 +136,12 @@ public enum OSSVoiceEnum: String, CaseIterable {
         }
         return voiceInfo
     }
-    
+
     /// Provides the Enum key itself as a String
     public var title: String {
         return String(describing: self)
     }
-    
+
     /// Demo message is for returning a string in the language that will be read while also providing the name of the voice that Apple have provided.
     public var demoMessage: String {
         var voiceName = ""
@@ -225,7 +225,7 @@ public enum OSSVoiceEnum: String, CaseIterable {
             return "你好我的名字是 \(voiceName)"
         }
     }
-    
+
     /// The flag for the selected language.
     ///
     /// You can supply your own flag image, provided is has the same name (.rawValue) as the image in the pod assets.
@@ -258,13 +258,13 @@ public enum OSSVoiceEnum: String, CaseIterable {
 */
 @available(iOS 9.0, *)
 public class OSSVoice: AVSpeechSynthesisVoice {
-    
+
     // MARK: - Private Properties
-    
+
     private var voiceQuality: AVSpeechSynthesisVoiceQuality = .default
     private var voiceLanguage: String = OSSVoiceEnum.UnitedStatesEnglish.rawValue
     private var voiceTypeValue: OSSVoiceEnum = .UnitedStatesEnglish
-    
+
     /// You have access to set the voice quality or use the default which is set to .default
     override public var quality: AVSpeechSynthesisVoiceQuality {
         get {
@@ -274,7 +274,7 @@ public class OSSVoice: AVSpeechSynthesisVoice {
             voiceQuality = newValue
         }
     }
-    
+
     /// Language offers a get and set. The default value is United States English.
     override public var language: String {
         get {
@@ -284,17 +284,17 @@ public class OSSVoice: AVSpeechSynthesisVoice {
             voiceLanguage = newValue
             if let valueEnum = OSSVoiceEnum(rawValue: newValue) {
                 voiceTypeValue = valueEnum
-            }            
+            }
         }
     }
-    
+
     /// Returns the current voice type enum to allow for obtining details.
     public var voiceType: OSSVoiceEnum {
         get {
             return voiceTypeValue
         }
     }
-    
+
     /// If this init is used, defaults will be used.
     ///
     /// This method will set default values on the language and quality of voice.
@@ -306,7 +306,7 @@ public class OSSVoice: AVSpeechSynthesisVoice {
         super.init()
         commonInit()
     }
-    
+
     /// This init method is required as it sets the voice quality and language in order to speak the text passed in.
     public init?(quality: AVSpeechSynthesisVoiceQuality, language: OSSVoiceEnum) {
         super.init()
@@ -314,13 +314,13 @@ public class OSSVoice: AVSpeechSynthesisVoice {
         voiceLanguage = language.rawValue
         voiceQuality = quality
     }
-    
+
     /// Required: Do not recommend using.
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         return nil
     }
-    
+
     /// Used as a fail-safe should the custom init method not be used.
     ///
     /// This method will set default values on the language and quality of voice.

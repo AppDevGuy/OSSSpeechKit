@@ -25,11 +25,11 @@ import Foundation
 #if canImport(Speech)
 
 public class OSSSpeechUtility: NSObject {
-    
+
     // MARK: - Variables
-    
+
     fileprivate var tableName = "Localizable"
-    
+
     /// Change this property to your strings table name if you wish to override the SDK strings values in your app.
     public var stringsTableName: String {
         get {
@@ -39,9 +39,9 @@ public class OSSSpeechUtility: NSObject {
             tableName = newValue
         }
     }
-    
+
     // MARK: - Public Methods
-    
+
     /// A helper method that enables all Localized strings to be overridden by the main application.
     ///
     /// This method checks the main bundle for a Localized strings file. If one exists, the localized string name will be checked in that file. If one does not exist, the SDK string will be returned.
@@ -70,7 +70,7 @@ public class OSSSpeechUtility: NSObject {
         }
         return defaultValue
     }
-    
+
 }
 
 #endif
