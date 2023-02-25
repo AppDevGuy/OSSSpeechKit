@@ -21,14 +21,14 @@
 //  IN THE SOFTWARE.
 //
 
-import UIKit
+import Foundation
 
 public class OSSSpeechUtility: NSObject {
-    
+
     // MARK: - Variables
-    
+
     fileprivate var tableName = "Localizable"
-    
+
     /// Change this property to your strings table name if you wish to override the SDK strings values in your app.
     public var stringsTableName: String {
         get {
@@ -38,9 +38,9 @@ public class OSSSpeechUtility: NSObject {
             tableName = newValue
         }
     }
-    
+
     // MARK: - Public Methods
-    
+
     /// A helper method that enables all Localized strings to be overridden by the main application.
     ///
     /// This method checks the main bundle for a Localized strings file. If one exists, the localized string name will be checked in that file. If one does not exist, the SDK string will be returned.
@@ -69,36 +69,40 @@ public class OSSSpeechUtility: NSObject {
         }
         return defaultValue
     }
-    
-}
 
-extension NSObject {
-    /// Method outputs a debug statement containing necessary information to resolve issues.
-    ///
-    /// Only works with debug/dev builds.
-    ///
-    ///  - Parameters:
-    ///     - object: Any object type
-    ///     - functionName: Automatically populated by the application
-    ///     - fileName: Automatically populated by the application
-    ///     - lineNumber: Automatically populated by the application
-    ///     - message: The message you wish to output.
-    public func debugLog(object: Any, functionName: String = #function, fileName: String = #file, lineNumber: Int = #line, message: String) {
-        #if DEBUG
-        let className = (fileName as NSString).lastPathComponent
-        print("\n\n******************\tBegin Debug Log\t******************\n\n\tClass: <\(className)>\n\tFunction: \(functionName)\n\tLine: #\(lineNumber)\n\tObject: \(object)\n\tLog Message: \(message)\n\n******************\tEnd Debug Log\t******************\n\n")
-        #endif
-    }
 }
 
 /// Bundle extension to aid in retrieving the SDK resources for getting SDK images.
 extension Bundle {
-    /// Will return the Bundle for the SDK if it can be found.
-    static func getResourcesBundle() -> Bundle? {
-        let bundle = Bundle(for: OSSSpeech.self)
-        guard let resourcesBundleUrl = bundle.resourceURL?.appendingPathComponent("OSSSpeechKit.bundle") else {
-            return nil
-        }
-        return Bundle(url: resourcesBundleUrl)
-    }
+	/// Will return the Bundle for the SDK if it can be found.
+	static func getResourcesBundle() -> Bundle? {
+#if SWIFT_PACKAGE
+		return Bundle.module
+#else
+		let bundle = Bundle(for: OSSVoice.self)
+		guard let resourcesBundleUrl = bundle.resourceURL?.appendingPathComponent("OSSSpeechKit.bundle") else {
+			return nil
+		}
+		return Bundle(url: resourcesBundleUrl)
+#endif
+	}
+}
+
+extension NSObject {
+	/// Method outputs a debug statement containing necessary information to resolve issues.
+	///
+	/// Only works with debug/dev builds.
+	///
+	///  - Parameters:
+	///     - object: Any object type
+	///     - functionName: Automatically populated by the application
+	///     - fileName: Automatically populated by the application
+	///     - lineNumber: Automatically populated by the application
+	///     - message: The message you wish to output.
+	public func debugLog(object: Any, functionName: String = #function, fileName: String = #file, lineNumber: Int = #line, message: String) {
+		#if DEBUG
+		let className = (fileName as NSString).lastPathComponent
+		print("\n\n******************\tBegin Debug Log\t******************\n\n\tClass: <\(className)>\n\tFunction: \(functionName)\n\tLine: #\(lineNumber)\n\tObject: \(object)\n\tLog Message: \(message)\n\n******************\tEnd Debug Log\t******************\n\n")
+		#endif
+	}
 }

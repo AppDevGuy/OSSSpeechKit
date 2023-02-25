@@ -1,16 +1,16 @@
 # Check Travis CI version info:
 # https://docs.travis-ci.com/user/reference/osx/
 language: objective-c
-osx_image: xcode11.3
+osx_image: xcode14.2
 xcode_workspace: OSSSpeechKit.xcworkspace
 xcode_scheme: OSSSpeechKit-Example
-xcode_destination: platform=iOS Simulator,OS=13.3,name=iPhone 11
+xcode_destination: platform=iOS Simulator,OS=16.2,name=iPhone 14
 before_install:
-- cd Example
-- pod install
+  - cd Example
+  - pod install
 after_success:
-#  - bash <(curl -s https://codecov.io/bash)
-# Fixing code cov issue with solution from https://community.codecov.io/t/llvm-cov-failed-to-produce-results-for/1652/9
+  #  - bash <(curl -s https://codecov.io/bash)
+  # Fixing code cov issue with solution from https://community.codecov.io/t/llvm-cov-failed-to-produce-results-for/1652/9
   - bash <(curl https://codecov.io/bash | sed 's/"$beta_xcode_partials"//g')
   - gem install jazzy
   - make documentation

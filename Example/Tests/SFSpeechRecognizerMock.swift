@@ -21,7 +21,8 @@
 //  IN THE SOFTWARE.
 //
 
-import UIKit
+#if canImport(Speech)
+import Foundation
 import Speech
 
 class SFSpeechRecognizerMock: SFSpeechRecognizer {
@@ -30,3 +31,4 @@ class SFSpeechRecognizerMock: SFSpeechRecognizer {
         handler(.authorized)
     }
 }
+#endif

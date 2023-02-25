@@ -29,16 +29,12 @@ class CountryLanguageListTableViewController: UITableViewController {
     // MARK: - Variables
     
     private let speechKit = OSSSpeech.shared
-    
+
     private lazy var microphoneButton: UIBarButtonItem = {
         var micImage: UIImage?
-        if #available(iOS 13.0, *) {
-            micImage = UIImage(systemName: "mic.fill")?.withRenderingMode(.alwaysTemplate)
-        } else {
-            micImage = UIImage(named: "oss-microphone-icon")?.withRenderingMode(.alwaysTemplate)
-        }
+        micImage = UIImage(systemName: "mic.fill")?.withRenderingMode(.alwaysTemplate)
         let button = UIBarButtonItem(image: micImage, style: .plain, target: self, action: #selector(recordVoice))
-        button.tintColor = .black
+        button.tintColor = .label
         button.accessibilityIdentifier = "OSSSpeechKitMicButton"
         return button
     }()
@@ -58,12 +54,23 @@ class CountryLanguageListTableViewController: UITableViewController {
     // MARK: - Voice Recording
     
     @objc func recordVoice() {
-        if microphoneButton.tintColor == .red {
+        shoudlStartRecordingVoice(microphoneButton.tintColor != .red)
+    }
+
+    private func shoudlStartRecordingVoice(_ shouldRecord: Bool) {
+        updateMicButtonColor(forState: shouldRecord)
+        if !shouldRecord {
             speechKit.endVoiceRecording()
             return
         }
-        microphoneButton.tintColor = .red
         speechKit.recordVoice()
+    }
+
+    func updateMicButtonColor(forState isRecording: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.microphoneButton.tintColor = isRecording ? .red : .label
+        }
     }
 }
 
@@ -111,7 +118,7 @@ extension CountryLanguageListTableViewController: OSSSpeechDelegate {
     }
     
     func didFailToProcessRequest(withError error: Error?) {
-        recordVoice()
+        shoudlStartRecordingVoice(false)
         guard let err = error else {
             print("Error with the request but the error returned is nil")
             return
@@ -125,14 +132,13 @@ extension CountryLanguageListTableViewController: OSSSpeechDelegate {
     
     func didFailToCommenceSpeechRecording() {
         print("Failed to record speech.")
-        recordVoice()
+        shoudlStartRecordingVoice(false)
     }
     
     func didFinishListening(withText text: String) {
-        weak var weakSelf = self
-        OperationQueue.main.addOperation {
-            weakSelf?.microphoneButton.tintColor = .black
-            weakSelf?.speechKit.speakText(text)
+        OperationQueue.main.addOperation { [weak self] in
+            self?.updateMicButtonColor(forState: false)
+            self?.speechKit.speakText(text)
         }
     }
 }

@@ -1,0 +1,16 @@
+PODS:
+  - OSSSpeechKit (0.3.3)
+
+DEPENDENCIES:
+  - OSSSpeechKit (from `../`)
+
+EXTERNAL SOURCES:
+  OSSSpeechKit:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  OSSSpeechKit: ea0fd8151e7e338bc6ddc6bb749455fc3b33cfde
+
+PODFILE CHECKSUM: 619c7767d93bbf8bc7a5c2d0a1d118e435561c49
+
+COCOAPODS: 1.11.3
