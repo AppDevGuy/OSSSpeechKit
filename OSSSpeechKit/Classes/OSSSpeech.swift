@@ -150,6 +150,8 @@ public enum OSSSpeechRecognitionTaskType: Int {
 public protocol OSSSpeechDelegate: AnyObject {
     /// When the microphone has finished accepting audio, this delegate will be called with the final best text output.
     func didFinishListening(withText text: String)
+    ///When the microphone has finished accepting audio, this delegate will be called with the final best text output or voice file path.
+    func didFinishListening(withAudioFileURL url:URL,withText text:String)
     /// Handle returning authentication status to user - primary use is for non-authorized state.
     func authorizationToMicrophone(withAuthentication type: OSSSpeechKitAuthorizationStatus)
     /// If the speech recogniser and request fail to set up, this method will be called.
@@ -165,6 +167,9 @@ public class OSSSpeech: NSObject {
 
     // MARK: - Private Properties
 
+    private var audioRecorder:AVAudioRecorder?
+    private var audioFileURL:URL!
+    
     /// An object that produces synthesized speech from text utterances and provides controls for monitoring or controlling ongoing speech.
     private var speechSynthesizer: AVSpeechSynthesizer!
 
@@ -344,8 +349,9 @@ public class OSSSpeech: NSObject {
         #if !os(macOS)
         do {
             let category: AVAudioSession.Category = isRecording ? .playAndRecord : .playback
-            try audioSession.setCategory(category, options: .duckOthers)
+            try audioSession.setCategory(category, options: isRecording ? .defaultToSpeaker : .duckOthers)
             try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
+            isRecording ? try audioSession.setActive(true) : try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
             return true
         } catch {
             if isRecording {
@@ -422,6 +428,9 @@ public class OSSSpeech: NSObject {
         }
         let node = engine.inputNode
         node.removeTap(onBus: 0)
+        
+        audioRecorder?.stop()
+        
         if node.inputFormat(forBus: 0).channelCount == 0 {
             node.reset()
         }
@@ -535,6 +544,40 @@ public class OSSSpeech: NSObject {
             delegate?.didFailToCommenceSpeechRecording()
             delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidSpeechRequest.error)
         }
+        
+        readyToRecord()
+    }
+    
+    func readyToRecord()
+    {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateString = dateFormatter.string(from: Date())
+        
+        self.audioFileURL = getDocumentsDirectory().appendingPathComponent("\(dateString).m4a")
+
+        let audioSettings = [AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+                           AVSampleRateKey: 12000,
+                     AVNumberOfChannelsKey: 1,
+                  AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+        ]
+        
+        do {
+            audioRecorder = try AVAudioRecorder(url: audioFileURL, settings: audioSettings)
+            audioRecorder?.delegate = self
+            audioRecorder?.record()
+
+        }
+        catch
+        {
+            print(error.localizedDescription)
+        }
+    }
+
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = paths[0]
+        return documentsDirectory
     }
 }
 
@@ -547,6 +590,7 @@ extension OSSSpeech: SFSpeechRecognitionTaskDelegate, SFSpeechRecognizerDelegate
     public func speechRecognitionTask(_ task: SFSpeechRecognitionTask, didFinishSuccessfully successfully: Bool) {
         recognitionTask = nil
         delegate?.didFinishListening(withText: spokenText)
+        delegate?.didFinishListening(withAudioFileURL: audioFileURL, withText: spokenText)
         setSession(isRecording: false)
     }
 
@@ -568,6 +612,17 @@ extension OSSSpeech: SFSpeechRecognitionTaskDelegate, SFSpeechRecognizerDelegate
 
     /// Docs available by Google searching for SFSpeechRecognizerDelegate
     public func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {}
+}
 
+//MARK: AVAudioRecorderDelegate
+extension OSSSpeech:AVAudioRecorderDelegate
+{
+    public func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        if flag
+        {
+            audioRecorder?.stop()
+            print("Audio file save")
+        }
+    }
 }
 #endif
