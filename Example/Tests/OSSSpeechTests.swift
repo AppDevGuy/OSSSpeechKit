@@ -313,6 +313,10 @@ class OSSSpeechTests: XCTestCase {
 }
 
 extension OSSSpeechTests: OSSSpeechDelegate {
+    func didFinishListening(withAudioFileURL url: URL, withText text: String) {
+        print("Translation completed with text: \(text). And user voice file path: \(url.absoluteString)")
+    }
+    
     func didCompleteTranslation(withText text: String) {
         print("Translation completed with text: \(text)")
     }
