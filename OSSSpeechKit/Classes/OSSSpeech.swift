@@ -72,6 +72,8 @@ public enum OSSSpeechKitErrorType: Int {
     case invalidRecordVoice = -8
     ///  Voice record file path is Invalid
     case invalidVoiceFilePath = -9
+    /// Voice record file path can not delete
+    case invalidDeleteVoiceFilePath = -10
 
     /// The OSSSpeechKit error message string.
     ///
@@ -96,6 +98,8 @@ public enum OSSSpeechKitErrorType: Int {
             return OSSSpeechUtility().getString(forLocalizedName: "OSSSpeechKitErrorType_messageInvalidRecordVoice", defaultValue: "The user voice recoeder service is not working.")
         case .invalidVoiceFilePath:
             return OSSSpeechUtility().getString(forLocalizedName: "OSSSpeechKitErrorType_messageInvalidVoiceFolePath", defaultValue: "The user voice file path can not create.")
+        case .invalidDeleteVoiceFilePath:
+            return OSSSpeechUtility().getString(forLocalizedName: "OSSSpeechKitErrorType_messageInvalidDeleteVoiceFilePath", defaultValue: "The user voice file path can not delete.")
         }
     }
 
@@ -115,7 +119,7 @@ public enum OSSSpeechKitErrorType: Int {
              .invalidSpeechRequest,
              .recogniserUnavailble:
             return OSSSpeechUtility().getString(forLocalizedName: "OSSSpeechKitErrorType_requestTypeInvalidSpeech", defaultValue: "Speech")
-        case .invalidVoiceFilePath:
+        case .invalidVoiceFilePath,.invalidDeleteVoiceFilePath:
             return OSSSpeechUtility().getString(forLocalizedName: "OSSSpeechKitErrorType_requestTypeInvalidFilePath", defaultValue: "File")
         }
     }
@@ -171,6 +175,8 @@ public protocol OSSSpeechDelegate: AnyObject {
     func didCompleteTranslation(withText text: String)
     /// Error handling function.
     func didFailToProcessRequest(withError error: Error?)
+    /// When delete some voice file,this delegate will be return success or not
+    func deleteVoiceFile(withFinish finish: Bool ,withError error: Error?)
 }
 
 
@@ -182,7 +188,9 @@ public class OSSSpeech: NSObject {
     /// A user voice recoder
     private var audioRecorder: AVAudioRecorder?
     /// When we record the user voice and success,so return audio URL options.
-    private var audioFileURL: URL?
+    private var audioFileURL: URL!
+    /// User can save audio record or not defult true
+    public var saveRecord:Bool = true
     
     /// An object that produces synthesized speech from text utterances and provides controls for monitoring or controlling ongoing speech.
     private var speechSynthesizer: AVSpeechSynthesizer!
@@ -559,20 +567,19 @@ public class OSSSpeech: NSObject {
             delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidSpeechRequest.error)
         }
         
-        readyToRecord()
+        if self.saveRecord {
+            readyToRecord()
+        }
     }
     
     /// When we use the speech function then record the user voice
     private func readyToRecord()
     {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.dateFormat = "yyyy-MM-dd-HH:mm:ss"
         let dateString = dateFormatter.string(from: Date())
-        
-        guard audioFileURL == getDocumentsDirectory().appendingPathComponent("\(dateString).m4a") else {
-            delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidVoiceFilePath.error)
-            return
-        }
+                    
+        audioFileURL = getDocumentsDirectory().appendingPathComponent("\(dateString)-osKit.m4a")
 
         let audioSettings = [AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
                            AVSampleRateKey: 12000,
@@ -590,10 +597,38 @@ public class OSSSpeech: NSObject {
     }
 
     /// Get documents directory
-    func getDocumentsDirectory() -> URL {
+    private func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentsDirectory = paths[0]
         return documentsDirectory
+    }
+        
+    ///Delete one voice file(s)
+    public func deleteVoiceFolderItem(url:URL?) {
+        
+        let fileManager = FileManager.default
+        let folderURL = getDocumentsDirectory()
+        do {
+            let contents = try fileManager.contentsOfDirectory(at: folderURL, includingPropertiesForKeys: nil,options: .skipsHiddenFiles)
+            for fileURL in contents {
+                guard let pathUrl = url else {
+                    if fileURL.absoluteString.contains("-osKit.m4a") {
+                        try fileManager.removeItem(at: fileURL)
+                    }
+                    return
+                }
+                if fileURL.absoluteString == pathUrl.absoluteString {
+                    try fileManager.removeItem(at: fileURL)
+                    delegate?.deleteVoiceFile(withFinish: true, withError: nil)
+                }
+            }
+            guard let pathUrl = url else {
+                delegate?.deleteVoiceFile(withFinish: true, withError: nil)
+                return
+            }
+        } catch {
+            delegate?.deleteVoiceFile(withFinish: false, withError: OSSSpeechKitErrorType.invalidDeleteVoiceFilePath.error)
+        }
     }
 }
 
@@ -606,7 +641,9 @@ extension OSSSpeech: SFSpeechRecognitionTaskDelegate, SFSpeechRecognizerDelegate
     public func speechRecognitionTask(_ task: SFSpeechRecognitionTask, didFinishSuccessfully successfully: Bool) {
         recognitionTask = nil
         delegate?.didFinishListening(withText: spokenText)
-        delegate?.didFinishListening(withAudioFileURL: audioFileURL!, withText: spokenText)
+        if saveRecord{
+            delegate?.didFinishListening(withAudioFileURL: audioFileURL!, withText: spokenText)
+        }
         setSession(isRecording: false)
     }
 
