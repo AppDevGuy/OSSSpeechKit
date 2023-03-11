@@ -228,7 +228,7 @@ public class OSSSpeech: NSObject {
     /// The object used to enable translation of strings to synthsized voice.
     public var utterance: OSSUtterance?
 
-#if !os(macOS)
+    #if !os(macOS)
     /// An AVAudioSession that ensure volume controls are correct in various scenarios
     private var session: AVAudioSession?
 
@@ -244,7 +244,7 @@ public class OSSSpeech: NSObject {
             session = newValue
         }
     }
-#endif
+    #endif
 
     /// This property handles permission authorization.
     /// This property is intentionally named vaguely to prevent accidental overriding.
@@ -605,7 +605,7 @@ public class OSSSpeech: NSObject {
     }
 
     /// Get documents directory
-    private func getDocumentsDirectory() -> URL {
+    public func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentsDirectory = paths[0]
         return documentsDirectory
@@ -658,7 +658,7 @@ public class OSSSpeech: NSObject {
                         self.delegate?.voiceFilePathTranscription(withText: transcription)
                     }
                 }
-            } else if let error = error {
+            } else if error != nil {
                 self.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidTranscriptionFilePath.error)
             }
         })
