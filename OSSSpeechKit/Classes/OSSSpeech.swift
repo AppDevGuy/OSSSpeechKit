@@ -74,6 +74,8 @@ public enum OSSSpeechKitErrorType: Int {
     case invalidVoiceFilePath = -9
     /// Voice record file path can not delete
     case invalidDeleteVoiceFilePath = -10
+    /// Voice record file path can not transcription
+    case invalidTranscriptionFilePath = -11
 
     /// The OSSSpeechKit error message string.
     ///
@@ -100,6 +102,8 @@ public enum OSSSpeechKitErrorType: Int {
             return OSSSpeechUtility().getString(forLocalizedName: "OSSSpeechKitErrorType_messageInvalidVoiceFolePath", defaultValue: "The user voice file path can not create.")
         case .invalidDeleteVoiceFilePath:
             return OSSSpeechUtility().getString(forLocalizedName: "OSSSpeechKitErrorType_messageInvalidDeleteVoiceFilePath", defaultValue: "The user voice file path can not delete.")
+        case .invalidTranscriptionFilePath:
+            return OSSSpeechUtility().getString(forLocalizedName: "OSSSpeechKitErrorType_messageInvalidTranscriptionFilePath", defaultValue: "Voice record file path can not transcription.")
         }
     }
 
@@ -121,6 +125,8 @@ public enum OSSSpeechKitErrorType: Int {
             return OSSSpeechUtility().getString(forLocalizedName: "OSSSpeechKitErrorType_requestTypeInvalidSpeech", defaultValue: "Speech")
         case .invalidVoiceFilePath,.invalidDeleteVoiceFilePath:
             return OSSSpeechUtility().getString(forLocalizedName: "OSSSpeechKitErrorType_requestTypeInvalidFilePath", defaultValue: "File")
+        case .invalidTranscriptionFilePath:
+            return OSSSpeechUtility().getString(forLocalizedName: "OSSSpeechKitErrorType_requestTypeInvalidTranscriptionFilePath", defaultValue: "Transcription")
         }
     }
 
@@ -177,6 +183,8 @@ public protocol OSSSpeechDelegate: AnyObject {
     func didFailToProcessRequest(withError error: Error?)
     /// When delete some voice file,this delegate will be return success or not
     func deleteVoiceFile(withFinish finish: Bool ,withError error: Error?)
+    /// Get the content according to the path of the voice file
+    func voiceFilePathTranscription(withText text:String)
 }
 
 
@@ -220,7 +228,7 @@ public class OSSSpeech: NSObject {
     /// The object used to enable translation of strings to synthsized voice.
     public var utterance: OSSUtterance?
 
-	#if !os(macOS)
+#if !os(macOS)
     /// An AVAudioSession that ensure volume controls are correct in various scenarios
     private var session: AVAudioSession?
 
@@ -236,7 +244,7 @@ public class OSSSpeech: NSObject {
             session = newValue
         }
     }
-	#endif
+#endif
 
     /// This property handles permission authorization.
     /// This property is intentionally named vaguely to prevent accidental overriding.
@@ -416,10 +424,10 @@ public class OSSSpeech: NSObject {
     private func requestMicPermission() {
         #if !os(macOS)
         audioSession.requestRecordPermission {[weak self] allowed in
-			guard let self = self else { return }
+            guard let self = self else { return }
             if !allowed {
-				self.debugLog(object: self, message: "Microphone permission was denied.")
-				self.delegate?.authorizationToMicrophone(withAuthentication: .denied)
+                self.debugLog(object: self, message: "Microphone permission was denied.")
+                self.delegate?.authorizationToMicrophone(withAuthentication: .denied)
                 return
             }
             self.getMicroPhoneAuthorization()
@@ -603,7 +611,7 @@ public class OSSSpeech: NSObject {
         return documentsDirectory
     }
         
-    ///Delete one voice file(s)
+    /// Delete one voice file(s)
     public func deleteVoiceFolderItem(url:URL?) {
         
         let fileManager = FileManager.default
@@ -622,13 +630,38 @@ public class OSSSpeech: NSObject {
                     delegate?.deleteVoiceFile(withFinish: true, withError: nil)
                 }
             }
-            guard let pathUrl = url else {
+            guard url != nil else {
                 delegate?.deleteVoiceFile(withFinish: true, withError: nil)
                 return
             }
         } catch {
             delegate?.deleteVoiceFile(withFinish: false, withError: OSSSpeechKitErrorType.invalidDeleteVoiceFilePath.error)
         }
+    }
+    
+    /// Transcription voice file path
+    public func recognizeSpeech(filePath: URL,finalBlock:((_ text:String)->Void)? = nil) {
+        let identifier = voice?.voiceType.rawValue ?? OSSVoiceEnum.UnitedStatesEnglish.rawValue
+        speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: identifier))
+        guard let audioFile = try? AVAudioFile(forReading: filePath) else {
+            return
+        }
+        let request = SFSpeechURLRecognitionRequest(url: audioFile.url)
+        speechRecognizer!.recognitionTask(with: request, resultHandler: { (result, error) in
+            if let result = result {
+                if result.isFinal {
+                    let transcription = result.bestTranscription.formattedString
+                    if finalBlock != nil {
+                        finalBlock!(transcription)
+                    }
+                    else {
+                        self.delegate?.voiceFilePathTranscription(withText: transcription)
+                    }
+                }
+            } else if let error = error {
+                self.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidTranscriptionFilePath.error)
+            }
+        })
     }
 }
 
