@@ -571,9 +571,11 @@ public class OSSSpeech: NSObject {
             return
         }
         if let audioRequest = request {
-            if recogniser.supportsOnDeviceRecognition {
-                audioRequest.requiresOnDeviceRecognition = shouldUseOnDeviceRecognition
-            }
+            if #available(iOS 13, *) {
+                if recogniser.supportsOnDeviceRecognition {
+                    audioRequest.requiresOnDeviceRecognition = shouldUseOnDeviceRecognition
+                }
+            } 
             recogniser.delegate = self
             recogniser.defaultTaskHint = recognitionTaskType.taskType
             recognitionTask = recogniser.recognitionTask(with: audioRequest, delegate: self)
