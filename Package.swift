@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "OSSSpeechKit",
     platforms: [
-        .iOS(.v12),
+        .iOS(.v13),
         .tvOS(.v13),
 		.macOS(.v11)
     ],
