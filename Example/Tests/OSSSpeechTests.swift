@@ -42,6 +42,12 @@ class OSSSpeechTests: XCTestCase {
         speechKit = nil
     }
     
+    func testCanInitWithCustomSynth() {
+        let synth = AVSpeechSynthesizer()
+        let speechKit = OSSSpeech(speechSynthesizer: synth)
+        XCTAssertNotNil(speechKit)
+    }
+    
     func testAudioSessionValid() {
         let exp = expectation(description: "Speech Recogniser Permission")
         var speechAuth = false

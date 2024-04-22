@@ -224,8 +224,13 @@ public class OSSSpeech: NSObject {
 
     // MARK: - Lifecycle
 
-    private override init() {
-        speechSynthesizer = AVSpeechSynthesizer()
+    
+    /// Allow injection of the AVSpeechSynthesizer so that caller can be AVSpeechSynthesizerDelegate
+    ///     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, willSpeakRangeOfSpeechString characterRange: NSRange, utterance: AVSpeechUtterance) {
+    ///             func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+    /// - Parameter speechSynthesizer
+    public init(speechSynthesizer: AVSpeechSynthesizer = AVSpeechSynthesizer()) {
+        self.speechSynthesizer = speechSynthesizer
     }
 
     private static let sharedInstance: OSSSpeech = {
