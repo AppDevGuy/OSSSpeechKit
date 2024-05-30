@@ -112,6 +112,17 @@ extension CountryLanguageListTableViewController {
 }
 
 extension CountryLanguageListTableViewController: OSSSpeechDelegate {
+    func deleteVoiceFile(withFinish finish: Bool, withError error: Error?) {
+        
+    }
+    
+    func voiceFilePathTranscription(withText text: String) {
+        
+    }
+    
+    func didFinishListening(withAudioFileURL url: URL, withText text: String) {
+        print("Translation completed: \(text). And user voice file path: \(url.absoluteString)")
+    }
     
     func didCompleteTranslation(withText text: String) {
         print("Translation completed: \(text)")
