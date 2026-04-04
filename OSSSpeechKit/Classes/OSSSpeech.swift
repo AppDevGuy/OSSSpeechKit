@@ -166,7 +166,7 @@ public class OSSSpeech: NSObject {
     // MARK: - Private Properties
 
     /// An object that produces synthesized speech from text utterances and provides controls for monitoring or controlling ongoing speech.
-    private var speechSynthesizer: AVSpeechSynthesizer!
+    private var speechSynthesizer: AVSpeechSynthesizer?
 
     // MARK: - Variables
 
@@ -282,8 +282,8 @@ public class OSSSpeech: NSObject {
             // Initialize default utterance
             utterance = OSSUtterance(attributedString: attributedText)
         }
-        if utterance!.attributedSpeechString.string != attributedText.string {
-            utterance!.attributedSpeechString = attributedText
+        if let utterance = utterance, utterance.attributedSpeechString.string != attributedText.string {
+            utterance.attributedSpeechString = attributedText
         }
         speak()
     }
@@ -292,6 +292,7 @@ public class OSSSpeech: NSObject {
     ///
     /// Will check if the current speech synthesizer session is speaking before attempting to pause.
     public func pauseSpeaking() {
+        guard let speechSynthesizer = speechSynthesizer else { return }
         if !speechSynthesizer.isSpeaking { return }
         speechSynthesizer.pauseSpeaking(at: .immediate)
     }
@@ -300,6 +301,7 @@ public class OSSSpeech: NSObject {
     ///
     /// Will check if the current speech synthesizer session is paused before attempting to continue speaking.
     public func continueSpeaking() {
+        guard let speechSynthesizer = speechSynthesizer else { return }
         if !speechSynthesizer.isPaused { return }
         speechSynthesizer.continueSpeaking()
     }
@@ -309,6 +311,7 @@ public class OSSSpeech: NSObject {
     /// Does not remove or reset the utterance or voice - only stops the current speaking if it's active.
     /// Also checks to see if the current synthesizer session is paused.
     public func stopSpeaking() {
+        guard let speechSynthesizer = speechSynthesizer else { return }
         guard speechSynthesizer.isSpeaking || speechSynthesizer.isPaused else {
              return
         }
@@ -342,7 +345,7 @@ public class OSSSpeech: NSObject {
         // Ensure volume is correct each time
         setSession(isRecording: false)
         stopSpeaking()
-        speechSynthesizer.speak(newUtterance)
+        speechSynthesizer?.speak(newUtterance)
     }
 
     @discardableResult private func setSession(isRecording: Bool) -> Bool {
@@ -479,7 +482,11 @@ public class OSSSpeech: NSObject {
                     return nil
                 }
             }
-            let convertedBuffer = AVAudioPCMBuffer(pcmFormat: outputFormat, frameCapacity: AVAudioFrameCount(outputFormat.sampleRate) * buffer.frameLength / AVAudioFrameCount(buffer.format.sampleRate))!
+            guard let convertedBuffer = AVAudioPCMBuffer(pcmFormat: outputFormat, frameCapacity: AVAudioFrameCount(outputFormat.sampleRate) * buffer.frameLength / AVAudioFrameCount(buffer.format.sampleRate)) else {
+                self?.delegate?.didFailToCommenceSpeechRecording()
+                self?.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidAudioEngine.error)
+                return
+            }
             var error: NSError?
             let status = converter.convert(to: convertedBuffer, error: &error, withInputFrom: inputCallback)
             if status == .error {
@@ -506,7 +513,7 @@ public class OSSSpeech: NSObject {
             cancelRecording()
             setSession(isRecording: false)
         }
-        if speechSynthesizer.isSpeaking {
+        if speechSynthesizer?.isSpeaking == true {
             stopSpeaking()
         }
         // If the audio session is not configured, we must not continue.
