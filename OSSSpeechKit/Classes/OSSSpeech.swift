@@ -329,6 +329,11 @@ public class OSSSpeech: NSObject {
     }
 
     private func speak() {
+        guard let speechSynthesizer = speechSynthesizer else {
+            debugLog(object: self, message: "Speech synthesizer is not initialized.")
+            delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidVoice.error)
+            return
+        }
         var speechVoice = OSSVoice()
         if let aVoice = voice {
             speechVoice = aVoice
@@ -345,7 +350,7 @@ public class OSSSpeech: NSObject {
         // Ensure volume is correct each time
         setSession(isRecording: false)
         stopSpeaking()
-        speechSynthesizer?.speak(newUtterance)
+        speechSynthesizer.speak(newUtterance)
     }
 
     @discardableResult private func setSession(isRecording: Bool) -> Bool {
