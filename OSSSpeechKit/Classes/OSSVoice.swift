@@ -286,6 +286,113 @@ public enum OSSVoiceEnum: String, CaseIterable {
 		return NSImage(named: rawValue)
 	}
 #endif
+
+	/// Convenience initializer to create an `OSSVoiceEnum` from a language code or name.
+	/// This allows accessing the Catalan voice using "ca" or "Catalan".
+	///
+	/// - Parameter identifier: The language code (e.g., "ca") or name (e.g., "Catalan").
+	/// - Returns: The corresponding `OSSVoiceEnum` case, or `nil` if no match is found.
+	public init?(identifier: String) {
+		let lowercasedIdentifier = identifier.lowercased()
+		switch lowercasedIdentifier {
+		case "ca", "catalan":
+			self = .SpanishCatalan
+		case "en-au", "australian":
+			self = .Australian
+		case "pt-br", "brazilian":
+			self = .Brazilian
+		case "bg-bg", "bulgarian":
+			self = .Bulgarian
+		case "fr-ca", "canadianfrench":
+			self = .CanadianFrench
+		case "zh-ch", "chinese":
+			self = .Chinese
+		case "zh-cn", "chinesesimplified":
+			self = .ChineseSimplified
+		case "zh-hk", "chinesehongkong":
+			self = .ChineseHongKong
+		case "hr-hr", "croatian":
+			self = .Croatian
+		case "cs-cz", "czech":
+			self = .Czech
+		case "da-dk", "danish":
+			self = .Danish
+		case "nl-be", "dutchbelgium":
+			self = .DutchBelgium
+		case "nl-nl", "dutchnetherlands":
+			self = .DutchNetherlands
+		case "en-gb", "english":
+			self = .English
+		case "fi-fi", "finnish":
+			self = .Finnish
+		case "fr-fr", "french":
+			self = .French
+		case "de-de", "german":
+			self = .German
+		case "el-gr", "greek":
+			self = .Greek
+		case "he-il", "hebrew":
+			self = .Hebrew
+		case "hi-in", "hindi":
+			self = .Hindi
+		case "hu-hu", "hungarian":
+			self = .Hungarian
+		case "en-in", "indianenglish":
+			self = .IndianEnglish
+		case "id-id", "indonesian":
+			self = .Indonesian
+		case "en-ie", "irishenglish":
+			self = .IrishEnglish
+		case "it-it", "italian":
+			self = .Italian
+		case "ja-jp", "japanese":
+			self = .Japanese
+		case "ko-kr", "korean":
+			self = .Korean
+		case "ms-my", "malay":
+			self = .Malay
+		case "es-mx", "mexican":
+			self = .Mexican
+		case "no-no", "norwegian":
+			self = .Norwegian
+		case "nb-no", "norwegianbokmal":
+			self = .NorwegianBokmal
+		case "pl-pl", "polish":
+			self = .Polish
+		case "pt-pt", "portuguese":
+			self = .Portuguese
+		case "ro-ro", "romanian":
+			self = .Romanian
+		case "ru-ru", "russian":
+			self = .Russian
+		case "ar-sa", "saudiarabian":
+			self = .SaudiArabian
+		case "sk-sk", "slovakian":
+			self = .Slovakian
+		case "en-za", "southafricanenglish":
+			self = .SouthAfricanEnglish
+		case "es-es", "spanish":
+			self = .Spanish
+		case "sv-se", "swedish":
+			self = .Swedish
+		case "zh-tw", "taiwanese":
+			self = .Taiwanese
+		case "th-th", "thai":
+			self = .Thai
+		case "tr-tr", "turkish":
+			self = .Turkish
+		case "uk-ua", "ukranian":
+			self = .Ukranian
+		case "en-us", "unitedstatesenglish":
+			self = .UnitedStatesEnglish
+		case "vi-vn", "vietnamese":
+			self = .Vietnamese
+		case "ar-001", "arabicworld":
+			self = .ArabicWorld
+		default:
+			return nil
+		}
+	}
 }
 
 /** OSSVoice overides some of the properties provided to enable setting as well as getting.
@@ -351,6 +458,19 @@ public class OSSVoice: AVSpeechSynthesisVoice {
         voiceTypeValue = language
         voiceLanguage = language.rawValue
         voiceQuality = quality
+    }
+
+    /// Convenience initializer to create an `OSSVoice` from a language code or name.
+    /// This allows accessing the Catalan voice using "ca" or "Catalan".
+    ///
+    /// - Parameters:
+    ///   - quality: The voice quality to use.
+    ///   - identifier: The language code (e.g., "ca") or name (e.g., "Catalan").
+    public convenience init?(quality: AVSpeechSynthesisVoiceQuality, identifier: String) {
+        guard let language = OSSVoiceEnum(identifier: identifier) else {
+            return nil
+        }
+        self.init(quality: quality, language: language)
     }
 
     /// Required: Do not recommend using.
