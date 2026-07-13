@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>OSSUtteranceConfiguration Structure Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Struct/OSSUtteranceConfiguration" class="dashAnchor"></a>
+    <a title="OSSUtteranceConfiguration Structure Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">OSSSpeechKit 1.0.0 Docs</a> (100% documented)</p>
+        <p class="header-right"><a href="https://github.com/AppDevGuy/OSSSpeechKit"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
+        <div class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">OSSSpeechKit Reference</a>
+        <img id="carat" src="../img/carat.png" alt=""/>
+        OSSUtteranceConfiguration Structure Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/OSSSpeech.html">OSSSpeech</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/OSSSpeechEngine.html">OSSSpeechEngine</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/OSSSpeechEngine/State.html">– State</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/OSSSpeechUtility.html">OSSSpeechUtility</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/OSSUtterance.html">OSSUtterance</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/OSSVoice.html">OSSVoice</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/OSSSpeechError.html">OSSSpeechError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/OSSSpeechKitAuthorizationStatus.html">OSSSpeechKitAuthorizationStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/OSSSpeechKitErrorType.html">OSSSpeechKitErrorType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/OSSSpeechRecognitionEvent.html">OSSSpeechRecognitionEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/OSSSpeechRecognitionTaskType.html">OSSSpeechRecognitionTaskType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/OSSVoiceEnum.html">OSSVoiceEnum</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/NSObject.html">NSObject</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/OSSSpeechDelegate.html">OSSSpeechDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/OSSLanguage.html">OSSLanguage</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/OSSUtteranceConfiguration.html">OSSUtteranceConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/OSSVoiceConfiguration.html">OSSVoiceConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/OSSVoiceInfo.html">OSSVoiceInfo</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>OSSUtteranceConfiguration</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">OSSUtteranceConfiguration</span></code></pre>
+
+                </div>
+              </div>
+            <p>Value-style speech parameters used to construct a fresh AVFoundation
+utterance for every synthesis request.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit25OSSUtteranceConfigurationV4rateSfvp"></a>
+                    <a name="//apple_ref/swift/Property/rate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit25OSSUtteranceConfigurationV4rateSfvp">rate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Speech rate to apply to the utterance.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">rate</span><span class="p">:</span> <span class="kt">Float</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit25OSSUtteranceConfigurationV15pitchMultiplierSfvp"></a>
+                    <a name="//apple_ref/swift/Property/pitchMultiplier" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit25OSSUtteranceConfigurationV15pitchMultiplierSfvp">pitchMultiplier</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Pitch multiplier to apply to the utterance.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">pitchMultiplier</span><span class="p">:</span> <span class="kt">Float</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit25OSSUtteranceConfigurationV6volumeSfvp"></a>
+                    <a name="//apple_ref/swift/Property/volume" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit25OSSUtteranceConfigurationV6volumeSfvp">volume</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Playback volume to apply to the utterance.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">volume</span><span class="p">:</span> <span class="kt">Float</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit25OSSUtteranceConfigurationV17preUtteranceDelaySdvp"></a>
+                    <a name="//apple_ref/swift/Property/preUtteranceDelay" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit25OSSUtteranceConfigurationV17preUtteranceDelaySdvp">preUtteranceDelay</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Delay before the utterance begins speaking.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">preUtteranceDelay</span><span class="p">:</span> <span class="kt">TimeInterval</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit25OSSUtteranceConfigurationV18postUtteranceDelaySdvp"></a>
+                    <a name="//apple_ref/swift/Property/postUtteranceDelay" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit25OSSUtteranceConfigurationV18postUtteranceDelaySdvp">postUtteranceDelay</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Delay after the utterance finishes speaking.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">postUtteranceDelay</span><span class="p">:</span> <span class="kt">TimeInterval</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit25OSSUtteranceConfigurationV4rate15pitchMultiplier6volume17preUtteranceDelay04postjK0ACSf_S2fS2dtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(rate:pitchMultiplier:volume:preUtteranceDelay:postUtteranceDelay:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit25OSSUtteranceConfigurationV4rate15pitchMultiplier6volume17preUtteranceDelay04postjK0ACSf_S2fS2dtcfc">init(rate:<wbr>pitchMultiplier:<wbr>volume:<wbr>preUtteranceDelay:<wbr>postUtteranceDelay:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates speech synthesis parameters for an utterance.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span>
+    <span class="nv">rate</span><span class="p">:</span> <span class="kt">Float</span> <span class="o">=</span> <span class="kt">AVSpeechUtteranceDefaultSpeechRate</span><span class="p">,</span>
+    <span class="nv">pitchMultiplier</span><span class="p">:</span> <span class="kt">Float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nv">volume</span><span class="p">:</span> <span class="kt">Float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nv">preUtteranceDelay</span><span class="p">:</span> <span class="kt">TimeInterval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nv">postUtteranceDelay</span><span class="p">:</span> <span class="kt">TimeInterval</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>rate</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Speech rate to apply.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>pitchMultiplier</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Pitch multiplier to apply.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>volume</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Playback volume to apply.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>preUtteranceDelay</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Delay before speaking begins.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>postUtteranceDelay</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Delay after speaking finishes.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2026 <a class="link" href="https://github.com/AppDevGuy" target="_blank" rel="external noopener">AppDevGuy</a>. All rights reserved. (Last updated: 2026-07-13)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>

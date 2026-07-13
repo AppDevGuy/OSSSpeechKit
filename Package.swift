@@ -1,63 +1,46 @@
-// swift-tools-version:5.3
-// The swift-tools-version declares the minimum version of Swift required to build this package.
+// swift-tools-version: 6.0
 import PackageDescription
 
 let package = Package(
     name: "OSSSpeechKit",
     platforms: [
-        .iOS(.v13),
-        .tvOS(.v13),
-		.macOS(.v11)
+        .iOS(.v17)
     ],
     products: [
         .library(
             name: "OSSSpeechKit",
-            targets: ["OSSSpeechKit"]),
-        .library(
-            name: "OSSSpeechKit-Static",
-            type: .static,
-            targets: ["OSSSpeechKit"]),
-        .library(
-            name: "OSSSpeechKit-Dynamic",
-            type: .dynamic,
-            targets: ["OSSSpeechKit"])
+            targets: ["OSSSpeechKit"]
+        )
     ],
-
-	// MARK: - Targets
     targets: [
-        // // MARK: - OSSSpeachKit
         .target(
             name: "OSSSpeechKit",
-            path: "OSSSpeechKit/",
-            sources: [
-                "Classes/OSSSpeech.swift",
-                "Classes/OSSSpeechUtility.swift",
-                "Classes/OSSUtterance.swift",
-                "Classes/OSSVoice.swift"
-            ],
+            path: "OSSSpeechKit",
+            sources: ["Classes"],
             resources: [
-                .process("Assets/")
+                .process("Assets"),
+                .copy("PrivacyInfo.xcprivacy")
             ],
             linkerSettings: [
-				.linkedFramework("AVFoundation"),
-				.linkedFramework("AppKit", .when(platforms: [.macOS])),
-				.linkedFramework("Speech", .when(platforms: [.iOS])),
-				.linkedFramework("UIKit", .when(platforms: [.iOS]))
+                .linkedFramework("AVFoundation"),
+                .linkedFramework("Speech"),
+                .linkedFramework("UIKit")
             ]
         ),
-		
-    .testTarget(
-        name: "OSSSpeechKitTests",
-        dependencies: [
-            "OSSSpeechKit"
-        ],
-        path: "Example/Tests",
-        exclude: [
-            "Info.plist"
-        ],
-        linkerSettings: [
-            .linkedFramework("AVKit")
-        ]
-    )],
-    swiftLanguageVersions: [.v5]
+        .testTarget(
+            name: "OSSSpeechKitTests",
+            dependencies: ["OSSSpeechKit"],
+            path: "Example/Tests",
+            exclude: ["Info.plist", "RecordingSessionModelTests.swift"],
+            resources: [
+                .process("LocalizableTests.strings")
+            ],
+            linkerSettings: [
+                .linkedFramework("AVFoundation"),
+                .linkedFramework("Speech"),
+                .linkedFramework("UIKit")
+            ]
+        )
+    ],
+    swiftLanguageModes: [.v5]
 )

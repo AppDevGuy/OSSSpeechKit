@@ -2,31 +2,47 @@ name: Swift
 
 on:
   push:
-    branches: [master]
+    branches: [master, main]
   pull_request:
-    branches: [master]
+    branches: [master, main]
+  workflow_dispatch:
 
-#list of jobs to perform
+permissions:
+  contents: read
+
 jobs:
-  #the only job in the list, named `build`
-  build_and_test:
-    #specify OS to run the jobs on
-    runs-on: macos-latest
-    #sequential steps to run for the `build` job
+  spm:
+    name: Swift package
+    runs-on: macos-15
     steps:
-      # step 1, use Marketplace action called Checkout@v2, to checkout the code
-    - uses: actions/checkout@v2 #'uses' keyword launches the Marketplace action
-      # step 2, verbosely build the package using the `swift` CLI
-    - name: Build
-      run: swift build -v #'run' keyword executes the command, as if it's run in terminal
-      # step 3, run tests
-      # Note that you must use "=" and not ":" despite error logs for -destiation using ":"
-      # Also using "Any iOS Simulator" doesn't seem to work despite being an option.
-      # The using CODE_SIGN... and beyond are for Codecov purposes when generating results.
-    - name: Run tests
-      run: |
-          cd Example
-          pod install
-          xcodebuild clean test -scheme OSSSpeechKit-Example -workspace OSSSpeechKit.xcworkspace -destination 'platform=iOS Simulator,OS=16.2,name=iPhone 14' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
-          bash <(curl https://codecov.io/bash | sed 's/"$beta_xcode_partials"//g')
+      - uses: actions/checkout@v4
+      - name: Validate package manifest
+        run: swift package dump-package
+      - name: Build package and test targets with Swift 6
+        run: |
+          SDK_PATH="$(xcrun --sdk iphonesimulator --show-sdk-path)"
+          swift build --build-tests \
+            --sdk "$SDK_PATH" \
+            --triple arm64-apple-ios17.0-simulator \
+            -Xswiftc -swift-version -Xswiftc 6
+
+  example:
+    name: SPM example and tests
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select an available iPhone simulator
+        run: |
+          SIMULATOR_ID="$(
+            xcrun simctl list devices available -j |
+              python3 -c 'import json, sys; data=json.load(sys.stdin); print(next(device["udid"] for devices in data["devices"].values() for device in devices if device["name"].startswith("iPhone")))'
+          )"
+          echo "SIMULATOR_DESTINATION=platform=iOS Simulator,id=${SIMULATOR_ID}" >> "$GITHUB_ENV"
+      - name: Test example and package
+        run: |
+          xcodebuild test \
+            -project Example/OSSSpeechKit.xcodeproj \
+            -scheme OSSSpeechKit-Example \
+            -destination "$SIMULATOR_DESTINATION" \
+            CODE_SIGNING_ALLOWED=NO
 

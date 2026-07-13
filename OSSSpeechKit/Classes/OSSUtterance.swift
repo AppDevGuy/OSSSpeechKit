@@ -28,6 +28,7 @@ import AVFoundation
 /// The OSSUtterance offers special overrides for strings which are usually set once objects.
 ///
 /// As the developer, you can override the `volume`, `rate` and `pitchMultiplier` should you wish to.
+@available(*, deprecated, message: "Use OSSUtteranceConfiguration with OSSSpeechEngine.")
 public class OSSUtterance: AVSpeechUtterance {
 
     // MARK: - Variables
@@ -64,6 +65,10 @@ public class OSSUtterance: AVSpeechUtterance {
 
     // MARK: - Lifecycle
 
+    /// Creates an error placeholder utterance.
+    ///
+    /// Use ``init(string:)`` or ``init(attributedString:)`` to create a useful
+    /// utterance.
     public override init() {
         super.init(string: "ERROR")
         debugLog(object: self, message: "ERROR: You must use the `init(string:)` or `init(attributedString:` methods.")

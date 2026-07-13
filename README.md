@@ -1,252 +1,199 @@
 # OSSSpeechKit
 
-[![OSSSpeechKit Logo](https://appdevguy.github.io/OSSSpeechKit/OSSSpeechKit-Logo.png)](https://github.com/AppDevGuy/OSSSpeechKit)
+OSSSpeechKit is an iOS library for speech synthesis and speech recognition built on Apple's `AVFoundation` and `Speech` frameworks.
 
-[![Build Status](https://travis-ci.org/AppDevGuy/OSSSpeechKit.svg?branch=master)](https://travis-ci.org/AppDevGuy/OSSSpeechKit)
-[![Version](https://img.shields.io/cocoapods/v/OSSSpeechKit.svg?style=flat)](https://cocoapods.org/pods/OSSSpeechKit)
-[![License](https://img.shields.io/cocoapods/l/OSSSpeechKit.svg?style=flat)](https://cocoapods.org/pods/OSSSpeechKit)
-[![Platform](https://img.shields.io/cocoapods/p/OSSSpeechKit.svg?style=flat)](https://cocoapods.org/pods/OSSSpeechKit)
-[![codecov](https://codecov.io/gh/AppDevGuy/OSSSpeechKit/branch/master/graph/badge.svg)](https://codecov.io/gh/AppDevGuy/OSSSpeechKit)
-[![docs](https://appdevguy.github.io/OSSSpeechKit/badge.svg)](https://appdevguy.github.io/OSSSpeechKit)
+## Requirements
 
-OSSSpeechKit was developed to provide easier accessibility options to apps.
+- iOS 17 or later
+- Swift 5 language mode or later
+- Xcode with Swift 6 package support
 
-Apple does not make it easy to get the right voice, nor do they provide a simple way of selecting a language or using speech to text. OSSSpeechKit makes the hassle of trying to find the right language go away.
+## Installation
 
-# Requirements
+In Xcode, choose **File > Add Package Dependencies**, enter:
 
-- Swift 5.0 or higher
-- iOS 13.0 or higher
-- Cocoapods
-
-# Supported Languages
-
-The table below shows the original 37 languages first supported. Since v0.3.3, an additional 10 languages have been added.
-
-<table class="tg" style="width: 100%;"> <tr> <td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> English - Australian<br>🇦🇺 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Hebrew<br>🇮🇱 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Japanese<br>🇯🇵 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Romanian<br>🇷🇴 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Swedish<br>🇸🇪 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Norsk<br>🇳🇴 </td></tr><tr> <td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Portuguese - Brazilian<br>🇧🇷 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Hindi - Indian<br>🇮🇳 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Korean<br>🇰🇷 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Russian<br>🇷🇺 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Chinese - Taiwanese<br>🇹🇼 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Dutch - Belgium<br>🇧🇪 </td></tr><tr> <td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> French - Canadian<br>🇨🇦 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Hungarian<br>🇭🇺 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Spanish - Mexican<br>🇲🇽 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Arabic - Saudi Arabian<br>🇸🇦 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Thai<br>🇹🇭 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> French<br>🇫🇷 </td></tr><tr> <td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Chinese<br>🇨🇳 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Indonesian<br>🇮🇩 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Norwegian<br>🇳🇴 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Slovakian<br>🇸🇰 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Turkish<br>🇹🇷 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Finnish<br>🇫🇮 </td></tr><tr> <td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Chinese - Hong Kong<br>🇭🇰 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> English - Irish<br>🇮🇪 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Polish<br>🇵🇱 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> English - South African<br>🇿🇦 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> English - United States<br>🇺🇸 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Danish<br>🇩🇰 </td></tr><tr> <td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Czech<br>🇨🇿 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Italian<br>🇮🇹 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Portuguese<br>🇵🇹 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Spanish<br>🇪🇸 </td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> English<br>🇬🇧</td><td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Dutch<br>🇳🇱 </td></tr><tr> <td class="tg-xldj" style="width: 20%; text-align:center; vertical-align: middle;"> Greek<br>🇬🇷 </td></tr></table>
-
-# Features
-
-OSSSpeechKit offers simple **text to speech** and **speech to text** in 47 different languages.
-
-OSSSpeechKit is built on top of both the [AVFoundation](https://developer.apple.com/documentation/avfoundation) and [Speech](https://developer.apple.com/documentation/speech) frameworks.
-
-You can achieve text to speech or speech to text in as little as two lines of code.
-
-The speech will play over the top of other sounds such as music.
-
-# Installation
-
-OSSSpeechKit is available through [CocoaPods](https://cocoapods.org). To install it, simply add the following line to your Podfile:
-
-```ruby
-pod 'OSSSpeechKit'
+```text
+https://github.com/AppDevGuy/OSSSpeechKit.git
 ```
 
-# Implementation
+Select version `1.0.0` or later and add the `OSSSpeechKit` library product to your app target.
 
-## Text to Speech
-
-These methods enable you to pass in a string and hear the text played back using.
-
-### Simple
+You can also add it to `Package.swift`:
 
 ```swift
+dependencies: [
+    .package(
+        url: "https://github.com/AppDevGuy/OSSSpeechKit.git",
+        from: "1.0.0"
+    )
+]
+```
+
+Swift Package Manager is the only supported installation method. The historical CocoaPods release `0.3.3` remains available for existing builds but is no longer maintained; version 1.0 and later are not published to CocoaPods.
+
+## Speech synthesis
+
+`OSSSpeechEngine` is main-actor isolated and instance based. Select a language from the catalog, confirm that a voice exists on the current device, then speak:
+
+```swift
+import AVFoundation
 import OSSSpeechKit
 
-.....
+let engine = OSSSpeechEngine()
+let language = OSSLanguage.catalog.first {
+    $0.id == "english-australia"
+}!
 
-// Declare an instance of OSSSpeechKit
-let speechKit = OSSSpeech.shared
-// Set the voice you wish to use - currently upper case for formality or language and country name
-speechKit.voice = OSSVoice(quality: .enhanced, language: .Australian)
-// Set the text in the language you have set
-speechKit.speakText(text: "Hello, my name is OSSSpeechKit.")
+guard !language.availableSynthesisVoices.isEmpty else {
+    // Ask the user to install a compatible system voice.
+    return
+}
+
+try await engine.speak(
+    "Hello from OSSSpeechKit.",
+    voice: OSSVoiceConfiguration(
+        language: language,
+        preferredQuality: .enhanced
+    ),
+    configuration: OSSUtteranceConfiguration(
+        rate: AVSpeechUtteranceDefaultSpeechRate,
+        pitchMultiplier: 1,
+        volume: 1
+    )
+)
 ```
 
-### Advanced
+Use `pauseSpeaking()`, `continueSpeaking()`, and `stopSpeaking()` to control playback.
 
-```swift
-import OSSSpeechKit
+## Speech recognition
 
-.....
+Add both usage descriptions to the consuming app's `Info.plist`:
 
-// Declare an instance of OSSSpeechKit
-let speechKit = OSSSpeech.shared
-// Create a voice instance
-let newVoice = OSSVoice()
-// Set the language
-newVoice.language = OSSVoiceEnum.Australian.rawValue
-// Set the voice quality
-newVoice.quality = .enhanced
-// Set the voice of the speech kit
-speechKit.voice = newVoice
-// Initialise an utterance
-let utterance = OSSUtterance(string: "Testing")
-// Set the recognition task type
-speechKit.recognitionTaskType = .dictation
-// Set volume
-utterance.volume = 0.5
-// Set rate of speech
-utterance.rate = 0.5
-// Set the pitch
-utterance.pitchMultiplier = 1.2
-// Set speech utterance
-speechKit.utterance = utterance
-// Ask to speak
-speechKit.speakText(text: utterance.speechString)
+```xml
+<key>NSMicrophoneUsageDescription</key>
+<string>Explain why your app records audio.</string>
+<key>NSSpeechRecognitionUsageDescription</key>
+<string>Explain why your app transcribes speech.</string>
 ```
 
-## Speech to Text
-
-Currently speech to text is offered in a very simple format. Starting and stopping of recording is handled by the app.
-
-### iOS 13 On-Device Speech to Text support is now available as of 0.3.0 🎉
-
-SpeechKit implements delegates to handle the recording authorization, output of text and failure to record.
+Then consume recognition events:
 
 ```swift
-speechKit.delegate = self
-// Call to start and end recording.
-speechKit.recordVoice()
-// Call to end recording
-speechKit.endVoiceRecording()
-```
+let engine = OSSSpeechEngine()
 
-It is important that you have included in your `info.plist` the following:
+do {
+    let events = try await engine.recognitionEvents(
+        locale: Locale(identifier: "en-AU")
+    )
 
-> Privacy - Speech Recognition Usage Description
-
-> Privacy - Microphone Usage Description
-
-Without these, you will not be able to access the microphone nor speech recognition.
-
-### Delegates
-
-Handle returning authentication status to user - primary use is for non-authorized state.
-
-> `func authorizationToMicrophone(withAuthentication type: OSSSpeechKitAuthorizationStatus)`
-
-When the microphone has finished accepting audio, this delegate will be called with the final best text output.
-
-> `func didFailToCommenceSpeechRecording()`
-
-If the speech recogniser and request fail to set up, this method will be called.
-
-> `func didFinishListening(withText text: String)`
-
-For further information you can [check out the Apple documentation directly.](https://developer.apple.com/documentation/speech/sfspeechrecognizer)
-
-# Other Features
-
-### List all available voices:
-
-```swift
-let allLanguages = OSSVoiceEnum.allCases
-```
-
-### Get specific voice information:
-
-```swift
-// All support languages
-let allVoices = OSSVoiceEnum.allCases
-// Language details
-let languageInformation = allVoices[0].getDetails()
-// Flag of country
-let flag = allVoices[0].flag
-```
-
-The `getDetails()` method returns a struct containing:
-
-```swift
-OSSVoiceInfo {
-    /// The name of the voice; All AVSpeechSynthesisVoice instances have a persons name.
-    var name: String?
-    /// The name of the language being used.
-    var language: String?
-    /// The language code is what is internationally used in Locale settings.
-    var languageCode: String?
-    /// Identifier is a unique bundle url provided by Apple for each AVSpeechSynthesisVoice.
-    var identifier: Any?
+    for try await event in events {
+        switch event {
+        case .partial(let text):
+            print("Partial:", text)
+        case .completed(let text):
+            print("Final:", text)
+        case .availabilityChanged(let available):
+            print("Available:", available)
+        case .cancelled:
+            break
+        }
+    }
+} catch {
+    print("Recognition failed:", error)
 }
 ```
 
-### Other Info
+Call `cancelRecognition()` to stop an active session. Set `usesOnDeviceRecognition = true` before starting if your product requires on-device recognition; the operation fails when the selected recognizer does not support it.
 
-The `OSSVoiceEnum` contains other methods, such as a hello message, title variable and subtitle variable so you can use it in a list.
-
-You can also set the speech:
-
-- volume
-- pitchMultiplier
-- rate
-
-As well as using an `NSAttributedString`.
-
-There are plans to implement flags for each country as well as some more features, such as being able to play the voice if the device is on silent.
-
-If the language or voice you require is not available, this is either due to:
-
-- Apple have not made it available through their AVFoundation;
-- or the SDK has not been updated to include the newly added voice.
-
-# Important Information
-
-Apple do not make the voice of Siri available for use.
-
-This kit provides Apple's AVFoundation voices available and easy to use, so you do not need to know all the voice codes, among many other things.
-
-To say things correctly in each language, you need to set the voice to the correct language and supply that languages text; this SDK is not a translator.
-
-### Code Example:
-
-You wish for you app to use a Chinese voice, you will need to ensure the text being passed in is Chinese.
-
-_Disclaimer: I do not know how to speak Chinese, I have used Google translate for the Chinese characters._
-
-#### Correct:
+For a dictation-style session that stays open across verbal pauses, consume the
+continuous event stream:
 
 ```swift
-speechKit.voice = OSSVoice(quality: .enhanced, language: .Chinese)
-speechKit.speakText(text: "你好我的名字是 ...")
+let events = try await engine.continuousRecognitionEvents(
+    locale: Locale(identifier: "en-AU")
+)
+
+for try await event in events {
+    switch event {
+    case .transcript(let transcript):
+        print(transcript.formattedText)
+        for segment in transcript.segments {
+            print(segment.timestamp, segment.duration, segment.text)
+        }
+    case .paused:
+        print("Capture paused")
+    case .resumed:
+        print("Capture resumed")
+    case .completed, .cancelled:
+        break
+    case .availabilityChanged(let available):
+        print("Available:", available)
+    }
+}
 ```
 
-#### Incorrect:
+Use `pauseRecognition()` and `resumeRecognition()` to suspend and restart
+microphone capture while retaining the same event stream. Call
+`finishRecognition()` to end successfully, or `cancelRecognition()` to cancel.
+Segment timestamps use active recording time, so time spent paused is excluded.
+The API transcribes live microphone input; it does not save an audio file.
+
+## Languages, voices, and flags
+
+`OSSLanguage.catalog` is display metadata, not a guarantee of runtime support. Availability varies by OS release, device, installed voice assets, region, network access, and Apple's services.
+
+The catalog was reconciled against Apple's current
+[VoiceOver language support](https://support.apple.com/en-us/111748) and
+[feature availability](https://www.apple.com/ios/feature-availability/) pages.
+Exact synthesis voices come from
+[`AVSpeechSynthesisVoice.speechVoices()`](https://developer.apple.com/documentation/avfaudio/avspeechsynthesisvoice/speechvoices())
+and recognition locales come from
+[`SFSpeechRecognizer.supportedLocales()`](https://developer.apple.com/documentation/speech/sfspeechrecognizer/supportedlocales());
+those runtime results are authoritative.
+
+Check capabilities when presenting an option:
 
 ```swift
-speechKit.voice = OSSVoice(quality: .enhanced, language: .Australian)
-speechKit.speakText(text: "你好我的名字是 ...")
+for language in OSSLanguage.catalog {
+    let canSpeak = !language.availableSynthesisVoices.isEmpty
+    let canRecognize = language.supportsRecognition
+    let flag = language.flagEmoji
+    print(flag, language.name, canSpeak, canRecognize)
+}
 ```
 
-OR
+For UIKit code that needs an image, use:
 
 ```swift
-speechKit.voice = OSSVoice(quality: .enhanced, language: .Chinese)
-speechKit.speakText(text: "Hello, my name is ...")
+let image = language.renderedFlagImage(pointSize: 24)
 ```
 
-This same principle applies to all other languages such as German, Saudi Arabian, French, etc.. Failing to set the language for the text you wish to be spoken will not sound correct.
+Speech synthesis is not translation. Supply text written for the selected language and locale.
 
-# Contributions and Queries
+## Privacy
 
-If you have a question, please create a ticket or email me directly.
+OSSSpeechKit requests microphone and speech-recognition permission only when your app asks it to. Your app is responsible for clear `NSMicrophoneUsageDescription` and `NSSpeechRecognitionUsageDescription` strings and for disclosing its own data practices.
 
-If you wish to contribute, please create a pull request.
+Speech recognition may use Apple services unless on-device recognition is requested and supported. Review Apple's current Speech framework and App Store privacy requirements for your use case.
 
-# Example Project
+The included `PrivacyInfo.xcprivacy` declares that OSSSpeechKit itself does not track users, collect data, or access a required-reason API. It does not replace the consuming app's privacy manifest or App Privacy answers.
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
+## Migrating from pre-1.0
 
-# Unit Tests
+The singleton and subclass-based APIs remain temporarily available but are deprecated:
 
-For further examples, please look at the Unit Test class.
+- `OSSSpeech.shared` → create an `OSSSpeechEngine`
+- `OSSVoice` → `OSSVoiceConfiguration`
+- `OSSUtterance` → `OSSUtteranceConfiguration`
+- `OSSVoiceEnum.flag` → `flagEmoji` or `renderedFlagImage(pointSize:scale:)`
+- `OSSVoiceEnum` catalogs → `OSSLanguage.catalog`
 
-# Author
+See [MIGRATION.md](MIGRATION.md) for examples and behavior changes.
 
-App Dev Guy
+## Example and tests
 
-<a href="https://stackoverflow.com/users/4008175/app-dev-guy"><img src="https://stackoverflow.com/users/flair/4008175.png" width="208" height="58" alt="profile for App Dev Guy at Stack Overflow, Q&amp;A for professional and enthusiast programmers" title="profile for App Dev Guy at Stack Overflow, Q&amp;A for professional and enthusiast programmers"></a>
+Open `Example/OSSSpeechKit.xcodeproj` to run the example app and its tests. The project links the package from the repository root.
 
-# License
+## License
 
-OSSSpeechKit is available under the MIT license. See the LICENSE file for more info.
+OSSSpeechKit is available under the MIT license. See [LICENSE](LICENSE).

@@ -23,13 +23,10 @@
 
 import Foundation
 import AVFoundation
-#if canImport(UIKit)
 import UIKit
-#elseif canImport(AppKit)
-import AppKit
-#endif
 
-/// The voice infor struct ensures that the data structure has conformity and consistency.
+/// Information about a resolved system voice.
+@available(*, deprecated, message: "Use OSSLanguage and AVSpeechSynthesisVoice directly.")
 public struct OSSVoiceInfo {
     /// The name of the voice; All AVSpeechSynthesisVoice instances have a persons name.
     public var name: String?
@@ -37,8 +34,11 @@ public struct OSSVoiceInfo {
     public var language: String?
     /// The language code is what is internationally used in Locale settings.
     public var languageCode: String?
-    /// Identifier is a unique bundle url provided by Apple for each AVSpeechSynthesisVoice.
+    /// Identifier is a unique bundle URL provided by Apple for each voice.
+    @available(*, deprecated, message: "Use voiceIdentifier.")
     public var identifier: Any?
+    /// Typed identifier for the resolved AVSpeechSynthesisVoice.
+    public var voiceIdentifier: String?
 }
 // swiftlint:disable identifier_name
 /// The available system voices.
@@ -47,6 +47,7 @@ public struct OSSVoiceInfo {
 ///
 ///     OSSVoiceEnum.allCases
 ///
+@available(*, deprecated, message: "Use OSSLanguage.catalog and runtime capability APIs.")
 public enum OSSVoiceEnum: String, CaseIterable {
     /// Australian
     case Australian = "en-AU"
@@ -150,6 +151,7 @@ public enum OSSVoiceEnum: String, CaseIterable {
             if #available(iOS 9.0, *) {
                 voiceInfo.name = voice.name
                 voiceInfo.identifier = voice.identifier
+                voiceInfo.voiceIdentifier = voice.identifier
             }
             voiceInfo.languageCode = rawValue
             voiceInfo.language = "\(self)"
@@ -266,26 +268,21 @@ public enum OSSVoiceEnum: String, CaseIterable {
         }
     }
 
-    /// The flag for the selected language.
+    /// The legacy image flag for the selected language.
     ///
-    /// You can supply your own flag image, provided is has the same name (.rawValue) as the image in the pod assets.
+    /// You can supply your own flag image, provided it has the same name (`rawValue`) as the packaged image.
     ///
     /// If no image is found in the application bundle, the image from the SDK bundle will be provided.
-#if canImport(UIKit)
+    @available(*, deprecated, message: "Use flagEmoji for text or renderedFlagImage(pointSize:scale:) for UIKit images.")
     public var flag: UIImage? {
         if let mainBundleImage = UIImage(named: rawValue, in: Bundle.main, compatibleWith: nil) {
             return mainBundleImage
         }
-        return UIImage(named: rawValue, in: Bundle.getResourcesBundle(), compatibleWith: nil)
+        if let bundledImage = UIImage(named: rawValue, in: Bundle.getResourcesBundle(), compatibleWith: nil) {
+            return bundledImage
+        }
+        return renderedFlagImage()
     }
-#elseif canImport(AppKit)
-	public var flag: NSImage? {
-		if let mainBundleImage = NSImage(named: rawValue) {
-			return mainBundleImage
-		}
-		return NSImage(named: rawValue)
-	}
-#endif
 }
 
 /** OSSVoice overides some of the properties provided to enable setting as well as getting.
@@ -296,8 +293,8 @@ public enum OSSVoiceEnum: String, CaseIterable {
  
  - Note: If init() is called, the default quality of OSSVoice will us "default" and the language will be "OSSVoiceEnum.UnitedStatesEnglish".
 */
-@available(iOS 9.0, *)
-public class OSSVoice: AVSpeechSynthesisVoice {
+@available(*, deprecated, message: "Use OSSVoiceConfiguration, which resolves a real AVSpeechSynthesisVoice.")
+public class OSSVoice: AVSpeechSynthesisVoice, @unchecked Sendable {
 
     // MARK: - Private Properties
 
