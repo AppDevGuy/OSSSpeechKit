@@ -18,13 +18,27 @@ final class RecordingSessionModelTests: XCTestCase {
         XCTAssertEqual(model.status, .recording)
         XCTAssertEqual(engine.startCount, 1)
 
+        let firstSentenceReceived = expectation(description: "First sentence finalized into a row")
+        model.onChange = {
+            if model.rows.map(\.text) == ["First sentence"] {
+                model.onChange = nil
+                firstSentenceReceived.fulfill()
+            }
+        }
         engine.send(.transcript(makeTranscript("First sentence", timestamp: 0, isFinal: true)))
-        await allowTasksToRun()
+        await fulfillment(of: [firstSentenceReceived], timeout: 1)
         XCTAssertEqual(model.rows, [.init(timestamp: 0, text: "First sentence")])
 
         currentDate.addTimeInterval(4)
+        let secondThoughtReceived = expectation(description: "Second thought received as live text")
+        model.onChange = {
+            if model.liveText == "Second thought" {
+                model.onChange = nil
+                secondThoughtReceived.fulfill()
+            }
+        }
         engine.send(.transcript(makeTranscript("Second thought", timestamp: 3, isFinal: false)))
-        await allowTasksToRun()
+        await fulfillment(of: [secondThoughtReceived], timeout: 1)
         model.pause()
 
         XCTAssertEqual(model.status, .paused)
