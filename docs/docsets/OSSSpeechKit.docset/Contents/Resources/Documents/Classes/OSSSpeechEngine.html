@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>OSSSpeechEngine Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/OSSSpeechEngine" class="dashAnchor"></a>
+    <a title="OSSSpeechEngine Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">OSSSpeechKit 1.0.0 Docs</a> (100% documented)</p>
+        <p class="header-right"><a href="https://github.com/AppDevGuy/OSSSpeechKit"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
+        <div class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">OSSSpeechKit Reference</a>
+        <img id="carat" src="../img/carat.png" alt=""/>
+        OSSSpeechEngine Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/OSSSpeech.html">OSSSpeech</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/OSSSpeechEngine.html">OSSSpeechEngine</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/OSSSpeechEngine/State.html">– State</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/OSSSpeechUtility.html">OSSSpeechUtility</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/OSSUtterance.html">OSSUtterance</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/OSSVoice.html">OSSVoice</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/OSSSpeechError.html">OSSSpeechError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/OSSSpeechKitAuthorizationStatus.html">OSSSpeechKitAuthorizationStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/OSSSpeechKitErrorType.html">OSSSpeechKitErrorType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/OSSSpeechRecognitionEvent.html">OSSSpeechRecognitionEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/OSSSpeechRecognitionTaskType.html">OSSSpeechRecognitionTaskType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/OSSVoiceEnum.html">OSSVoiceEnum</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/NSObject.html">NSObject</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/OSSSpeechDelegate.html">OSSSpeechDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/OSSLanguage.html">OSSLanguage</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/OSSUtteranceConfiguration.html">OSSUtteranceConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/OSSVoiceConfiguration.html">OSSVoiceConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/OSSVoiceInfo.html">OSSVoiceInfo</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>OSSSpeechEngine</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">@MainActor</span>
+<span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">OSSSpeechEngine</span> <span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">OSSSpeechEngine</span><span class="p">:</span> <span class="kt">AVSpeechSynthesizerDelegate</span><span class="p">,</span> <span class="kt">SFSpeechRecognizerDelegate</span></code></pre>
+
+                </div>
+              </div>
+            <p>Instance-based, main-actor-isolated speech synthesis and recognition engine.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit0A6EngineC5StateO"></a>
+                    <a name="//apple_ref/swift/Enum/State" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit0A6EngineC5StateO">State</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Current high-level activity of the speech engine.</p>
+
+                        <a href="../Classes/OSSSpeechEngine/State.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">State</span> <span class="p">:</span> <span class="kt">Equatable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit0A6EngineC5stateAC5StateOvp"></a>
+                    <a name="//apple_ref/swift/Property/state" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit0A6EngineC5stateAC5StateOvp">state</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Current high-level activity of the engine.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@MainActor</span>
+<span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">state</span><span class="p">:</span> <span class="kt"><a href="../Classes/OSSSpeechEngine/State.html">State</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit0A6EngineC23usesOnDeviceRecognitionSbvp"></a>
+                    <a name="//apple_ref/swift/Property/usesOnDeviceRecognition" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit0A6EngineC23usesOnDeviceRecognitionSbvp">usesOnDeviceRecognition</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Whether recognition should require on-device processing when supported.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@MainActor</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">usesOnDeviceRecognition</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit0A6EngineC19recognitionTaskHintSo019SFSpeechRecognitioneF0Vvp"></a>
+                    <a name="//apple_ref/swift/Property/recognitionTaskHint" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit0A6EngineC19recognitionTaskHintSo019SFSpeechRecognitioneF0Vvp">recognitionTaskHint</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Task hint passed to the underlying speech recognizer.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@MainActor</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">recognitionTaskHint</span><span class="p">:</span> <span class="kt">SFSpeechRecognitionTaskHint</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@OSSSpeechKit@objc(cs)OSSSpeechEngine(im)init"></a>
+                    <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@OSSSpeechKit@objc(cs)OSSSpeechEngine(im)init">init()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates a speech engine with its own synthesizer, audio engine, and audio session.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@MainActor</span>
+<span class="kd">public</span> <span class="k">override</span> <span class="nf">init</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit0A6EngineC27supportedRecognitionLocalesShy10Foundation6LocaleVGvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/supportedRecognitionLocales" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit0A6EngineC27supportedRecognitionLocalesShy10Foundation6LocaleVGvpZ">supportedRecognitionLocales</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Locales that the platform reports as available for speech recognition.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@MainActor</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">supportedRecognitionLocales</span><span class="p">:</span> <span class="kt">Set</span><span class="o">&lt;</span><span class="kt">Locale</span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit0A6EngineC26requestSpeechAuthorizationAA0abF6StatusOyYaF"></a>
+                    <a name="//apple_ref/swift/Method/requestSpeechAuthorization()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit0A6EngineC26requestSpeechAuthorizationAA0abF6StatusOyYaF">requestSpeechAuthorization()</a>
+                    </code>
+                      <span class="declaration-note">
+                        Asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Requests speech recognition authorization and maps the native status.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@MainActor</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">requestSpeechAuthorization</span><span class="p">()</span> <span class="k">async</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Enums/OSSSpeechKitAuthorizationStatus.html">OSSSpeechKitAuthorizationStatus</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit0A6EngineC30requestMicrophoneAuthorizationSbyYaF"></a>
+                    <a name="//apple_ref/swift/Method/requestMicrophoneAuthorization()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit0A6EngineC30requestMicrophoneAuthorizationSbyYaF">requestMicrophoneAuthorization()</a>
+                    </code>
+                      <span class="declaration-note">
+                        Asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Requests microphone recording authorization.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@MainActor</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">requestMicrophoneAuthorization</span><span class="p">()</span> <span class="k">async</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit0A6EngineC5speak_5voice13configurationySS_AA21OSSVoiceConfigurationVAA012OSSUtteranceH0VtYaKF"></a>
+                    <a name="//apple_ref/swift/Method/speak(_:voice:configuration:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit0A6EngineC5speak_5voice13configurationySS_AA21OSSVoiceConfigurationVAA012OSSUtteranceH0VtYaKF">speak(_:<wbr>voice:<wbr>configuration:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Speaks plain text using a resolved AVFoundation voice.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@MainActor</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">speak</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+    <span class="nv">voice</span><span class="p">:</span> <span class="kt"><a href="../Structs/OSSVoiceConfiguration.html">OSSVoiceConfiguration</a></span><span class="p">,</span>
+    <span class="nv">configuration</span><span class="p">:</span> <span class="kt"><a href="../Structs/OSSUtteranceConfiguration.html">OSSUtteranceConfiguration</a></span> <span class="o">=</span> <span class="o">.</span><span class="nf">init</span><span class="p">()</span>
+<span class="p">)</span> <span class="k">async</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit0A6EngineC5speak_5voice13configurationySo18NSAttributedStringC_AA21OSSVoiceConfigurationVAA012OSSUtteranceJ0VtYaKF"></a>
+                    <a name="//apple_ref/swift/Method/speak(_:voice:configuration:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit0A6EngineC5speak_5voice13configurationySo18NSAttributedStringC_AA21OSSVoiceConfigurationVAA012OSSUtteranceJ0VtYaKF">speak(_:<wbr>voice:<wbr>configuration:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Speaks attributed text using a resolved AVFoundation voice.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@MainActor</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">speak</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">attributedText</span><span class="p">:</span> <span class="kt">NSAttributedString</span><span class="p">,</span>
+    <span class="nv">voice</span><span class="p">:</span> <span class="kt"><a href="../Structs/OSSVoiceConfiguration.html">OSSVoiceConfiguration</a></span><span class="p">,</span>
+    <span class="nv">configuration</span><span class="p">:</span> <span class="kt"><a href="../Structs/OSSUtteranceConfiguration.html">OSSUtteranceConfiguration</a></span> <span class="o">=</span> <span class="o">.</span><span class="nf">init</span><span class="p">()</span>
+<span class="p">)</span> <span class="k">async</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit0A6EngineC13pauseSpeakingyyF"></a>
+                    <a name="//apple_ref/swift/Method/pauseSpeaking()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit0A6EngineC13pauseSpeakingyyF">pauseSpeaking()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Pauses the current utterance immediately when the engine is speaking.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@MainActor</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">pauseSpeaking</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit0A6EngineC16continueSpeakingyyF"></a>
+                    <a name="//apple_ref/swift/Method/continueSpeaking()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit0A6EngineC16continueSpeakingyyF">continueSpeaking()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Resumes a paused utterance.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@MainActor</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">continueSpeaking</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit0A6EngineC12stopSpeakingyyF"></a>
+                    <a name="//apple_ref/swift/Method/stopSpeaking()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit0A6EngineC12stopSpeakingyyF">stopSpeaking()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Stops the current utterance and finishes the synthesis operation.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@MainActor</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">stopSpeaking</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit0A6EngineC17recognitionEvents6locale20requestAuthorizationScsyAA0A16RecognitionEventOs5Error_pG10Foundation6LocaleV_SbtYaKF"></a>
+                    <a name="//apple_ref/swift/Method/recognitionEvents(locale:requestAuthorization:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit0A6EngineC17recognitionEvents6locale20requestAuthorizationScsyAA0A16RecognitionEventOs5Error_pG10Foundation6LocaleV_SbtYaKF">recognitionEvents(locale:<wbr>requestAuthorization:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Asynchronous
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Starts recognition and returns a stream that owns the recording session.
+Cancelling iteration tears down the audio tap and recognition task.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@MainActor</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">recognitionEvents</span><span class="p">(</span>
+    <span class="nv">locale</span><span class="p">:</span> <span class="kt">Locale</span><span class="p">,</span>
+    <span class="nv">requestAuthorization</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span>
+<span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">AsyncThrowingStream</span><span class="o">&lt;</span><span class="kt"><a href="../Enums/OSSSpeechRecognitionEvent.html">OSSSpeechRecognitionEvent</a></span><span class="p">,</span> <span class="kt">Error</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit0A6EngineC17cancelRecognitionyyF"></a>
+                    <a name="//apple_ref/swift/Method/cancelRecognition()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit0A6EngineC17cancelRecognitionyyF">cancelRecognition()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Cancels the active recognition session and tears down audio recording.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@MainActor</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">cancelRecognition</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@OSSSpeechKit@objc(cs)OSSSpeechEngine(im)speechSynthesizer:didFinishSpeechUtterance:"></a>
+                    <a name="//apple_ref/swift/Method/speechSynthesizer(_:didFinish:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@OSSSpeechKit@objc(cs)OSSSpeechEngine(im)speechSynthesizer:didFinishSpeechUtterance:">speechSynthesizer(_:<wbr>didFinish:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Completes the awaiting synthesis operation when AVFoundation finishes speaking.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">nonisolated</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">speechSynthesizer</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">synthesizer</span><span class="p">:</span> <span class="kt">AVSpeechSynthesizer</span><span class="p">,</span>
+    <span class="n">didFinish</span> <span class="nv">utterance</span><span class="p">:</span> <span class="kt">AVSpeechUtterance</span>
+<span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@OSSSpeechKit@objc(cs)OSSSpeechEngine(im)speechSynthesizer:didCancelSpeechUtterance:"></a>
+                    <a name="//apple_ref/swift/Method/speechSynthesizer(_:didCancel:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@OSSSpeechKit@objc(cs)OSSSpeechEngine(im)speechSynthesizer:didCancelSpeechUtterance:">speechSynthesizer(_:<wbr>didCancel:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Completes the awaiting synthesis operation with cancellation when speech is cancelled.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">nonisolated</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">speechSynthesizer</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">synthesizer</span><span class="p">:</span> <span class="kt">AVSpeechSynthesizer</span><span class="p">,</span>
+    <span class="n">didCancel</span> <span class="nv">utterance</span><span class="p">:</span> <span class="kt">AVSpeechUtterance</span>
+<span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@OSSSpeechKit@objc(cs)OSSSpeechEngine(im)speechRecognizer:availabilityDidChange:"></a>
+                    <a name="//apple_ref/swift/Method/speechRecognizer(_:availabilityDidChange:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@OSSSpeechKit@objc(cs)OSSSpeechEngine(im)speechRecognizer:availabilityDidChange:">speechRecognizer(_:<wbr>availabilityDidChange:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Emits recognizer availability changes to the active recognition stream.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">nonisolated</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">speechRecognizer</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">speechRecognizer</span><span class="p">:</span> <span class="kt">SFSpeechRecognizer</span><span class="p">,</span>
+    <span class="n">availabilityDidChange</span> <span class="nv">available</span><span class="p">:</span> <span class="kt">Bool</span>
+<span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2026 <a class="link" href="https://github.com/AppDevGuy" target="_blank" rel="external noopener">AppDevGuy</a>. All rights reserved. (Last updated: 2026-07-13)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>

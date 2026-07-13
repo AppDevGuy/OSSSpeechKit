@@ -23,6 +23,7 @@
 
 import Foundation
 
+/// Utility methods for localized strings and diagnostics used by OSSSpeechKit.
 public class OSSSpeechUtility: NSObject {
 
     // MARK: - Variables
@@ -52,17 +53,21 @@ public class OSSSpeechUtility: NSObject {
     ///     - comment: The value for the key. If no key - value is found, the comment value will be used.
     /// - Returns: A string with either the value from the main bundle or the SDK bundle, else the comment.
     public func getString(forLocalizedName name: String, defaultValue: String) -> String {
+        getString(forLocalizedName: name, defaultValue: defaultValue, bundle: Bundle.main)
+    }
+
+    func getString(forLocalizedName name: String, defaultValue: String, bundle: Bundle) -> String {
         if name.isEmpty {
             return "!&!&!&!&!&!&!&!&!&!&!&!&!&!&!"
         }
-        var localString = NSLocalizedString(name, tableName: stringsTableName, bundle: Bundle.main, comment: defaultValue)
+        var localString = NSLocalizedString(name, tableName: stringsTableName, bundle: bundle, comment: defaultValue)
         if !localString.isEmpty && localString != name {
             return localString
         }
         guard let sdkBundle = Bundle.getResourcesBundle() else {
             return defaultValue
         }
-        // The Main Bundle does not contain the value for the key. Use the SDK strings table.
+        // The preferred bundle does not contain the value for the key. Use the SDK strings table.
         localString = NSLocalizedString(name, tableName: "Localizable", bundle: sdkBundle, value: defaultValue, comment: defaultValue)
         if !localString.isEmpty && localString != name {
             return localString
@@ -74,17 +79,9 @@ public class OSSSpeechUtility: NSObject {
 
 /// Bundle extension to aid in retrieving the SDK resources for getting SDK images.
 extension Bundle {
-	/// Will return the Bundle for the SDK if it can be found.
+	/// Returns the Swift package resource bundle.
 	static func getResourcesBundle() -> Bundle? {
-#if SWIFT_PACKAGE
 		return Bundle.module
-#else
-		let bundle = Bundle(for: OSSVoice.self)
-		guard let resourcesBundleUrl = bundle.resourceURL?.appendingPathComponent("OSSSpeechKit.bundle") else {
-			return nil
-		}
-		return Bundle(url: resourcesBundleUrl)
-#endif
 	}
 }
 
@@ -99,6 +96,7 @@ extension NSObject {
 	///     - fileName: Automatically populated by the application
 	///     - lineNumber: Automatically populated by the application
 	///     - message: The message you wish to output.
+    @available(*, deprecated, message: "Use OSLog from your application instead.")
 	public func debugLog(object: Any, functionName: String = #function, fileName: String = #file, lineNumber: Int = #line, message: String) {
 		#if DEBUG
 		let className = (fileName as NSString).lastPathComponent

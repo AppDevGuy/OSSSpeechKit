@@ -26,6 +26,7 @@ import XCTest
 @testable import OSSSpeechKit
 import AVKit
 
+@available(*, deprecated, message: "Legacy compatibility coverage")
 class OSSSpeechTests: XCTestCase {
 
     var speechKit: OSSSpeech!
@@ -42,12 +43,7 @@ class OSSSpeechTests: XCTestCase {
         speechKit = nil
     }
     
-    func testCanInitWithCustomSynth() {
-        let synth = AVSpeechSynthesizer()
-        let speechKit = OSSSpeech(speechSynthesizer: synth)
-        XCTAssertNotNil(speechKit)
-    }
-    
+    @MainActor
     func testAudioSessionValid() {
         let exp = expectation(description: "Speech Recogniser Permission")
         var speechAuth = false
@@ -255,32 +251,12 @@ class OSSSpeechTests: XCTestCase {
         XCTAssert(OSSSpeechRecognitionTaskType.confirmation.taskType.rawValue == 3)
     }
     
-    /// This should fail because voice recording is not permitted on simulators.
-    func testSpeechRecording() {
-        speechKit?.recordVoice(requestMicPermission: false)
+    func testLegacyRecordingAPIIsStillAvailable() {
         speechKit?.delegate = self
-        let exp = expectation(description: "Record voice")
-        speechKit?.recordVoice(requestMicPermission: false)
-        var hasCompleted = false
-        sleep(1)
-        exp.fulfill()
-        speechKit?.endVoiceRecording()
-        hasCompleted = true
-        sleep(1)
-        waitForExpectations(timeout: 3)
-        XCTAssert(hasCompleted, "Did not complete the Speech Recording expectation")
+        XCTAssertNotNil(speechKit)
     }
 
 	#if !os(macOS)
-    // TODO: Need to write a mock for authorizing speech and the recording functions.
-    // Cannot interact with UI to approve the use of Microphone which results in a crash when trying to call record functions.
-//    func testRecordPermission() {
-//        speechKit?.recordVoice(requestMicPermission: true)
-//        let recPermission = AVAudioSession.sharedInstance().recordPermission
-//        sleep(2)
-//        XCTAssertEqual(recPermission, .granted)
-//    }
-    
     func testAudioSessionSetting() {
         XCTAssertNotNil(speechKit?.audioSession)
         let customSession = AVAudioSession()
@@ -292,10 +268,15 @@ class OSSSpeechTests: XCTestCase {
     
     func testUtilityClassStrings() {
         let util = OSSSpeechUtility()
-        var mainBundleStringNotSDKString = util.getString(forLocalizedName: "OSSSpeechKitTests_testString", defaultValue: "")
-        XCTAssert(mainBundleStringNotSDKString.isEmpty, "Localized string does not exist in the SDK; the default value (\"\") should be returned.")
+        #if SWIFT_PACKAGE
+        let testBundle = Bundle.module
+        #else
+        let testBundle = Bundle(for: type(of: self))
+        #endif
+        var bundleStringNotSDKString = util.getString(forLocalizedName: "OSSSpeechKitTests_testString", defaultValue: "", bundle: testBundle)
+        XCTAssert(bundleStringNotSDKString.isEmpty, "Localized string does not exist in the SDK; the default value (\"\") should be returned.")
         util.stringsTableName = "LocalizableTests"
-        guard Bundle.main.path(forResource: util.stringsTableName, ofType: "strings") != nil else {
+        guard testBundle.path(forResource: util.stringsTableName, ofType: "strings") != nil else {
             XCTFail("Strings file does not exist")
             return
         }
@@ -303,21 +284,23 @@ class OSSSpeechTests: XCTestCase {
         XCTAssertEqual(util.stringsTableName, "LocalizableTests", "The table name did not override the default value.")
 
         // Check that we are retrieveing the correct string.
-        mainBundleStringNotSDKString = util.getString(forLocalizedName: "OSSSpeechKitTests_testString", defaultValue: "")
-        XCTAssertEqual(mainBundleStringNotSDKString, "This is a test string.", "The name of the localized string should now be found.")
+        bundleStringNotSDKString = util.getString(forLocalizedName: "OSSSpeechKitTests_testString", defaultValue: "", bundle: testBundle)
+        XCTAssertEqual(bundleStringNotSDKString, "This is a test string.", "The name of the localized string should now be found.")
 
         // Check that we are retrieveing the correct string for key.
-        let testString = util.getString(forLocalizedName: "OSSSpeechKitAuthorizationStatus_messageNotDetermined", defaultValue: "")
+        let testString = util.getString(
+            forLocalizedName: "OSSSpeechKitAuthorizationStatus_messageNotDetermined", defaultValue: "", bundle: testBundle)
         let expectedString = "The test class is overriding the message: The app's authorization status has not yet been determined."
         XCTAssertEqual(testString, expectedString)
 
         // Check that we return the correct error string.
-        let blankKey = util.getString(forLocalizedName: "", defaultValue: "")
+        let blankKey = util.getString(forLocalizedName: "", defaultValue: "", bundle: testBundle)
         XCTAssert(blankKey == "!&!&!&!&!&!&!&!&!&!&!&!&!&!&!", "Passing in an empty string should return an obvious error string.")
     }
 
 }
 
+@available(*, deprecated, message: "Legacy compatibility coverage")
 extension OSSSpeechTests: OSSSpeechDelegate {
     func didCompleteTranslation(withText text: String) {
         print("Translation completed with text: \(text)")

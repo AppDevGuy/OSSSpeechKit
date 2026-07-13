@@ -28,7 +28,7 @@ class CountryLanguageListTableViewController: UITableViewController {
     
     // MARK: - Variables
     
-    private let speechKit = OSSSpeech.shared
+    private let speechKit = OSSSpeechEngine()
 
     private lazy var microphoneButton: UIBarButtonItem = {
         var micImage: UIImage?
@@ -45,7 +45,6 @@ class CountryLanguageListTableViewController: UITableViewController {
         super.viewDidLoad()
         title = "Languages"
         tableView.accessibilityIdentifier = "OSSSpeechKitLanguageTableView"
-        speechKit.delegate = self
         navigationItem.rightBarButtonItem = microphoneButton
         tableView.register(CountryLanguageTableViewCell.self,
                            forCellReuseIdentifier: CountryLanguageTableViewCell.reuseIdentifier)
@@ -54,23 +53,20 @@ class CountryLanguageListTableViewController: UITableViewController {
     // MARK: - Voice Recording
     
     @objc func recordVoice() {
-        shoudlStartRecordingVoice(microphoneButton.tintColor != .red)
-    }
-
-    private func shoudlStartRecordingVoice(_ shouldRecord: Bool) {
-        updateMicButtonColor(forState: shouldRecord)
-        if !shouldRecord {
-            speechKit.endVoiceRecording()
-            return
+        let selectedLanguage = tableView.indexPathForSelectedRow
+            .map { OSSLanguage.catalog[$0.row] }
+            ?? OSSLanguage.catalog.first(where: { $0.id == "english-us" })!
+        let recordingController = RecordingSessionViewController(
+            model: RecordingSessionModel(language: selectedLanguage)
+        )
+        recordingController.modalPresentationStyle = .pageSheet
+        if let sheet = recordingController.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.selectedDetentIdentifier = .large
+            sheet.prefersGrabberVisible = true
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
         }
-        speechKit.recordVoice()
-    }
-
-    func updateMicButtonColor(forState isRecording: Bool) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            self.microphoneButton.tintColor = isRecording ? .red : .label
-        }
+        present(recordingController, animated: true)
     }
 }
 
@@ -83,7 +79,7 @@ extension CountryLanguageListTableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return OSSVoiceEnum.allCases.count
+        return OSSLanguage.catalog.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -91,55 +87,43 @@ extension CountryLanguageListTableViewController {
                                                        for: indexPath) as? CountryLanguageTableViewCell else {
             return UITableViewCell(style: .subtitle, reuseIdentifier: UITableViewCell.reuseIdentifier)
         }
-        cell.language = OSSVoiceEnum.allCases[indexPath.row]
+        cell.language = OSSLanguage.catalog[indexPath.row]
         cell.isAccessibilityElement = true
         cell.accessibilityIdentifier = "OSSLanguageCell_\(indexPath.section)_\(indexPath.row)"
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // NOTE: Must set the voice before requesting speech. This can be set once.
-        speechKit.voice = OSSVoice(quality: .enhanced, language: OSSVoiceEnum.allCases[indexPath.item])
-        speechKit.utterance?.rate = 0.45
-        // Test attributed string vs normal string
-        if indexPath.item % 2 == 0 {
-            speechKit.speakText(OSSVoiceEnum.allCases[indexPath.item].demoMessage)
-        } else {
-            let attributedString = NSAttributedString(string: OSSVoiceEnum.allCases[indexPath.item].demoMessage)
-            speechKit.speakAttributedText(attributedText: attributedString)
+        let language = OSSLanguage.catalog[indexPath.row]
+        Task {
+            do {
+                try await speak("Hello from \(language.name)", language: language)
+            } catch {
+                presentError(error)
+            }
         }
     }
-}
 
-extension CountryLanguageListTableViewController: OSSSpeechDelegate {
-    
-    func didCompleteTranslation(withText text: String) {
-        print("Translation completed: \(text)")
+    private func speak(_ text: String, language: OSSLanguage) async throws {
+        try await speechKit.speak(
+            text,
+            voice: OSSVoiceConfiguration(language: language),
+            configuration: .init(rate: 0.45)
+        )
     }
-    
-    func didFailToProcessRequest(withError error: Error?) {
-        shoudlStartRecordingVoice(false)
-        guard let err = error else {
-            print("Error with the request but the error returned is nil")
-            return
+
+    private func presentError(_ error: Error) {
+        var message = error.localizedDescription
+        if case OSSSpeechError.voiceUnavailable = error {
+            message += "\n\nOn the simulator, open Settings > Accessibility > Spoken Content > Voices and download a voice for the selected language."
         }
-        print("Error with the request: \(err)")
-    }
-    
-    func authorizationToMicrophone(withAuthentication type: OSSSpeechKitAuthorizationStatus) {
-        print("Authorization status has returned: \(type.message).")
-    }
-    
-    func didFailToCommenceSpeechRecording() {
-        print("Failed to record speech.")
-        shoudlStartRecordingVoice(false)
-    }
-    
-    func didFinishListening(withText text: String) {
-        OperationQueue.main.addOperation { [weak self] in
-            self?.updateMicButtonColor(forState: false)
-            self?.speechKit.speakText(text)
-        }
+        let alert = UIAlertController(
+            title: "Speech unavailable",
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
 }
 

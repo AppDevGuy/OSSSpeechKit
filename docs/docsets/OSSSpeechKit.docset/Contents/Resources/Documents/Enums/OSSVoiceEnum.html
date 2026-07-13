@@ -8,20 +8,28 @@
     <script src="../js/jquery.min.js" defer></script>
     <script src="../js/jazzy.js" defer></script>
     
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
     <a name="//apple_ref/swift/Enum/OSSVoiceEnum" class="dashAnchor"></a>
     <a title="OSSVoiceEnum Enumeration Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">OSSSpeechKit 0.3.0 Docs</a> (95% documented)</p>
-        <p class="header-right"><a href="https://github.com/AppDevGuy/OSSSpeechKit"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p><a href="../index.html">OSSSpeechKit 1.0.0 Docs</a> (100% documented)</p>
+        <p class="header-right"><a href="https://github.com/AppDevGuy/OSSSpeechKit"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
+        <div class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
       </div>
     </header>
     <div class="content-wrapper">
       <p id="breadcrumbs">
         <a href="../index.html">OSSSpeechKit Reference</a>
-        <img id="carat" src="../img/carat.png" />
+        <img id="carat" src="../img/carat.png" alt=""/>
         OSSVoiceEnum Enumeration Reference
       </p>
     </div>
@@ -33,6 +41,12 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Classes/OSSSpeech.html">OSSSpeech</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/OSSSpeechEngine.html">OSSSpeechEngine</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/OSSSpeechEngine/State.html">– State</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/OSSSpeechUtility.html">OSSSpeechUtility</a>
@@ -49,10 +63,16 @@
             <a href="../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Enums/OSSSpeechError.html">OSSSpeechError</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Enums/OSSSpeechKitAuthorizationStatus.html">OSSSpeechKitAuthorizationStatus</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/OSSSpeechKitErrorType.html">OSSSpeechKitErrorType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/OSSSpeechRecognitionEvent.html">OSSSpeechRecognitionEvent</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/OSSSpeechRecognitionTaskType.html">OSSSpeechRecognitionTaskType</a>
@@ -65,9 +85,6 @@
           <li class="nav-group-name">
             <a href="../Extensions.html">Extensions</a>
             <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="../Extensions/Bundle.html">Bundle</a>
-              </li>
               <li class="nav-group-task">
                 <a href="../Extensions/NSObject.html">NSObject</a>
               </li>
@@ -85,6 +102,15 @@
             <a href="../Structs.html">Structures</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Structs/OSSLanguage.html">OSSLanguage</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/OSSUtteranceConfiguration.html">OSSUtteranceConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/OSSVoiceConfiguration.html">OSSVoiceConfiguration</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/OSSVoiceInfo.html">OSSVoiceInfo</a>
               </li>
             </ul>
@@ -97,7 +123,9 @@
             <h1>OSSVoiceEnum</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">OSSVoiceEnum</span> <span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="kt">CaseIterable</span></code></pre>
+                  
+                  <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="s">"Use OSSLanguage.catalog and runtime capability APIs."</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">enum</span> <span class="kt">OSSVoiceEnum</span> <span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="kt">CaseIterable</span></code></pre>
 
                 </div>
               </div>
@@ -168,6 +196,33 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:12OSSSpeechKit12OSSVoiceEnumO9BulgarianyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/Bulgarian" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit12OSSVoiceEnumO9BulgarianyA2CmF">Bulgarian</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Bulgarian</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">Bulgarian</span> <span class="o">=</span> <span class="s">"bg-BG"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:12OSSSpeechKit12OSSVoiceEnumO14CanadianFrenchyA2CmF"></a>
                     <a name="//apple_ref/swift/Element/CanadianFrench" class="dashAnchor"></a>
                     <a class="token" href="#/s:12OSSSpeechKit12OSSVoiceEnumO14CanadianFrenchyA2CmF">CanadianFrench</a>
@@ -205,7 +260,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Chinese</p>
+                        <p>Chinese Traditional</p>
 
                       </div>
                       <div class="declaration">
@@ -213,6 +268,33 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">Chinese</span> <span class="o">=</span> <span class="s">"zh-CH"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit12OSSVoiceEnumO17ChineseSimplifiedyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/ChineseSimplified" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit12OSSVoiceEnumO17ChineseSimplifiedyA2CmF">ChineseSimplified</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Chinese Simplified</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">ChineseSimplified</span> <span class="o">=</span> <span class="s">"zh-CN"</span></code></pre>
 
                         </div>
                       </div>
@@ -240,6 +322,33 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">ChineseHongKong</span> <span class="o">=</span> <span class="s">"zh-HK"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit12OSSVoiceEnumO8CroatianyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/Croatian" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit12OSSVoiceEnumO8CroatianyA2CmF">Croatian</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Croatian</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">Croatian</span> <span class="o">=</span> <span class="s">"hr-HR"</span></code></pre>
 
                         </div>
                       </div>
@@ -573,6 +682,33 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:12OSSSpeechKit12OSSVoiceEnumO13IndianEnglishyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/IndianEnglish" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit12OSSVoiceEnumO13IndianEnglishyA2CmF">IndianEnglish</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Indian English</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">IndianEnglish</span> <span class="o">=</span> <span class="s">"en-IN"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:12OSSSpeechKit12OSSVoiceEnumO10IndonesianyA2CmF"></a>
                     <a name="//apple_ref/swift/Element/Indonesian" class="dashAnchor"></a>
                     <a class="token" href="#/s:12OSSSpeechKit12OSSVoiceEnumO10IndonesianyA2CmF">Indonesian</a>
@@ -708,6 +844,33 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:12OSSSpeechKit12OSSVoiceEnumO5MalayyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/Malay" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit12OSSVoiceEnumO5MalayyA2CmF">Malay</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Malaysian</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">Malay</span> <span class="o">=</span> <span class="s">"ms-MY"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:12OSSSpeechKit12OSSVoiceEnumO7MexicanyA2CmF"></a>
                     <a name="//apple_ref/swift/Element/Mexican" class="dashAnchor"></a>
                     <a class="token" href="#/s:12OSSSpeechKit12OSSVoiceEnumO7MexicanyA2CmF">Mexican</a>
@@ -753,6 +916,33 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">Norwegian</span> <span class="o">=</span> <span class="s">"no-NO"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit12OSSVoiceEnumO15NorwegianBokmalyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/NorwegianBokmal" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit12OSSVoiceEnumO15NorwegianBokmalyA2CmF">NorwegianBokmal</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Norwegian Bokmal</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">NorwegianBokmal</span> <span class="o">=</span> <span class="s">"nb-NO"</span></code></pre>
 
                         </div>
                       </div>
@@ -978,6 +1168,33 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:12OSSSpeechKit12OSSVoiceEnumO14SpanishCatalanyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/SpanishCatalan" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit12OSSVoiceEnumO14SpanishCatalanyA2CmF">SpanishCatalan</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Catalan</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">SpanishCatalan</span> <span class="o">=</span> <span class="s">"ca-ES"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:12OSSSpeechKit12OSSVoiceEnumO7SwedishyA2CmF"></a>
                     <a name="//apple_ref/swift/Element/Swedish" class="dashAnchor"></a>
                     <a class="token" href="#/s:12OSSSpeechKit12OSSVoiceEnumO7SwedishyA2CmF">Swedish</a>
@@ -1086,6 +1303,33 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:12OSSSpeechKit12OSSVoiceEnumO8UkranianyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/Ukranian" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit12OSSVoiceEnumO8UkranianyA2CmF">Ukranian</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Ukranian</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">Ukranian</span> <span class="o">=</span> <span class="s">"uk-UA"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:12OSSSpeechKit12OSSVoiceEnumO19UnitedStatesEnglishyA2CmF"></a>
                     <a name="//apple_ref/swift/Element/UnitedStatesEnglish" class="dashAnchor"></a>
                     <a class="token" href="#/s:12OSSSpeechKit12OSSVoiceEnumO19UnitedStatesEnglishyA2CmF">UnitedStatesEnglish</a>
@@ -1104,6 +1348,60 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">UnitedStatesEnglish</span> <span class="o">=</span> <span class="s">"en-US"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit12OSSVoiceEnumO10VietnameseyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/Vietnamese" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit12OSSVoiceEnumO10VietnameseyA2CmF">Vietnamese</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Vietnamese</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">Vietnamese</span> <span class="o">=</span> <span class="s">"vi-VN"</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit12OSSVoiceEnumO11ArabicWorldyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/ArabicWorld" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit12OSSVoiceEnumO11ArabicWorldyA2CmF">ArabicWorld</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Arabic World</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="kt">ArabicWorld</span> <span class="o">=</span> <span class="s">"ar-001"</span></code></pre>
 
                         </div>
                       </div>
@@ -1204,9 +1502,9 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The flag for the selected language.</p>
+                        <p>The legacy image flag for the selected language.</p>
 
-<p>You can supply your own flag image, provided is has the same name (.rawValue) as the image in the pod assets.</p>
+<p>You can supply your own flag image, provided it has the same name (<code>rawValue</code>) as the packaged image.</p>
 
 <p>If no image is found in the application bundle, the image from the SDK bundle will be provided.</p>
 
@@ -1215,7 +1513,119 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">flag</span><span class="p">:</span> <span class="kt">UIImage</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="s">"Use flagEmoji for text or renderedFlagImage(pointSize:scale:﹚ for UIKit images."</span><span class="p">)</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">flag</span><span class="p">:</span> <span class="kt">UIImage</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit12OSSVoiceEnumO25canonicalLocaleIdentifierSSvp"></a>
+                    <a name="//apple_ref/swift/Property/canonicalLocaleIdentifier" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit12OSSVoiceEnumO25canonicalLocaleIdentifierSSvp">canonicalLocaleIdentifier</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The canonical locale used by the modern API.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">canonicalLocaleIdentifier</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit12OSSVoiceEnumO16languageMetadataAA11OSSLanguageVvp"></a>
+                    <a name="//apple_ref/swift/Property/languageMetadata" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit12OSSVoiceEnumO16languageMetadataAA11OSSLanguageVvp">languageMetadata</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Modern metadata corresponding to this legacy case.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">languageMetadata</span><span class="p">:</span> <span class="kt"><a href="../Structs/OSSLanguage.html">OSSLanguage</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit12OSSVoiceEnumO9flagEmojiSSvp"></a>
+                    <a name="//apple_ref/swift/Property/flagEmoji" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit12OSSVoiceEnumO9flagEmojiSSvp">flagEmoji</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Preferred Unicode replacement for the legacy image property.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">flagEmoji</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12OSSSpeechKit12OSSVoiceEnumO17renderedFlagImage9pointSize5scaleSo7UIImageC14CoreFoundation7CGFloatV_AKtF"></a>
+                    <a name="//apple_ref/swift/Method/renderedFlagImage(pointSize:scale:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12OSSSpeechKit12OSSVoiceEnumO17renderedFlagImage9pointSize5scaleSo7UIImageC14CoreFoundation7CGFloatV_AKtF">renderedFlagImage(pointSize:<wbr>scale:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Renders <code><a href="../Enums/OSSVoiceEnum.html#/s:12OSSSpeechKit12OSSVoiceEnumO9flagEmojiSSvp">flagEmoji</a></code> for UIKit clients.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">renderedFlagImage</span><span class="p">(</span>
+    <span class="nv">pointSize</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mi">24</span><span class="p">,</span>
+    <span class="nv">scale</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UIImage</span></code></pre>
 
                         </div>
                       </div>
@@ -1227,11 +1637,10 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="https://github.com/AppDevGuy" target="_blank" rel="external">AppDevGuy</a>. All rights reserved. (Last updated: 2020-05-05)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2026 <a class="link" href="https://github.com/AppDevGuy" target="_blank" rel="external noopener">AppDevGuy</a>. All rights reserved. (Last updated: 2026-07-13)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>
   </body>
-</div>
 </html>

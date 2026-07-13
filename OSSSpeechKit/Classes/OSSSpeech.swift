@@ -67,6 +67,7 @@ public enum OSSSpeechKitErrorType: Int {
     /// The audio engine is invalid.
     case invalidAudioEngine = -6
     /// Voice recognition is unavailable.
+    @available(*, deprecated, message: "Use OSSSpeechError.recognizerUnavailable.")
     case recogniserUnavailble = -7
 
     /// The OSSSpeechKit error message string.
@@ -147,6 +148,7 @@ public enum OSSSpeechRecognitionTaskType: Int {
 }
 
 /// Delegate to handle events such as failed authentication for microphone among many more.
+@available(*, deprecated, message: "Use OSSSpeechEngine async methods and recognition events.")
 public protocol OSSSpeechDelegate: AnyObject {
     /// When the microphone has finished accepting audio, this delegate will be called with the final best text output.
     func didFinishListening(withText text: String)
@@ -161,7 +163,8 @@ public protocol OSSSpeechDelegate: AnyObject {
 }
 
 /// Speech is the primary interface. To use, set the voice and then call `.speak(string: "your string")`
-public class OSSSpeech: NSObject {
+@available(*, deprecated, message: "Use the instance-based OSSSpeechEngine async API.")
+public class OSSSpeech: NSObject, @unchecked Sendable {
 
     // MARK: - Private Properties
 
@@ -213,7 +216,8 @@ public class OSSSpeech: NSObject {
 
     /// This property handles permission authorization.
     /// This property is intentionally named vaguely to prevent accidental overriding.
-    public var srp = SFSpeechRecognizer.self
+    @available(*, deprecated, message: "Use dependency injection with OSSSpeechEngine tests.")
+    public var srp: SFSpeechRecognizer.Type = SFSpeechRecognizer.self
 
     // Voice to text
     private var audioEngine: AVAudioEngine?
@@ -238,6 +242,7 @@ public class OSSSpeech: NSObject {
     }()
 
     /// A singleton object to ensure conformity accross the application it is used in.
+    @available(*, deprecated, message: "Create an OSSSpeechEngine instance instead.")
     public class var shared: OSSSpeech {
         return sharedInstance
     }
@@ -326,19 +331,14 @@ public class OSSSpeech: NSObject {
     }
 
     private func speak() {
-        var speechVoice = OSSVoice()
-        if let aVoice = voice {
-            speechVoice = aVoice
+        guard let validUtterance = utterance, !validUtterance.speechString.isEmpty else {
+            delegate?.didFailToProcessRequest(withError: OSSSpeechError.emptyText)
+            return
         }
-        let validString = utterance?.speechString ?? "error"
-        // Utterance must be an original object in order to be spoken. We redefine an new instance of Utterance each time using the values in the existing utterance.
-        let newUtterance = AVSpeechUtterance(string: validString)
-        newUtterance.voice = speechVoice
-        if let validUtterance = utterance {
-            newUtterance.rate = validUtterance.rate
-            newUtterance.pitchMultiplier = validUtterance.pitchMultiplier
-            newUtterance.volume = validUtterance.volume
-        }
+        let newUtterance = AVSpeechUtterance(attributedString: validUtterance.attributedSpeechString)
+        newUtterance.voice = voice?.configuration.resolve()
+            ?? AVSpeechSynthesisVoice(language: OSSVoiceEnum.UnitedStatesEnglish.rawValue)
+        validUtterance.configuration.apply(to: newUtterance)
         // Ensure volume is correct each time
         setSession(isRecording: false)
         stopSpeaking()
@@ -405,13 +405,12 @@ public class OSSSpeech: NSObject {
     }
 
     private func getMicroPhoneAuthorization() {
-        weak var weakSelf = self
-        weakSelf?.srp.requestAuthorization { authStatus in
+        srp.requestAuthorization { [weak self] authStatus in
             let status = OSSSpeechKitAuthorizationStatus(rawValue: authStatus.rawValue) ?? .notDetermined
-            weakSelf?.delegate?.authorizationToMicrophone(withAuthentication: status)
-            if status == .authorized {
+            self?.delegate?.authorizationToMicrophone(withAuthentication: status)
+            if status == .authorized, let self {
                 OperationQueue.main.addOperation {
-                    weakSelf?.recordAndRecognizeSpeech()
+                    self.recordAndRecognizeSpeech()
                 }
             }
         }
@@ -440,7 +439,8 @@ public class OSSSpeech: NSObject {
             request = nil
         }
         if let task = recognitionTask {
-            task.finish()
+            task.cancel()
+            recognitionTask = nil
         }
         resetAudioEngine()
     }
@@ -457,40 +457,13 @@ public class OSSSpeech: NSObject {
         let input = audioEngine.inputNode
         let bus = 0
         let recordingFormat = input.outputFormat(forBus: 0)
-        guard let outputFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: 8000, channels: 1, interleaved: true) else {
-            delegate?.didFailToCommenceSpeechRecording()
-            delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidAudioEngine.error)
-            return
-        }
-        guard let converter = AVAudioConverter(from: recordingFormat, to: outputFormat) else {
+        guard recordingFormat.channelCount > 0 else {
             delegate?.didFailToCommenceSpeechRecording()
             delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidAudioEngine.error)
             return
         }
         input.installTap(onBus: bus, bufferSize: 8192, format: recordingFormat) { [weak self] (buffer, _) -> Void in
-            var newBufferAvailable = true
-            let inputCallback: AVAudioConverterInputBlock = { _, outStatus in
-                if newBufferAvailable {
-                    outStatus.pointee = .haveData
-                    newBufferAvailable = false
-                    return buffer
-                } else {
-                    outStatus.pointee = .noDataNow
-                    return nil
-                }
-            }
-            let convertedBuffer = AVAudioPCMBuffer(pcmFormat: outputFormat, frameCapacity: AVAudioFrameCount(outputFormat.sampleRate) * buffer.frameLength / AVAudioFrameCount(buffer.format.sampleRate))!
-            var error: NSError?
-            let status = converter.convert(to: convertedBuffer, error: &error, withInputFrom: inputCallback)
-            if status == .error {
-                self?.delegate?.didFailToCommenceSpeechRecording()
-                self?.delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidAudioEngine.error)
-                if let err = error {
-                    self?.debugLog(object: self as Any, message: "Audio Engine conversion error: \(err)")
-                }
-                return
-            }
-            self?.request?.append(convertedBuffer)
+            self?.request?.append(buffer)
         }
         audioEngine.prepare()
         do {
@@ -502,10 +475,7 @@ public class OSSSpeech: NSObject {
     }
 
     private func recordAndRecognizeSpeech() {
-        if let speechRecognizer, !speechRecognizer.isAvailable {
-            cancelRecording()
-            setSession(isRecording: false)
-        }
+        cancelRecording()
         if speechSynthesizer.isSpeaking {
             stopSpeaking()
         }
@@ -517,8 +487,15 @@ public class OSSSpeech: NSObject {
         }
         request = SFSpeechAudioBufferRecognitionRequest()
         engineSetup()
-        let identifier = voice?.voiceType.rawValue ?? OSSVoiceEnum.UnitedStatesEnglish.rawValue
-        speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: identifier))
+        let identifier = voice?.voiceType.canonicalLocaleIdentifier ?? OSSVoiceEnum.UnitedStatesEnglish.rawValue
+        let requestedLocale = Locale(identifier: identifier)
+        guard let supportedLocale = OSSLanguage.supportedRecognitionLocale(equivalentTo: requestedLocale) else {
+            delegate?.didFailToCommenceSpeechRecording()
+            delegate?.didFailToProcessRequest(withError: OSSSpeechError.recognitionLocaleUnsupported(identifier))
+            cancelRecording()
+            return
+        }
+        speechRecognizer = SFSpeechRecognizer(locale: supportedLocale)
         guard let recogniser = speechRecognizer else {
             delegate?.didFailToCommenceSpeechRecording()
             delegate?.didFailToProcessRequest(withError: OSSSpeechKitErrorType.invalidSpeechRequest.error)
@@ -544,6 +521,7 @@ public class OSSSpeech: NSObject {
 }
 
 /// Extension to handle the SFSpeechRecognitionTaskDelegate and SFSpeechRecognizerDelegate methods.
+@available(*, deprecated, message: "Use OSSSpeechEngine recognition events.")
 extension OSSSpeech: SFSpeechRecognitionTaskDelegate, SFSpeechRecognizerDelegate {
 
     // MARK: - SFSpeechRecognitionTaskDelegate Methods
@@ -551,7 +529,12 @@ extension OSSSpeech: SFSpeechRecognitionTaskDelegate, SFSpeechRecognizerDelegate
     /// Docs available by Google searching for SFSpeechRecognitionTaskDelegate
     public func speechRecognitionTask(_ task: SFSpeechRecognitionTask, didFinishSuccessfully successfully: Bool) {
         recognitionTask = nil
-        delegate?.didFinishListening(withText: spokenText)
+        if successfully {
+            delegate?.didFinishListening(withText: spokenText)
+        } else {
+            delegate?.didFailToProcessRequest(withError: OSSSpeechError.recognizerUnavailable)
+        }
+        resetAudioEngine()
         setSession(isRecording: false)
     }
 
@@ -565,8 +548,10 @@ extension OSSSpeech: SFSpeechRecognitionTaskDelegate, SFSpeechRecognizerDelegate
         spokenText = recognitionResult.bestTranscription.formattedString
     }
 
+    /// Called when the recognizer detects speech in the audio stream.
     public func speechRecognitionDidDetectSpeech(_ task: SFSpeechRecognitionTask) {}
 
+    /// Called when the recognizer has finished reading audio from the request.
     public func speechRecognitionTaskFinishedReadingAudio(_ task: SFSpeechRecognitionTask) {}
 
     // MARK: - SFSpeechRecognizerDelegate Methods

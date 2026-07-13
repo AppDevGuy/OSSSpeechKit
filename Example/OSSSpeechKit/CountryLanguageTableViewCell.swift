@@ -28,11 +28,14 @@ class CountryLanguageTableViewCell: UITableViewCell {
     
     // MARK: - Variables
     
-    public var language: OSSVoiceEnum? {
+    public var language: OSSLanguage? {
         didSet {
-            imageView?.image = language?.flag
-            textLabel?.text = language?.title
-            detailTextLabel?.text = language?.rawValue
+            imageView?.image = language?.renderedFlagImage()
+            textLabel?.text = language?.name
+            detailTextLabel?.text = language?.localeIdentifier
+            accessibilityLabel = [language?.name, language?.localeIdentifier]
+                .compactMap { $0 }
+                .joined(separator: ", ")
         }
     }
 
@@ -47,10 +50,6 @@ class CountryLanguageTableViewCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
     }
     
     override func prepareForReuse() {
